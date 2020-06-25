@@ -29,8 +29,8 @@ void	load_commands(t_master *m)
 {
 	m->command_number = 2;
 	m->commands = secure_malloc(2 * sizeof(t_command));
-	command_add(0, &(m->commands), "md5", md5_exec);
-	command_add(1, &(m->commands), "sha256", test_exec);
+	command_add(0, m->commands, "md5", md5_exec);
+	command_add(1, m->commands, "sha256", test_exec);
 }
 //3: passer a travers les noms de fonctions et si il y a match avec la chaine donnee appeler la fonction correspondante.
 
@@ -42,7 +42,7 @@ BOOL	try_to_exec_command(t_master *m, const char *try_name)
 	i = 0;
 	while (i != m->command_number)
 	{
-		if (strcmp(try_name, m->commands[i].name))
+		if (str_cmp(try_name, m->commands[i].name))
 		{
 			m->commands[i].exec(m);
 			free_commands(m->commands, m->command_number);

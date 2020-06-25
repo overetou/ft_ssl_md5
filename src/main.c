@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:48:45 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/24 19:54:36 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/25 09:43:09 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ char	*alloc_str(const char *content)
 		new[i] = content[i];
 		i++;
 	}
+	return (new);
 }
 
-BOOL	strcmp(const char *s1, const char *s2)
+BOOL	str_cmp(const char *s1, const char *s2)
 {
 	int i;
 
