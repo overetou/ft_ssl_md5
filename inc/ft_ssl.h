@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/25 09:43:55 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/25 11:07:49 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #define BOOL char
 
@@ -33,8 +34,8 @@ typedef struct	s_master
 	t_command	*commands;
 	int			command_number;
 	void		*(*param_exec)(void* master);
-	int			md5_param_choice_number;
-	t_command	*md5_param_choice;
+	int			param_choice_number;
+	t_command	*param_choice;
 }				t_master;
 
 void	putstr(const char *s);

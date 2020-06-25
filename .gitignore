@@ -1,3 +1,5 @@
 ft_ssl
 obj/*
 .vscode/settings.json
+src/test.c
+a.out

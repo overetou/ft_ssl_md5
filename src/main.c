@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:48:45 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/25 09:43:09 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/25 10:34:27 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ char	*alloc_str(const char *content)
 	i = 0;
 	while (content[i])
 		i++;
-	i = 0;
 	new = secure_malloc(i + 1);
+	i = 0;
 	while (content[i])
 	{
 		new[i] = content[i];
 		i++;
 	}
+	new[i] = '\0';
 	return (new);
 }
 
@@ -58,10 +59,11 @@ BOOL	str_cmp(const char *s1, const char *s2)
 
 	if (s1 == NULL || s2 == NULL)
 		return (0);
+	// putstr("cmp: no null\n");
 	i = 0;
 	while (s1[i] == s2[i] && s1[i])
 		i++;
-	return (s1[1] == s2[i]);
+	return (s1[i] == s2[i]);
 }
 
 int		main(int argc, char **argv)
@@ -78,6 +80,8 @@ int		main(int argc, char **argv)
 	else
 	{
 		m.command_given = 1;
+		m.argc = argc;
+		m.argv = argv;
 		if (try_to_exec_command(&m, argv[1]) == 0)
 		{
 			putstr("Given command could not be processed.\n"
