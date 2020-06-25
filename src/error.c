@@ -1,5 +1,17 @@
 #include "ft_ssl.h"
 
+void	memcopy(char *dest, const char *src, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i != size)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+}
+
 void	error_if_null(void *p, const char *err_msg)
 {
 	if (p)

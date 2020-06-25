@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:48:45 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/25 10:34:27 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/25 15:20:33 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,7 @@ char	*alloc_str(const char *content)
 	while (content[i])
 		i++;
 	new = secure_malloc(i + 1);
-	i = 0;
-	while (content[i])
-	{
-		new[i] = content[i];
-		i++;
-	}
+	memcopy(new, content, i);
 	new[i] = '\0';
 	return (new);
 }
@@ -69,24 +64,32 @@ BOOL	str_cmp(const char *s1, const char *s2)
 int		main(int argc, char **argv)
 {
 	t_master	m;
+	char		*command_name;
 
 	m.still_reading_args = 1;
 	m.command_given = 0;
+	m.buff_pos = 0;
+	m.reverse_enabled = 0;
+	m.quiet_enabled = 0;
 	if (argc <= 1)
 	{
 		putstr("usage: ft_ssl command [command opts] [command args]\n");
 		m.still_reading_args = 0;
+		command_name = get_command_name(&m);
 	}
 	else
 	{
 		m.command_given = 1;
 		m.argc = argc;
 		m.argv = argv;
-		if (try_to_exec_command(&m, argv[1]) == 0)
-		{
-			putstr("Given command could not be processed.\n"
-			"usage: ft_ssl command [command opts] [command args]\n");
-		}
+		command_name = argv[1];
 	}
+	if (try_to_exec_command(&m, command_name) == 0)
+	{
+		putstr("Given command could not be processed.\n"
+		"usage: ft_ssl command [command opts] [command args]\n");
+	}
+	if (argc <= 1)
+		free(command_name);
 	return (0);
 }

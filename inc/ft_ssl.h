@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/25 11:07:49 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/25 15:19:41 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stdio.h>
 
 #define BOOL char
+#define BUFF_MAX_SIZE 80
 
 typedef struct	s_command
 {
@@ -29,6 +30,9 @@ typedef struct	s_master
 {
 	int			argc;
 	char		**argv;
+	char		buffer[BUFF_MAX_SIZE];
+	int			buff_pos;
+	int			buff_max;
 	BOOL		command_given;
 	BOOL		still_reading_args;
 	t_command	*commands;
@@ -36,6 +40,8 @@ typedef struct	s_master
 	void		*(*param_exec)(void* master);
 	int			param_choice_number;
 	t_command	*param_choice;
+	BOOL		reverse_enabled;
+	BOOL		quiet_enabled;
 }				t_master;
 
 void	putstr(const char *s);
@@ -53,6 +59,8 @@ void	md5_q_exec(void *m);
 void	md5_r_exec(void *m);
 void	md5_s_exec(void *m);
 void	md5_execute_loaded(t_master *m);
+char	*get_command_name(t_master *m);
+void	memcopy(char *dest, const char *src, int size);
 
 void	test_exec(void* master);
 
