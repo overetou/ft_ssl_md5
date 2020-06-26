@@ -19,12 +19,21 @@ void	error_if_null(void *p, const char *err_msg)
 	error_msg(err_msg);
 }
 
-void	*secure_malloc(int	size)
+void	*secure_malloc(int size)
 {
 	void	*new;
 
 	new = malloc(size);
 	error_if_null(new, "Allocation Failure");
+	return (new);
+}
+
+void	*secure_realloc(void *ptr, int size)
+{
+	void	*new;
+
+	new = realloc(ptr, size);
+	error_if_null(new, "Reallocation Failure");
 	return (new);
 }
 

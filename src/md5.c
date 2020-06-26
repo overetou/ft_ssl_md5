@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 09:18:01 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/26 17:02:16 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/26 19:34:13 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,13 @@ BOOL	md5_try_arg(const char *s, t_master *m)
 
 void	md5_parse_args(t_master *m)
 {
-	int i;
-
 	if (m->still_reading_args)
 	{
-		i = 2;
-		while (i != m->argc)
+		m->arg_pos = 2;
+		while (m->arg_pos != m->argc)
 		{
-			if (md5_try_arg(m->argv[i], m))
-				i++;
+			if (md5_try_arg(m->argv[m->arg_pos], m))
+				(m->arg_pos)++;
 			else
 				error_msg("md5: given arguments made no sense.");
 		}

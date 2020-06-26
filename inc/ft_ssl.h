@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/26 17:13:30 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/26 19:44:11 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 typedef struct	s_command
 {
 	char		*name;
-	void		(*exec)(void* master);
+	void		(*exec)(void*);
 }				t_command;
 
 typedef struct	s_master
@@ -31,26 +31,30 @@ typedef struct	s_master
 	char		**argv;
 	char		buffer[BUFF_MAX_SIZE];
 	char		*stdin_string;
+	char		*direct_string;
 	int			argc;
+	int			arg_pos;
 	int			buff_pos;
 	int			buff_max;
 	int			command_number;
 	int			param_choice_number;
+	int			final_funcs_number;
 	t_command	*commands;
 	t_command	*param_choice;
 	BOOL		still_reading_args;
 	BOOL		reverse_enabled;
 	BOOL		quiet_enabled;
 	BOOL		p_enabled;
-	void		*(*param_exec)(void* master);
-	void		(*final_exec_funcs)(struct s_master *m);
+	BOOL		s_enabled;
+	void		(**final_exec_funcs)(void*);
 }				t_master;
 
 void	putstr(const char *s);
 char	*alloc_str(const char *content);
 void	error_msg(const char* msg);
 BOOL	str_cmp(const char *s1, const char *s2);
-void	*secure_malloc(int	size);
+void	*secure_malloc(int size);
+void	*secure_realloc(void *ptr, int size);
 void	command_add(const int command_index, t_command *commands,
 const char *command_name, void (*exec)(void* master));
 void	free_commands(t_command *commands, int command_number);
@@ -61,8 +65,11 @@ void	md5_q_exec(void *m);
 void	md5_r_exec(void *m);
 void	md5_s_exec(void *m);
 void	md5_execute_loaded(t_master *m);
-char	*get_command_name(t_master *m);
+void	load_stdin(t_master *m);
 void	memcopy(char *dest, const char *src, int size);
+void	add_final_exec_func(t_master *m, void (*f)(struct s_master*));
+void	md5_p_final_exec(t_master *m);
+void	md5_s_final_exec(t_master *m);
 
 void	test_exec(void* master);
 

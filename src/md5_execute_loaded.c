@@ -3,5 +3,5 @@
 void	md5_execute_loaded(t_master *m)
 {
 	putstr("md5: execution\n");
-	(void)m;
+	free(m->final_exec_funcs);
 }
