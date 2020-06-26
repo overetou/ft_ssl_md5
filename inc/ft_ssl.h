@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/25 15:19:41 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/26 17:13:30 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,22 @@ typedef struct	s_command
 
 typedef struct	s_master
 {
-	int			argc;
 	char		**argv;
 	char		buffer[BUFF_MAX_SIZE];
+	char		*stdin_string;
+	int			argc;
 	int			buff_pos;
 	int			buff_max;
-	BOOL		command_given;
-	BOOL		still_reading_args;
-	t_command	*commands;
 	int			command_number;
-	void		*(*param_exec)(void* master);
 	int			param_choice_number;
+	t_command	*commands;
 	t_command	*param_choice;
+	BOOL		still_reading_args;
 	BOOL		reverse_enabled;
 	BOOL		quiet_enabled;
+	BOOL		p_enabled;
+	void		*(*param_exec)(void* master);
+	void		(*final_exec_funcs)(struct s_master *m);
 }				t_master;
 
 void	putstr(const char *s);

@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 09:18:01 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/25 11:07:52 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/26 17:02:16 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	md5_exec(void* m)
 {
 	md5_load_params_choice(m);
 	md5_parse_args(m);
-	// md5_parse_args_on_stdin(m);
 	md5_execute_loaded(m);
 	free_commands(((t_master*)m)->param_choice,
 					((t_master*)m)->param_choice_number);
