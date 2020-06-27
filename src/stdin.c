@@ -1,5 +1,15 @@
 #include "ft_ssl.h"
 
+int		str_len(const char *s)
+{
+	int i;
+
+	i = 0;
+	while(s[i])
+		i++;
+	return (i);
+}
+
 void	load_stdin(t_master *m)
 {
 	int	i;

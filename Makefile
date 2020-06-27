@@ -14,7 +14,7 @@ LIBS=
 
 #From there we use the info to compile everything.
 SRC_FILE_NAMES = main.c md5.c error.c command_orientation.c md5_execute_loaded.c md5_param_exec.c stdin.c function_loading.c\
-				md5_final_exec.c
+				md5_final_exec.c md5_digest.c
 SOURCES=$(addprefix $(SRC_DIR)/, $(SRC_FILE_NAMES))
 OBJS:=$(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 INC_FLAGS=$(addprefix -I,$(INC_DIRS))

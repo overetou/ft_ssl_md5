@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/26 19:44:11 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/27 16:48:31 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,20 @@ typedef struct	s_master
 	void		(**final_exec_funcs)(void*);
 }				t_master;
 
+typedef struct	s_md5_data
+{
+	char			*full_msg;
+	unsigned int	bloc_pos;
+	unsigned int	word_pos;
+	unsigned long	initial_len;
+	unsigned long	full_len;
+	unsigned long	A;
+	unsigned long	B;
+	unsigned long	C;
+	unsigned long	D;
+	unsigned long	temp;
+}				t_md5_data;
+
 void	putstr(const char *s);
 char	*alloc_str(const char *content);
 void	error_msg(const char* msg);
@@ -70,6 +84,10 @@ void	memcopy(char *dest, const char *src, int size);
 void	add_final_exec_func(t_master *m, void (*f)(struct s_master*));
 void	md5_p_final_exec(t_master *m);
 void	md5_s_final_exec(t_master *m);
+int		str_len(const char *s);
+void	b_zero(void* s, int len);
+void	print_checksum(int *s);
+char	*md5_digest(const char *input);
 
 void	test_exec(void* master);
 

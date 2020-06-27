@@ -2,6 +2,13 @@
 
 void	md5_execute_loaded(t_master *m)
 {
-	putstr("md5: execution\n");
+	int	i;
+
+	i = 0;
+	while (i != m->final_funcs_number)
+	{
+		m->final_exec_funcs[i](m);
+		i++;
+	}
 	free(m->final_exec_funcs);
 }
