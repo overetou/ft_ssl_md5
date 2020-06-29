@@ -1,20 +1,21 @@
 #include "ft_ssl.h"
 
-void	md5_init_h(unsigned long *h)
+void	md5_init_hash(unsigned int *h)
 {
-	h[0] = 0x67452301L;
-	h[1] = 0xefcdab89L;
-	h[3] = 0x98badcfeL;
-	h[4] = 0x10325476L;
+	h[0] = 0x67452301;
+	h[1] = 0xefcdab89;
+	h[3] = 0x98badcfe;
+	h[4] = 0x10325476;
 }
 
-void	set_default_result(char *r)
+void	set_round_shift_table(unsigned char **r)
 {
+	*r = secure_malloc(16);
 	char table[] = {	7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
 						5,  9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
 						4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
 						6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21};
-	memcopy(r, (char*)table, 64);
+	memcopy((char*)(*r), (char*)table, 64);
 }
 
 unsigned long	left_rotate(unsigned long n, unsigned long times)
@@ -22,20 +23,19 @@ unsigned long	left_rotate(unsigned long n, unsigned long times)
 	return (((n) << (times)) | ((n) >> (32 - (times))));
 }
 
-void	print_checksum(int *s)
+void	print_checksum(unsigned int *s)
 {
 	int i;
 
 	i = 0;
-	while (i != 16)
+	while (i != 4)
 	{
-		printf("%02x", s[i]);
+		printf("%04x\n", s[i]);
 		i++;
 	}
-	puts("\n");
 }
 
-void	print_deca(const char *data, unsigned long size)
+void	print_deca(const unsigned char *data, unsigned long size)
 {
 	unsigned long	i;
 
@@ -48,14 +48,31 @@ void	print_deca(const char *data, unsigned long size)
 	puts("\n");
 }
 
+void	set_end_bits_len(unsigned char *adr, unsigned long val)
+{
+	int i;
+	int	j;
+	unsigned char	*vals;
+
+	i = 7;
+	j = 0;
+	vals = (unsigned char*)(&val);
+	while (i >= 0)
+	{
+		adr[i] = vals[j];
+		i--;
+		j++;
+	}
+}
+
 char	*md5_digest(const char *input)
 {
 	t_md5_data	data;
-	char		*round_shift_amount;
-	unsigned long	*h = secure_malloc(sizeof(long) * 4);
+	unsigned char	*round_shift_amount;
+	unsigned int	*h = secure_malloc(sizeof(int) * 4);
 	printf("allocated h with a size of %ld bits\n", sizeof(long) * 4 * 8);
 	unsigned int	f, g;
-	char			*w;
+	unsigned char	*w;
 	unsigned int k[] = {
         0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
         0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
@@ -76,47 +93,44 @@ char	*md5_digest(const char *input)
 
 	data.initial_len = str_len(input);
 	if (64 - data.initial_len % 64 > 8)
-	{
 		data.full_len = data.initial_len + 64 - (data.initial_len % 64);
-	}
 	else
 		data.full_len = data.initial_len + (64 - (data.initial_len + 8) % 64);
 	printf("initial length: %ld bits.\nAllocated length: %ld bits. Alloc_len %% 512 = %ld bits\n"
 	, data.initial_len * 8, data.full_len * 8, (data.full_len * 8) % 512);
 
 	data.full_msg = secure_malloc(data.full_len);
-	memcopy(data.full_msg, input, data.initial_len);
+	memcopy((char*)(data.full_msg), input, data.initial_len);
 	data.full_msg[data.initial_len] = 128;
-	b_zero(data.full_msg + data.initial_len + 1, data.full_len - data.initial_len - 1);
-	print_deca(data.full_msg, data.full_len);exit(0);
-
-	memcopy(data.full_msg + data.initial_len + data.full_len
-	- data.initial_len - 64, (char*)&(data.initial_len), sizeof(long));
-	round_shift_amount = secure_malloc(16);
-	set_default_result(round_shift_amount);
-	md5_init_h(h);
+	// printf("allocated len in bytes: %lu, initial len: %lu we b_zero: %lu bytes\n", data.full_len, data.initial_len, data.full_len - data.initial_len);
+	b_zero(data.full_msg + data.initial_len + 1, data.full_len - data.initial_len - 9);
+	data.initial_len *= 8;
+	memcopy((char*)(data.full_msg) + data.full_len - 8, (char*)(&(data.initial_len)), 8);
+	print_deca(data.full_msg, data.full_len);
+	set_round_shift_table(&round_shift_amount);
+	md5_init_hash(h);
 	data.bloc_pos = 0;
-	while (data.bloc_pos != data.full_len / 64)
+	while (data.bloc_pos != data.full_len)
 	{
-		w = data.full_msg + data.bloc_pos * 64;
+		w = data.full_msg + data.bloc_pos;
 		data.word_pos = 0;
-		while (data.word_pos != 64)
+		while (data.word_pos != 64)//wordpos is in bits!!
 		{
 			data.A = h[0];
 			data.B = h[1];
 			data.C = h[2];
 			data.D = h[3];
-			if (data.word_pos <= 15)
+			if (data.word_pos < 16)
 			{
 				f = (data.B & data.C) | ((~data.B) & data.D);
 				g = data.word_pos;
 			}
-			else if (data.word_pos <= 31)
+			else if (data.word_pos < 32)
 			{
-				f = (data.D & data.B) | ((~data.D) & data.C);
+				f = (data.B & data.D) | (data.C & (~(data.D)));
 				g = (5 * data.word_pos + 1) % 16;
 			}
-			else if (data.word_pos <= 47)
+			else if (data.word_pos < 48)
 			{
 				f = data.B ^ data.C ^ data.D;
 				g = (3 * data.word_pos + 5) % 16;
@@ -130,13 +144,14 @@ char	*md5_digest(const char *input)
 			data.D = data.C;
 			data.C = data.B;
 			data.B = left_rotate(data.A + f + k[data.word_pos] + w[g], round_shift_amount[data.word_pos]);
+			data.A = data.temp;
 			(data.word_pos)++;
 		}
 		h[0] = data.A;
 		h[1] = data.B;
 		h[2] = data.C;
 		h[3] = data.D;
-		data.bloc_pos += 1;
+		data.bloc_pos += 4;
 	}
 	return((char*)h);
 }
