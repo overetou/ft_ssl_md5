@@ -4,8 +4,8 @@ void	md5_init_hash(unsigned int *h)
 {
 	h[0] = 0x67452301;
 	h[1] = 0xefcdab89;
-	h[3] = 0x98badcfe;
-	h[4] = 0x10325476;
+	h[2] = 0x98badcfe;
+	h[3] = 0x10325476;
 }
 
 void	set_round_shift_table(unsigned char **r)
@@ -18,9 +18,10 @@ void	set_round_shift_table(unsigned char **r)
 	memcopy((char*)(*r), (char*)table, 64);
 }
 
-unsigned long	left_rotate(unsigned long n, unsigned long times)
+unsigned int	left_rotate(unsigned int n, unsigned long times)
 {
-	return (((n) << (times)) | ((n) >> (32 - (times))));
+	printf("x = %u, times = %lu\n", n, times);
+	return ((n << times % 32) | (n >> (32 - times % 32)));
 }
 
 void	print_checksum(unsigned int *s)
@@ -42,7 +43,7 @@ void	print_deca(const unsigned char *data, unsigned long size)
 	i = 0;
 	while (i != size)
 	{
-		printf("%d ", data[i]);
+		printf("%x ", data[i]);
 		i++;
 	}
 	puts("\n");
@@ -70,7 +71,7 @@ char	*md5_digest(const char *input)
 	t_md5_data	data;
 	unsigned char	*round_shift_amount;
 	unsigned int	*h = secure_malloc(sizeof(int) * 4);
-	printf("allocated h with a size of %ld bits\n", sizeof(long) * 4 * 8);
+	// printf("allocated h with a size of %ld bits\n", sizeof(long) * 4 * 8);
 	unsigned int	f, g;
 	unsigned char	*w;
 	unsigned int k[] = {
@@ -96,8 +97,8 @@ char	*md5_digest(const char *input)
 		data.full_len = data.initial_len + 64 - (data.initial_len % 64);
 	else
 		data.full_len = data.initial_len + (64 - (data.initial_len + 8) % 64);
-	printf("initial length: %ld bits.\nAllocated length: %ld bits. Alloc_len %% 512 = %ld bits\n"
-	, data.initial_len * 8, data.full_len * 8, (data.full_len * 8) % 512);
+	// printf("initial length: %ld bits.\nAllocated length: %ld bits. Alloc_len %% 512 = %ld bits\n"
+	// , data.initial_len * 8, data.full_len * 8, (data.full_len * 8) % 512);
 
 	data.full_msg = secure_malloc(data.full_len);
 	memcopy((char*)(data.full_msg), input, data.initial_len);
@@ -106,13 +107,14 @@ char	*md5_digest(const char *input)
 	b_zero(data.full_msg + data.initial_len + 1, data.full_len - data.initial_len - 9);
 	data.initial_len *= 8;
 	memcopy((char*)(data.full_msg) + data.full_len - 8, (char*)(&(data.initial_len)), 8);
-	print_deca(data.full_msg, data.full_len);
+	// print_deca(data.full_msg, data.full_len);
 	set_round_shift_table(&round_shift_amount);
 	md5_init_hash(h);
 	data.bloc_pos = 0;
 	while (data.bloc_pos != data.full_len)
 	{
 		w = data.full_msg + data.bloc_pos;
+		putstr((char*)w);putstr("\n");
 		data.word_pos = 0;
 		while (data.word_pos != 64)//wordpos is in bits!!
 		{
@@ -143,9 +145,13 @@ char	*md5_digest(const char *input)
 			data.temp = data.D;
 			data.D = data.C;
 			data.C = data.B;
-			data.B = left_rotate(data.A + f + k[data.word_pos] + w[g], round_shift_amount[data.word_pos]);
+			data.B = data.B + left_rotate(data.A + f + k[data.word_pos] + *((unsigned int*)(w + g)), round_shift_amount[data.word_pos]);
 			data.A = data.temp;
+			printf("f = %u, g = %u, k[i] = %u, w[g] = %u, round_shift = %u\n", f, g, (unsigned int)(k[data.word_pos]),
+			*((unsigned int*)(w + g)), round_shift_amount[data.word_pos]);
+			printf("A=%x, B=%x, C=%x, D=%x\n", data.A, data.B, data.C, data.D);
 			(data.word_pos)++;
+			exit(0);
 		}
 		h[0] = data.A;
 		h[1] = data.B;

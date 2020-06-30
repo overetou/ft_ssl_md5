@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/29 18:27:32 by overetou         ###   ########.fr       */
+/*   Updated: 2020/06/30 18:17:53 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ typedef struct	s_md5_data
 	unsigned int	word_pos;
 	unsigned long	initial_len;
 	unsigned long	full_len;
-	unsigned long	A;
-	unsigned long	B;
-	unsigned long	C;
-	unsigned long	D;
+	unsigned int	A;
+	unsigned int	B;
+	unsigned int	C;
+	unsigned int	D;
 	unsigned long	temp;
 }				t_md5_data;
 

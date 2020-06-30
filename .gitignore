@@ -3,3 +3,4 @@ obj/*
 .vscode/settings.json
 src/test.c
 a.out
+md5.py
