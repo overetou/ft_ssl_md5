@@ -24,27 +24,14 @@ unsigned int	left_rotate(unsigned int n, unsigned long times)
 	return ((n << times % 32) | (n >> (32 - times % 32)));
 }
 
-void	put_inverted_bytes(const unsigned char *s)
+void	print_checksum(unsigned char *s)
 {
 	int i;
 
 	i = 0;
-	while (i != 4)
+	while (i != 16)
 	{
 		printf("%x", s[i]);
-		i++;
-	}
-}
-
-void	print_checksum(unsigned int *s)
-{
-	int i;
-
-	i = 0;
-	while (i != 4)
-	{
-		// (void)s;
-		put_inverted_bytes((const unsigned char*)(s + i));
 		i++;
 	}
 	puts("\n");
@@ -55,7 +42,8 @@ void	print_deca(const unsigned char *data, unsigned long size)
 	unsigned long	i;
 
 	i = 0;
-	while (i != size)
+	(void)size;
+	while (i != 16)
 	{
 		printf("%x ", data[i]);
 		i++;
@@ -176,9 +164,9 @@ unsigned int	*md5_digest(const char *input)
 		h[3] += data.D;
 		data.bloc_pos += 64;
 	}
-	printf("%x\n", h[0]);
-	printf("%x\n", h[1]);
-	printf("%x\n", h[2]);
-	printf("%x\n", h[3]);
+	// printf("%x\n", h[0]);
+	// printf("%x\n", h[1]);
+	// printf("%x\n", h[2]);
+	// printf("%x\n", h[3]);
 	return(h);
 }

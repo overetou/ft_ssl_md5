@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/01 10:45:35 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/01 11:09:50 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	md5_p_final_exec(t_master *m);
 void	md5_s_final_exec(t_master *m);
 int		str_len(const char *s);
 void	b_zero(void* s, int len);
-void	print_checksum(unsigned int *s);
+void	print_checksum(unsigned char *s);
 unsigned int	*md5_digest(const char *input);
 
 void	test_exec(void* master);
