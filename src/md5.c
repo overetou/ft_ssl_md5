@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 09:18:01 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/01 11:26:36 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/01 16:35:47 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,16 @@ BOOL	md5_try_arg(const char *s, t_master *m)
 
 void	md5_parse_args(t_master *m)
 {
+	m->files_to_hash = NULL;
+	m->files_to_hash_nb = 0;
 	if (m->still_reading_args)
 	{
 		m->arg_pos = 2;
 		while (m->arg_pos != m->argc)
 		{
-			if (md5_try_arg(m->argv[m->arg_pos], m))
-				(m->arg_pos)++;
-			else
-				error_msg("md5: given arguments made no sense.\n");
+			if (md5_try_arg(m->argv[m->arg_pos], m) == 0)
+				md5_add_file_hash_task(m, m->argv[m->arg_pos]);
+			(m->arg_pos)++;
 		}
 	}
 }

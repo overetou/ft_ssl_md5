@@ -17,6 +17,7 @@ void	free_commands(t_command *commands, int command_number)
 	int i;
 
 	i = 0;
+	// printf("param func number before free: %d\n", command_number);
 	while (i != command_number)
 	{
 		free(commands[i].name);

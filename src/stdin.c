@@ -25,5 +25,23 @@ void	load_stdin(t_master *m)
 		i += m->buff_max;
 		m->buff_max = read(0, m->buffer, BUFF_MAX_SIZE);
 	}
-	m->buffer[i] = '\0';
+	m->stdin_string[i] = '\0';
+}
+
+void	load_file(t_master *m, int fd, char **to_fill)
+{
+	int	i;
+
+	m->buff_max = read(fd, m->buffer, BUFF_MAX_SIZE);
+	i = 0;
+	while (m->buff_max)
+	{
+		if (m->buff_max == -1)
+			error_msg("Error while reading a file.");
+		*to_fill = secure_realloc(*to_fill, i + m->buff_max + 1);
+		memcopy(*to_fill + i, m->buffer, m->buff_max);
+		i += m->buff_max;
+		m->buff_max = read(fd, m->buffer, BUFF_MAX_SIZE);
+	}
+	*to_fill[i] = '\0';
 }

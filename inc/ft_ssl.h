@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/01 11:29:56 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/01 17:31:30 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct	s_master
 	BOOL		quiet_enabled;
 	BOOL		p_enabled;
 	BOOL		s_enabled;
+	char		**files_to_hash;
+	int			files_to_hash_nb;
 	void		(**final_exec_funcs)(void*);
 }				t_master;
 
@@ -88,6 +90,9 @@ int		str_len(const char *s);
 void	b_zero(void* s, int len);
 void	print_checksum(unsigned char *s);
 unsigned char	*md5_digest(const char *input);
+void	load_file(t_master *m, int fd, char **to_fill);
+void	md5_add_file_hash_task(t_master *m, char *file_name);
+void	exec_file_hash(t_master *m, char *file_name);
 
 void	test_exec(void* master);
 
