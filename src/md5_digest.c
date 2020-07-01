@@ -20,8 +20,20 @@ void	set_round_shift_table(unsigned char **r)
 
 unsigned int	left_rotate(unsigned int n, unsigned long times)
 {
-	printf("x = %u, times = %lu\n", n, times);
+	// printf("x = %u, times = %lu\n", n, times);
 	return ((n << times % 32) | (n >> (32 - times % 32)));
+}
+
+void	put_inverted_bytes(const unsigned char *s)
+{
+	int i;
+
+	i = 0;
+	while (i != 4)
+	{
+		printf("%x", s[i]);
+		i++;
+	}
 }
 
 void	print_checksum(unsigned int *s)
@@ -31,9 +43,11 @@ void	print_checksum(unsigned int *s)
 	i = 0;
 	while (i != 4)
 	{
-		printf("%04x\n", s[i]);
+		// (void)s;
+		put_inverted_bytes((const unsigned char*)(s + i));
 		i++;
 	}
+	puts("\n");
 }
 
 void	print_deca(const unsigned char *data, unsigned long size)
@@ -66,7 +80,7 @@ void	set_end_bits_len(unsigned char *adr, unsigned long val)
 	}
 }
 
-char	*md5_digest(const char *input)
+unsigned int	*md5_digest(const char *input)
 {
 	t_md5_data	data;
 	unsigned char	*round_shift_amount;
@@ -114,16 +128,16 @@ char	*md5_digest(const char *input)
 	while (data.bloc_pos != data.full_len)
 	{
 		w = data.full_msg + data.bloc_pos;
-		putstr((char*)w);putstr("\n");
 		data.word_pos = 0;
+		data.A = h[0];
+		data.B = h[1];
+		data.C = h[2];
+		data.D = h[3];
 		while (data.word_pos != 64)//wordpos is in bits!!
 		{
-			data.A = h[0];
-			data.B = h[1];
-			data.C = h[2];
-			data.D = h[3];
 			if (data.word_pos < 16)
 			{
+				// printf("input : B=%x, C=%x, D=%x\n", data.B, data.C, data.D);
 				f = (data.B & data.C) | ((~data.B) & data.D);
 				g = data.word_pos;
 			}
@@ -145,19 +159,26 @@ char	*md5_digest(const char *input)
 			data.temp = data.D;
 			data.D = data.C;
 			data.C = data.B;
-			data.B = data.B + left_rotate(data.A + f + k[data.word_pos] + *((unsigned int*)(w + g)), round_shift_amount[data.word_pos]);
+			data.B = data.B + left_rotate(data.A + f + k[data.word_pos] + *(((unsigned int*)w) + g), round_shift_amount[data.word_pos]);
 			data.A = data.temp;
-			printf("f = %u, g = %u, k[i] = %u, w[g] = %u, round_shift = %u\n", f, g, (unsigned int)(k[data.word_pos]),
-			*((unsigned int*)(w + g)), round_shift_amount[data.word_pos]);
-			printf("A=%x, B=%x, C=%x, D=%x\n", data.A, data.B, data.C, data.D);
+			// if (data.word_pos == 48)
+			// {
+			// 	printf("f = %u, g = %u, k[i] = %u, w[g] = %u, round_shift = %u\n", f, g, (unsigned int)(k[data.word_pos]),
+			// 	*(((unsigned int*)w) + g), round_shift_amount[data.word_pos]);
+			// 	printf("A=%x, B=%x, C=%x, D=%x\n", data.A, data.B, data.C, data.D);
+			// 	exit(0);
+			// }
 			(data.word_pos)++;
-			exit(0);
 		}
-		h[0] = data.A;
-		h[1] = data.B;
-		h[2] = data.C;
-		h[3] = data.D;
-		data.bloc_pos += 4;
+		h[0] += data.A;
+		h[1] += data.B;
+		h[2] += data.C;
+		h[3] += data.D;
+		data.bloc_pos += 64;
 	}
-	return((char*)h);
+	printf("%x\n", h[0]);
+	printf("%x\n", h[1]);
+	printf("%x\n", h[2]);
+	printf("%x\n", h[3]);
+	return(h);
 }
