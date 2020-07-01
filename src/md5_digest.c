@@ -10,7 +10,7 @@ void	md5_init_hash(unsigned int *h)
 
 void	set_round_shift_table(unsigned char **r)
 {
-	*r = secure_malloc(16);
+	*r = secure_malloc(64);
 	char table[] = {	7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
 						5,  9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
 						4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
@@ -24,31 +24,17 @@ unsigned int	left_rotate(unsigned int n, unsigned long times)
 	return ((n << times % 32) | (n >> (32 - times % 32)));
 }
 
-void	print_checksum(unsigned char *s)
-{
-	int i;
-
-	i = 0;
-	while (i != 16)
-	{
-		printf("%x", s[i]);
-		i++;
-	}
-	puts("\n");
-}
-
 void	print_deca(const unsigned char *data, unsigned long size)
 {
 	unsigned long	i;
 
 	i = 0;
-	(void)size;
-	while (i != 16)
+	while (i != size)
 	{
 		printf("%x ", data[i]);
 		i++;
 	}
-	puts("\n");
+	puts("");
 }
 
 void	set_end_bits_len(unsigned char *adr, unsigned long val)
@@ -68,7 +54,7 @@ void	set_end_bits_len(unsigned char *adr, unsigned long val)
 	}
 }
 
-unsigned int	*md5_digest(const char *input)
+unsigned char	*md5_digest(const char *input)
 {
 	t_md5_data	data;
 	unsigned char	*round_shift_amount;
@@ -168,5 +154,7 @@ unsigned int	*md5_digest(const char *input)
 	// printf("%x\n", h[1]);
 	// printf("%x\n", h[2]);
 	// printf("%x\n", h[3]);
-	return(h);
+	free(data.full_msg);
+	free(round_shift_amount);
+	return((unsigned char*)h);
 }

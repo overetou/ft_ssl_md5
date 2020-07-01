@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 09:18:01 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/26 19:34:13 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/01 11:26:36 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,7 @@ void	md5_parse_args(t_master *m)
 			if (md5_try_arg(m->argv[m->arg_pos], m))
 				(m->arg_pos)++;
 			else
-				error_msg("md5: given arguments made no sense.");
-		}
-	}
-}
-
-void	md5_parse_args_on_stdin(t_master *m)
-{
-	int i;
-
-	if (m->still_reading_args)
-	{
-		i = 2;
-		while (i != m->argc)
-		{
-			if (md5_try_arg(m->argv[i], m))
-				i++;
-			else
-				error_msg("md5: given arguments made no sense.");
+				error_msg("md5: given arguments made no sense.\n");
 		}
 	}
 }

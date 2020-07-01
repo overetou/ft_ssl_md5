@@ -2,18 +2,20 @@
 
 void	md5_p_final_exec(t_master *m)
 {
-	char	*md5sum;
+	unsigned char	*md5sum;
 
 	md5sum = md5_digest(m->stdin_string);
 	putstr(m->stdin_string);
+	free(m->stdin_string);
 	putstr("\n");
 	print_checksum(md5sum);
 	putstr("\n");
+	free(md5sum);
 }
 
 void	md5_s_final_exec(t_master *m)
 {
-	char	*md5sum;
+	unsigned char	*md5sum;
 
 	md5sum = md5_digest(m->direct_string);
 	if (m->quiet_enabled)
@@ -36,4 +38,5 @@ void	md5_s_final_exec(t_master *m)
 		}
 	}
 	putstr("\n");
+	free(md5sum);
 }

@@ -20,9 +20,10 @@ void	load_stdin(t_master *m)
 	{
 		if (m->buff_max == -1)
 			error_msg("Error while reading on stdin.");
-		m->stdin_string = secure_realloc(m->stdin_string, m->buff_max);
+		m->stdin_string = secure_realloc(m->stdin_string, i + m->buff_max + 1);
 		memcopy(m->stdin_string + i, m->buffer, m->buff_max);
-		i += BUFF_MAX_SIZE;
+		i += m->buff_max;
 		m->buff_max = read(0, m->buffer, BUFF_MAX_SIZE);
 	}
+	m->buffer[i] = '\0';
 }

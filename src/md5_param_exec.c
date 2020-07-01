@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/26 17:39:22 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/26 19:19:49 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/01 11:23:14 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	md5_r_exec(void *m)
 }
 void	md5_s_exec(void *m)
 {
-	if (((t_master*)m)->p_enabled)
+	if (((t_master*)m)->s_enabled)
 		error_msg("ft_ssl/md5: -s argument given more than one time. (illegal action)\n");
-	((t_master*)m)->p_enabled = 1;
+	((t_master*)m)->s_enabled = 1;
 	if (((t_master*)m)->arg_pos + 1 == ((t_master*)m)->argc)
 		error_msg("ft_ssl/md5: -s must be folowed by a string. Ex: hey / \" spaced words\"");
 	(((t_master*)m)->arg_pos)++;

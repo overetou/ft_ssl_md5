@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:48:45 by overetou          #+#    #+#             */
-/*   Updated: 2020/06/26 19:39:16 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/01 11:24:15 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int		main(int argc, char **argv)
 	m.reverse_enabled = 0;
 	m.quiet_enabled = 0;
 	m.p_enabled = 0;
+	m.s_enabled = 0;
 	m.final_funcs_number = 0;
 	m.final_exec_funcs = NULL;
 	m.stdin_string = NULL;
