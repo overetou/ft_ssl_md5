@@ -6,11 +6,30 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 09:18:01 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/02 15:26:48 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/02 18:15:00 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
+
+void	md5_digest_init(t_md5_data *data, const char *input)
+{
+	data->initial_len = str_len(input);
+	md5_set_k((unsigned int*)(data->k));
+	data->h = secure_malloc(sizeof(int) * 4);
+	if (64 - data->initial_len % 64 > 8)
+		data->full_len = data->initial_len + 64 - (data->initial_len % 64);
+	else
+		data->full_len = data->initial_len + (64 - (data->initial_len + 8) % 64);
+	data->full_msg = secure_malloc(data->full_len);
+	memcopy((char*)(data->full_msg), input, data->initial_len);
+	data->full_msg[data->initial_len] = 128;
+	b_zero(data->full_msg + data->initial_len + 1, data->full_len - data->initial_len - 9);
+	data->initial_len *= 8;
+	memcopy((char*)(data->full_msg) + data->full_len - 8, (char*)(&(data->initial_len)), 8);
+	set_round_shift_table((unsigned char*)(data->round_shift_amount));
+	md5_init_hash(data->h);
+}
 
 BOOL	md5_try_arg(const char *s, t_master *m)
 {

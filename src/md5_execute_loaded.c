@@ -1,5 +1,22 @@
 #include "ft_ssl.h"
 
+void	md5_set_end_bits_len(unsigned char *adr, unsigned long val)
+{
+	int i;
+	int	j;
+	unsigned char	*vals;
+
+	i = 7;
+	j = 0;
+	vals = (unsigned char*)(&val);
+	while (i >= 0)
+	{
+		adr[i] = vals[j];
+		i--;
+		j++;
+	}
+}
+
 void	md5_execute_loaded(t_master *m)
 {
 	int	i;

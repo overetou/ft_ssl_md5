@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/02 16:11:32 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/02 18:15:07 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ typedef struct	s_md5_data
 	unsigned int	C;
 	unsigned int	D;
 	unsigned long	temp;
+	unsigned char	round_shift_amount[64];
+	unsigned int	*h;
+	unsigned int	f, g;
+	unsigned char	*w;
+	unsigned int	k[64];
 }				t_md5_data;
 
 void	putstr(const char *s);
@@ -93,6 +98,11 @@ unsigned char	*md5_digest(const char *input);
 void	load_file(t_master *m, int fd, char **to_fill);
 void	md5_add_file_hash_task(t_master *m, char *file_name);
 void	exec_file_hash(t_master *m, char *file_name);
+unsigned int	left_rotate(unsigned int n, unsigned long times);
+void	md5_set_k(unsigned int *to_set);
+void	md5_init_hash(unsigned int *h);
+void	set_round_shift_table(unsigned char *r);
+void	md5_digest_init(t_md5_data *data, const char *input);
 
 void	test_exec(void* master);
 

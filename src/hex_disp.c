@@ -6,11 +6,20 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 11:31:30 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/02 14:49:04 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/02 18:12:42 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
+
+
+void	md5_init_hash(unsigned int *h)
+{
+	h[0] = 0x67452301;
+	h[1] = 0xefcdab89;
+	h[2] = 0x98badcfe;
+	h[3] = 0x10325476;
+}
 
 void	uchar_print_hex(unsigned char c)
 {
