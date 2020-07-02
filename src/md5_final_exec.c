@@ -33,9 +33,9 @@ void	md5_s_final_exec(t_master *m)
 		}
 		else
 		{
-			putstr("MD5(\"");
+			putstr("MD5 (\"");
 			putstr(m->direct_string);
-			putstr("\") ");
+			putstr("\") = ");
 			print_checksum(md5sum);
 		}
 	}
@@ -45,34 +45,41 @@ void	md5_s_final_exec(t_master *m)
 
 void	exec_file_hash(t_master *m, char *file_name)
 {
-	char	*file_content;
+	char			*file_content;
 	unsigned char	*md5sum;
-	int fd;
+	int 			fd;
 
 	fd = open(file_name, O_RDONLY);
-	load_file(m, fd, &file_content);
-	close(fd);
-	md5sum = md5_digest(file_content);
-	if (m->quiet_enabled)
-		print_checksum(md5sum);
+	if (fd == -1)
+	{
+		putstr("Could not open file: ");
+		putstr(file_name);
+	}
 	else
 	{
-		if (m->reverse_enabled)
-		{
+		load_file(m, fd, &file_content);
+		close(fd);
+		md5sum = md5_digest(file_content);
+		if (m->quiet_enabled)
 			print_checksum(md5sum);
-			putstr(" \"");
-			putstr(file_name);
-			putstr("\"");
-		}
 		else
 		{
-			putstr("MD5(\"");
-			putstr(file_name);
-			putstr("\") ");
-			print_checksum(md5sum);
+			if (m->reverse_enabled)
+			{
+				print_checksum(md5sum);
+				putstr(" ");
+				putstr(file_name);
+			}
+			else
+			{
+				putstr("MD5 (");
+				putstr(file_name);
+				putstr(") = ");
+				print_checksum(md5sum);
+			}
 		}
+		free(file_content);
+		free(md5sum);
 	}
 	putstr("\n");
-	free(file_content);
-	free(md5sum);
 }

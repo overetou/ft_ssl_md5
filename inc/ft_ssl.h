@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/01 17:31:30 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/02 16:11:32 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct	s_master
 	BOOL		s_enabled;
 	char		**files_to_hash;
 	int			files_to_hash_nb;
-	void		(**final_exec_funcs)(void*);
+	void		(**final_exec_funcs)(struct s_master*);
 }				t_master;
 
 typedef struct	s_md5_data

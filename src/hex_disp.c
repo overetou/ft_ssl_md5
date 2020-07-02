@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 11:31:30 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/01 11:49:54 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/02 14:49:04 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	uchar_print_hex(unsigned char c)
 
 	memcopy(nbs, "0123456789abcdef", 16);
 	buf[0] = nbs[c / 16];
-	if (c > 16)
-		buf[1] = nbs[c - c / 16 * 16];
+	if (c > 15)
+		buf[1] = nbs[c - (c / 16) * 16];
 	else
 		buf[1] = nbs[c];
 	buf[2] = '\0';

@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:48:45 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/01 11:24:15 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/02 15:18:32 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,21 @@ int		main(int argc, char **argv)
 {
 	t_master	m;
 
-	m.still_reading_args = 1;
-	m.buff_pos = 0;
-	m.reverse_enabled = 0;
-	m.quiet_enabled = 0;
-	m.p_enabled = 0;
-	m.s_enabled = 0;
-	m.final_funcs_number = 0;
-	m.final_exec_funcs = NULL;
-	m.stdin_string = NULL;
 	if (argc <= 1)
 		putstr("usage: ft_ssl command [command opts] [command args]\n");
 	else
 	{
 		m.argc = argc;
 		m.argv = argv;
+		m.still_reading_args = 1;
+		m.buff_pos = 0;
+		m.reverse_enabled = 0;
+		m.quiet_enabled = 0;
+		m.p_enabled = 0;
+		m.s_enabled = 0;
+		m.final_funcs_number = 0;
+		m.final_exec_funcs = NULL;
+		m.stdin_string = NULL;
 		if (try_to_exec_command(&m, argv[1]) == 0)
 		{
 			putstr("Given command could not be processed.\n"

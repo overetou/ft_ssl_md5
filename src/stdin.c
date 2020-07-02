@@ -34,6 +34,7 @@ void	load_file(t_master *m, int fd, char **to_fill)
 
 	m->buff_max = read(fd, m->buffer, BUFF_MAX_SIZE);
 	i = 0;
+	*to_fill = NULL;
 	while (m->buff_max)
 	{
 		if (m->buff_max == -1)
@@ -43,5 +44,5 @@ void	load_file(t_master *m, int fd, char **to_fill)
 		i += m->buff_max;
 		m->buff_max = read(fd, m->buffer, BUFF_MAX_SIZE);
 	}
-	*to_fill[i] = '\0';
+	(*to_fill)[i] = '\0';
 }
