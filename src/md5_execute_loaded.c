@@ -17,7 +17,7 @@ void	md5_set_end_bits_len(unsigned char *adr, unsigned long val)
 	}
 }
 
-void	md5_exec_final_funcs(t_master *m)
+void	exec_final_funcs(t_master *m)
 {
 	int i;
 
@@ -42,7 +42,7 @@ void	exec_files_hash_and_funcs(t_master *m)
 	}
 	free(m->files_to_hash);
 	if (m->final_funcs_number)
-		md5_exec_final_funcs(m);
+		exec_final_funcs(m);
 }
 
 void	md5_execute_loaded(t_master *m)
@@ -54,7 +54,7 @@ void	md5_execute_loaded(t_master *m)
 	else
 	{
 		if (m->final_funcs_number)
-			md5_exec_final_funcs(m);
+			exec_final_funcs(m);
 		else
 		{
 			load_stdin(m);

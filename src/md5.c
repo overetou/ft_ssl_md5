@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 09:18:01 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/02 18:15:00 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/03 09:32:08 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	md5_digest_init(t_md5_data *data, const char *input)
 	md5_init_hash(data->h);
 }
 
-BOOL	md5_try_arg(const char *s, t_master *m)
+BOOL	try_arg(const char *s, t_master *m)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ BOOL	md5_try_arg(const char *s, t_master *m)
 	return(0);
 }
 
-void	md5_parse_args(t_master *m)
+void	parse_args(t_master *m)
 {
 	m->files_to_hash = NULL;
 	m->files_to_hash_nb = 0;
@@ -57,8 +57,8 @@ void	md5_parse_args(t_master *m)
 		m->arg_pos = 2;
 		while (m->arg_pos != m->argc)
 		{
-			if (md5_try_arg(m->argv[m->arg_pos], m) == 0)
-				md5_add_file_hash_task(m, m->argv[m->arg_pos]);
+			if (try_arg(m->argv[m->arg_pos], m) == 0)
+				add_file_hash_task(m, m->argv[m->arg_pos]);
 			(m->arg_pos)++;
 		}
 	}
@@ -69,15 +69,16 @@ void	md5_load_params_choice(t_master *m)
 	m->param_choice_number = 4;
 	m->param_choice = secure_malloc(4 * sizeof(t_command));
 	command_add(0, m->param_choice, "-p", md5_p_exec);
-	command_add(1, m->param_choice, "-q", md5_q_exec);
-	command_add(2, m->param_choice, "-r", md5_r_exec);
+	command_add(1, m->param_choice, "-q", q_exec);
+	command_add(2, m->param_choice, "-r", r_exec);
 	command_add(3, m->param_choice, "-s", md5_s_exec);
 }
 
 void	md5_exec(void* m)
 {
+	((t_master*)m)->digest = md5_digest;
 	md5_load_params_choice(m);
-	md5_parse_args(m);
+	parse_args(m);
 	md5_execute_loaded(m);
 	free_commands(((t_master*)m)->param_choice,
 					((t_master*)m)->param_choice_number);

@@ -45,16 +45,16 @@ void	md5_s_final_exec(t_master *m)
 
 void	display_file_content_hash(t_master *m, char *file_content, char *file_name)
 {
-	unsigned char	*md5sum;
+	unsigned char	*sum;
 
-	md5sum = md5_digest(file_content);
+	sum = m->digest(file_content);
 	if (m->quiet_enabled)
-		print_checksum(md5sum);
+		print_checksum(sum);
 	else
 	{
 		if (m->reverse_enabled)
 		{
-			print_checksum(md5sum);
+			print_checksum(sum);
 			putstr(" ");
 			putstr(file_name);
 		}
@@ -63,10 +63,10 @@ void	display_file_content_hash(t_master *m, char *file_content, char *file_name)
 			putstr("MD5 (");
 			putstr(file_name);
 			putstr(") = ");
-			print_checksum(md5sum);
+			print_checksum(sum);
 		}
 	}
-	free(md5sum);
+	free(sum);
 }
 
 void	exec_file_hash(t_master *m, char *file_name)

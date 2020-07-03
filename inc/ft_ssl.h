@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/02 18:15:07 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/03 09:30:48 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct	s_master
 	char		**files_to_hash;
 	int			files_to_hash_nb;
 	void		(**final_exec_funcs)(struct s_master*);
+	unsigned char	(*digest)(const char *input);
 }				t_master;
 
 typedef struct	s_md5_data
@@ -82,8 +83,8 @@ void	free_commands(t_command *commands, int command_number);
 BOOL	try_to_exec_command(t_master *m, const char *try_name);
 void	md5_exec(void* master);
 void	md5_p_exec(void *m);
-void	md5_q_exec(void *m);
-void	md5_r_exec(void *m);
+void	q_exec(void *m);
+void	r_exec(void *m);
 void	md5_s_exec(void *m);
 void	md5_execute_loaded(t_master *m);
 void	load_stdin(t_master *m);
@@ -96,14 +97,15 @@ void	b_zero(void* s, int len);
 void	print_checksum(unsigned char *s);
 unsigned char	*md5_digest(const char *input);
 void	load_file(t_master *m, int fd, char **to_fill);
-void	md5_add_file_hash_task(t_master *m, char *file_name);
+void	add_file_hash_task(t_master *m, char *file_name);
 void	exec_file_hash(t_master *m, char *file_name);
 unsigned int	left_rotate(unsigned int n, unsigned long times);
 void	md5_set_k(unsigned int *to_set);
 void	md5_init_hash(unsigned int *h);
 void	set_round_shift_table(unsigned char *r);
 void	md5_digest_init(t_md5_data *data, const char *input);
-
-void	test_exec(void* master);
+void	sha256_exec(void *master);
+void	sha256_p_exec(void *m);
+void	sha256_s_exec(void *m);
 
 #endif

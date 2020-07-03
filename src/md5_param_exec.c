@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/26 17:39:22 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/02 16:31:21 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/03 09:06:20 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ void	md5_p_exec(void *m)
 	}
 }
 
-void	md5_q_exec(void *m)
+void	q_exec(void *m)
 {
 	if (((t_master*)m)->quiet_enabled)
-		putstr("ft_ssl/md5: -q argument given more than one time. (illegal action)\n");
+		putstr("ft_ssl: -q argument given more than one time. (illegal action)\n");
 	else
 		((t_master*)m)->quiet_enabled = 1;
 }
 
-void	md5_r_exec(void *m)
+void	r_exec(void *m)
 {
 	if (((t_master*)m)->reverse_enabled)
-		putstr("ft_ssl/md5: -r argument given more than one time. (illegal action)\n");
+		putstr("ft_ssl: -r argument given more than one time. (illegal action)\n");
 	else
 		((t_master*)m)->reverse_enabled = 1;
 }
@@ -55,7 +55,7 @@ void	md5_s_exec(void *m)
 	}
 }
 
-void	md5_add_file_hash_task(t_master *m, char *file_name)
+void	add_file_hash_task(t_master *m, char *file_name)
 {
 	(m->files_to_hash_nb)++;
 	m->files_to_hash = secure_realloc(m->files_to_hash, (m->files_to_hash_nb) * sizeof(char*));
