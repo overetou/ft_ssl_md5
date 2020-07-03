@@ -9,7 +9,7 @@ void	md5_p_final_exec(t_master *m)
 	putstr(m->stdin_string);
 	if (m->stdin_string[str_len(m->stdin_string) - 1] != '\n')
 		putstr("\n");
-	print_checksum(md5sum);
+	print_checksum(md5sum, 16);
 	putstr("\n");
 	free(m->stdin_string);
 	free(md5sum);
@@ -21,12 +21,12 @@ void	md5_s_final_exec(t_master *m)
 
 	md5sum = md5_digest(m->direct_string);
 	if (m->quiet_enabled)
-		print_checksum(md5sum);
+		print_checksum(md5sum, 16);
 	else
 	{
 		if (m->reverse_enabled)
 		{
-			print_checksum(md5sum);
+			print_checksum(md5sum, 16);
 			putstr(" \"");
 			putstr(m->direct_string);
 			putstr("\"");
@@ -36,7 +36,7 @@ void	md5_s_final_exec(t_master *m)
 			putstr("MD5 (\"");
 			putstr(m->direct_string);
 			putstr("\") = ");
-			print_checksum(md5sum);
+			print_checksum(md5sum, 16);
 		}
 	}
 	putstr("\n");
@@ -49,12 +49,12 @@ void	display_file_content_hash(t_master *m, char *file_content, char *file_name)
 
 	sum = m->digest(file_content);
 	if (m->quiet_enabled)
-		print_checksum(sum);
+		print_checksum(sum, (m->digest == md5_digest ? 16 : 32));
 	else
 	{
 		if (m->reverse_enabled)
 		{
-			print_checksum(sum);
+			print_checksum(sum, (m->digest == md5_digest ? 16 : 32));
 			putstr(" ");
 			putstr(file_name);
 		}
@@ -63,7 +63,7 @@ void	display_file_content_hash(t_master *m, char *file_content, char *file_name)
 			putstr("MD5 (");
 			putstr(file_name);
 			putstr(") = ");
-			print_checksum(sum);
+			print_checksum(sum, (m->digest == md5_digest ? 16 : 32));
 		}
 	}
 	free(sum);

@@ -24,7 +24,7 @@ void	*secure_malloc(int size)
 	void	*new;
 
 	new = malloc(size);
-	error_if_null(new, "Allocation Failure");
+	error_if_null(new, "Allocation Failure\n");
 	return (new);
 }
 
@@ -33,7 +33,7 @@ void	*secure_realloc(void *ptr, int size)
 	void	*new;
 
 	new = realloc(ptr, size);
-	error_if_null(new, "Reallocation Failure");
+	error_if_null(new, "Reallocation Failure\n");
 	return (new);
 }
 

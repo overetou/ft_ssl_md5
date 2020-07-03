@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/03 09:30:48 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/03 16:47:44 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct	s_master
 	char		**files_to_hash;
 	int			files_to_hash_nb;
 	void		(**final_exec_funcs)(struct s_master*);
-	unsigned char	(*digest)(const char *input);
+	unsigned char	*(*digest)(const char*);
 }				t_master;
 
 typedef struct	s_md5_data
@@ -70,6 +70,20 @@ typedef struct	s_md5_data
 	unsigned char	*w;
 	unsigned int	k[64];
 }				t_md5_data;
+
+typedef struct	s_sha_data
+{
+	unsigned char	*full_msg;
+	unsigned int	bloc_pos;
+	unsigned int	word_pos;
+	unsigned long	initial_len;
+	unsigned long	full_len;
+	unsigned int	*a;
+	unsigned long	temp;
+	unsigned int	*h;
+	unsigned char	*w;
+	unsigned int	*constants;
+}				t_sha_data;
 
 void	putstr(const char *s);
 char	*alloc_str(const char *content);
@@ -94,7 +108,7 @@ void	md5_p_final_exec(t_master *m);
 void	md5_s_final_exec(t_master *m);
 int		str_len(const char *s);
 void	b_zero(void* s, int len);
-void	print_checksum(unsigned char *s);
+void	print_checksum(unsigned char *s, int size);
 unsigned char	*md5_digest(const char *input);
 void	load_file(t_master *m, int fd, char **to_fill);
 void	add_file_hash_task(t_master *m, char *file_name);
@@ -107,5 +121,9 @@ void	md5_digest_init(t_md5_data *data, const char *input);
 void	sha256_exec(void *master);
 void	sha256_p_exec(void *m);
 void	sha256_s_exec(void *m);
+void	exec_files_hash_and_funcs(t_master *m);
+void	exec_final_funcs(t_master *m);
+unsigned char	*sha256_digest(const char *input);
+void	parse_args(t_master *m);
 
 #endif

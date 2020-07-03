@@ -59,7 +59,7 @@ void	md5_execute_loaded(t_master *m)
 		{
 			load_stdin(m);
 			md5sum = md5_digest(m->stdin_string);
-			print_checksum(md5sum);
+			print_checksum(md5sum, 16);
 			free(md5sum);
 			free(m->stdin_string);
 			putstr("\n");

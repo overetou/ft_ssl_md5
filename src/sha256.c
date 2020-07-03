@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 08:44:52 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/03 09:32:23 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/03 16:47:01 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	sha256_execute_loaded(t_master *m)
 		{
 			load_stdin(m);
 			sha256_sum = sha256_digest(m->stdin_string);
-			print_checksum(sha256_sum);
+			print_checksum(sha256_sum, 32);
 			free(sha256_sum);
 			free(m->stdin_string);
 			putstr("\n");

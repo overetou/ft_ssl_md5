@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 09:18:01 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/03 09:32:08 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/03 10:31:22 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	md5_digest_init(t_md5_data *data, const char *input)
 {
 	data->initial_len = str_len(input);
-	md5_set_k((unsigned int*)(data->k));
 	data->h = secure_malloc(sizeof(int) * 4);
 	if (64 - data->initial_len % 64 > 8)
 		data->full_len = data->initial_len + 64 - (data->initial_len % 64);
 	else
 		data->full_len = data->initial_len + (64 - (data->initial_len + 8) % 64);
+	md5_set_k((unsigned int*)(data->k));
 	data->full_msg = secure_malloc(data->full_len);
 	memcopy((char*)(data->full_msg), input, data->initial_len);
 	data->full_msg[data->initial_len] = 128;

@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 11:31:30 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/02 18:12:42 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/03 16:44:25 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	uchar_print_hex(unsigned char c)
 	putstr(buf);
 }
 
-void	print_checksum(unsigned char *s)
+void	print_checksum(unsigned char *s, int size)
 {
 	int i;
 
 	i = 0;
-	while (i != 16)
+	while (i != size)
 	{
 		uchar_print_hex(s[i]);
 		i++;
