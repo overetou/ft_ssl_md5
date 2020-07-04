@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 09:35:31 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/03 17:25:09 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/03 17:53:25 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void			sha_init_hash(t_sha_data *data)
 
 void			sha256_init_constants(t_sha_data *data)
 {
-	data->constants = secure_malloc(64 * sizeof(int));
 	memcopy((char*)(data->constants), (char*)((unsigned int[64]){
 	0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4,
 	0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe,
@@ -57,7 +56,6 @@ void			sha256_digest_init(t_sha_data *data, const char *input)
 	memcopy((char*)(data->full_msg) + data->full_len - 8, (char*)(&(data->initial_len)), 8);
 	sha_init_hash(data);
 	sha256_init_constants(data);
-	data->a = secure_malloc(sizeof(int) * 8);
 }
 
 unsigned int	eps0(unsigned int x)
@@ -128,6 +126,5 @@ unsigned char	*sha256_digest(const char *input)
 		data.h[7] += data.a[7];
 	}
 	free(data.full_msg);
-	free(data.a);
 	return ((unsigned char*)(data.h));
 }

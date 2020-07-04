@@ -9,8 +9,8 @@ LIB_DIRS=
 
 #Compilation related indications
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror
-LIBS=
+CFLAGS=-Wall -Wextra -Werror -Wpedantic -fsanitize=address -g
+LIBS=asan
 
 #From there we use the info to compile everything.
 SRC_FILE_NAMES = main.c md5.c error.c command_orientation.c md5_execute_loaded.c md5_param_exec.c stdin.c function_loading.c hex_disp.c sha256.c sha256_param_exec.c sha256_digest.c\

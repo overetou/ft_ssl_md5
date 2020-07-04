@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/03 16:47:44 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/03 17:52:45 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ typedef struct	s_sha_data
 	unsigned int	word_pos;
 	unsigned long	initial_len;
 	unsigned long	full_len;
-	unsigned int	*a;
+	unsigned int	a[8];
 	unsigned long	temp;
 	unsigned int	*h;
 	unsigned char	*w;
-	unsigned int	*constants;
+	unsigned int	constants[64];
 }				t_sha_data;
 
 void	putstr(const char *s);
