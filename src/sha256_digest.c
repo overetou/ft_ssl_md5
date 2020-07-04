@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 09:35:31 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/03 17:53:25 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/04 17:58:29 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void			sha256_digest_init(t_sha_data *data, const char *input)
 		data->full_len = data->initial_len + 64 - (data->initial_len % 64);
 	else
 		data->full_len = data->initial_len + 128 - (data->initial_len % 64);
-	printf("full len = %lu\n", data->full_len);
+	// printf("full len = %lu\n", data->full_len);
 	data->full_msg = secure_malloc(data->full_len);
 	memcopy((char*)(data->full_msg), input, data->initial_len);
 	data->full_msg[data->initial_len] = 128;
@@ -98,13 +98,24 @@ unsigned char	*sha256_digest(const char *input)
 	data.bloc_pos = 0;
 	while (data.bloc_pos != data.full_len)
 	{
-		data.w = data.full_msg + data.bloc_pos;
+		memcopy((char*)(data.w), input + data.bloc_pos, 16);
+		t = 16;
+		while (t != 64)
+		{
+			data.w[t] = sig1(data.w[t - 2]) + data.w[t - 7] + sig0(data.w[t - 15]) + data.w[t - 16];
+			t++;
+		}
 		memcopy((char*)(data.a), (char*)(data.h), 8 * sizeof(int));
 		t = 0;
 		while(t != 64)
 		{
+			// printf("a = %u, b = %u, c = %u, d = %u, e = %u, f = %u, g = %u, h = %u\n", data.a[0], data.a[1], data.a[2], data.a[3], data.a[4], data.a[5], data.a[6], data.a[7]);
+			printf("%u + %u (eps %u) + %u (ch %u + %u + %u) + %u + %u\n", data.a[7], eps1(data.a[4]), data.a[4], ch(data.a[4], data.a[5], data.a[6]), data.a[4], data.a[5], data.a[6], data.constants[t], data.w[t]);
 			t1 = data.a[7] + eps1(data.a[4]) + ch(data.a[4], data.a[5], data.a[6]) + data.constants[t] + data.w[t];
 			t2 = eps0(data.a[0]) + maj(data.a[0], data.a[1], data.a[2]);
+			printf("t1 = %u\n", t1);
+			printf("t2 = %u\n", t2);
+			exit(0);
 			data.a[7] = data.a[6];
 			data.a[6] = data.a[5];
 			data.a[5] = data.a[4];

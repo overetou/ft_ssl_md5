@@ -9,12 +9,12 @@ LIB_DIRS=
 
 #Compilation related indications
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -Wpedantic -fsanitize=address -g
-LIBS=asan
+CFLAGS=-Wall -Wextra -Werror -Wpedantic -fsanitize=address -g -static-libasan
+LIBS=
 
 #From there we use the info to compile everything.
-SRC_FILE_NAMES = main.c md5.c error.c command_orientation.c md5_execute_loaded.c md5_param_exec.c stdin.c function_loading.c hex_disp.c sha256.c sha256_param_exec.c sha256_digest.c\
-				md5_final_exec.c md5_digest.c
+SRC_FILE_NAMES = main.c md5.c error.c command_orientation.c md5_execute_loaded.c md5_param_exec.c stdin.c \
+function_loading.c hex_disp.c sha256.c sha256_param_exec.c sha256_digest.c md5_final_exec.c md5_digest.c
 SOURCES=$(addprefix $(SRC_DIR)/, $(SRC_FILE_NAMES))
 OBJS:=$(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 INC_FLAGS=$(addprefix -I,$(INC_DIRS))
