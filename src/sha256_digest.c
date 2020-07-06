@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 09:35:31 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/04 17:58:29 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/06 16:54:33 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,22 @@ void			sha256_digest_init(t_sha_data *data, const char *input)
 
 unsigned int	eps0(unsigned int x)
 {
-	return (left_rotate(x, 2) ^ left_rotate(x, 13) ^ left_rotate(x, 22));
+	return (right_rotate(x, 2) ^ right_rotate(x, 13) ^ right_rotate(x, 22));
 }
 
 unsigned int	eps1(unsigned int x)
 {
-	return (left_rotate(x, 6) ^ left_rotate(x, 11) ^ left_rotate(x, 25));
+	return (right_rotate(x, 6) ^ right_rotate(x, 11) ^ right_rotate(x, 25));
 }
 
 unsigned int	sig0(unsigned int x)
 {
-	return (left_rotate(x, 7) ^ left_rotate(x, 18) ^ left_rotate(x, 3));
+	return (right_rotate(x, 7) ^ right_rotate(x, 18) ^ (x >> 3));
 }
 
 unsigned int	sig1(unsigned int x)
 {
-	return (left_rotate(x, 17) ^ left_rotate(x, 19) ^ left_rotate(x, 10));
+	return (right_rotate(x, 17) ^ right_rotate(x, 19) ^ (x >> 10));
 }
 
 unsigned int	ch(unsigned int x, unsigned int y, unsigned int z)
@@ -85,7 +85,7 @@ unsigned int	ch(unsigned int x, unsigned int y, unsigned int z)
 
 unsigned int	maj(unsigned int x, unsigned int y, unsigned int z)
 {
-	return ((x & y) ^ (x ^ z) ^ (y & z));
+	return ((x & y) ^ (x & z) ^ (y & z));
 }
 
 unsigned char	*sha256_digest(const char *input)
@@ -98,11 +98,17 @@ unsigned char	*sha256_digest(const char *input)
 	data.bloc_pos = 0;
 	while (data.bloc_pos != data.full_len)
 	{
-		memcopy((char*)(data.w), input + data.bloc_pos, 16);
-		t = 16;
+		memcopy((char*)(data.w), (char*)data.full_msg + data.bloc_pos, 16);
+		t = 0;
+		while (t != 16)
+		{
+			data.w[t] = (data.full_msg[4 * t] << 24) + (data.full_msg[4 * t + 1] << 16) + (data.full_msg[4 * t + 2] << 8)
+			+ data.full_msg[4 * t + 3];
+			t++;
+		}
 		while (t != 64)
 		{
-			data.w[t] = sig1(data.w[t - 2]) + data.w[t - 7] + sig0(data.w[t - 15]) + data.w[t - 16];
+			data.w[t] = sig1((data.w)[t - 2]) + (data.w)[t - 7] + sig0((data.w)[t - 15]) + (data.w)[t - 16];
 			t++;
 		}
 		memcopy((char*)(data.a), (char*)(data.h), 8 * sizeof(int));
@@ -110,11 +116,11 @@ unsigned char	*sha256_digest(const char *input)
 		while(t != 64)
 		{
 			// printf("a = %u, b = %u, c = %u, d = %u, e = %u, f = %u, g = %u, h = %u\n", data.a[0], data.a[1], data.a[2], data.a[3], data.a[4], data.a[5], data.a[6], data.a[7]);
-			printf("%u + %u (eps %u) + %u (ch %u + %u + %u) + %u + %u\n", data.a[7], eps1(data.a[4]), data.a[4], ch(data.a[4], data.a[5], data.a[6]), data.a[4], data.a[5], data.a[6], data.constants[t], data.w[t]);
-			t1 = data.a[7] + eps1(data.a[4]) + ch(data.a[4], data.a[5], data.a[6]) + data.constants[t] + data.w[t];
+			// printf("%u + %u (eps %u) + %u (ch %u + %u + %u) + %u + %u\n", data.a[7], eps1(data.a[4]), data.a[4], ch(data.a[4], data.a[5], data.a[6]), data.a[4], data.a[5], data.a[6], data.constants[t], ((unsigned int*)(data.w))[t]);
+			t1 = data.a[7] + eps1(data.a[4]) + ch(data.a[4], data.a[5], data.a[6]) + data.constants[t] + ((unsigned int*)(data.w))[t];
 			t2 = eps0(data.a[0]) + maj(data.a[0], data.a[1], data.a[2]);
 			printf("t1 = %u\n", t1);
-			printf("t2 = %u\n", t2);
+			printf("t2 = %u (%u + %u), a = %u, b = %u, c = %u\n", t2, eps0(data.a[0]), maj(data.a[0], data.a[1], data.a[2]), data.a[0], data.a[1], data.a[2]);
 			exit(0);
 			data.a[7] = data.a[6];
 			data.a[6] = data.a[5];

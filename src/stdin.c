@@ -15,6 +15,11 @@ unsigned int	left_rotate(unsigned int n, unsigned long times)
 	return ((n << times % 32) | (n >> (32 - times % 32)));
 }
 
+unsigned int	right_rotate(unsigned int n, unsigned long times)
+{
+	return ((n >> times % 32) | (n << (32 - times % 32)));
+}
+
 void	load_stdin(t_master *m)
 {
 	int	i;
