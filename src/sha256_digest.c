@@ -150,12 +150,12 @@ unsigned char	*sha256_digest(const char *input)
 		while(t != 64)
 		{
 			// printf("a = %u, b = %u, c = %u, d = %u, e = %u, f = %u, g = %u, h = %u\n", data.a[0], data.a[1], data.a[2], data.a[3], data.a[4], data.a[5], data.a[6], data.a[7]);
-			// printf("%u + %u (eps %u) + %u (ch %u + %u + %u) + %u + %u\n", data.a[7], eps1(data.a[4]), data.a[4], ch(data.a[4], data.a[5], data.a[6]), data.a[4], data.a[5], data.a[6], data.constants[t], *(((unsigned int*)(data.w)) + t));
+			// printf("t1 = %u + %u (eps %u) + %u (ch %u + %u + %u) + %u + %u\n", data.a[7], eps1(data.a[4]), data.a[4], ch(data.a[4], data.a[5], data.a[6]), data.a[4], data.a[5], data.a[6], data.constants[t], *(((unsigned int*)(data.w)) + t));
 			t1 = data.a[7] + eps1(data.a[4]) + ch(data.a[4], data.a[5], data.a[6]) + data.constants[t] + ((unsigned int*)(data.w))[t];
 			t2 = eps0(data.a[0]) + maj(data.a[0], data.a[1], data.a[2]);
 			// printf("t1 = %u\n", t1);
 			// printf("t2 = %u (%u + %u), a = %u, b = %u, c = %u\n", t2, eps0(data.a[0]), maj(data.a[0], data.a[1], data.a[2]), data.a[0], data.a[1], data.a[2]);
-			// exit(0);
+			exit(0);
 			data.a[7] = data.a[6];
 			data.a[6] = data.a[5];
 			data.a[5] = data.a[4];
