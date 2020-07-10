@@ -76,7 +76,7 @@ typedef struct	s_sha_data
 	unsigned char	*full_msg;
 	unsigned int	bloc_pos;
 	unsigned int	word_pos;
-	unsigned int	initial_len;
+	unsigned long	initial_len;
 	unsigned int	full_len;
 	unsigned int	a[8];
 	unsigned int	*h;

@@ -40,6 +40,22 @@ void			sha256_init_constants(t_sha_data *data)
 	0xc67178f2}), 64 * sizeof(int));
 }
 
+void            invert_endian(char *s, unsigned int len)
+{
+    char     *new;
+    unsigned int    i;
+
+    new = secure_malloc(len);
+    i = 0;
+    while (i != len)
+    {
+        new[i] = s[len - i - 1];
+        i++;
+    }
+    memcopy(s, new, len);
+    free(new);
+}
+
 void			sha256_digest_init(t_sha_data *data, const char *input)
 {
 	data->initial_len = str_len(input);
@@ -54,6 +70,7 @@ void			sha256_digest_init(t_sha_data *data, const char *input)
 	b_zero(data->full_msg + data->initial_len + 1, data->full_len - data->initial_len - 9);
 	data->initial_len *= 8;
 	memcopy((char*)(data->full_msg) + data->full_len - 8, (char*)(&(data->initial_len)), 8);
+    invert_endian((char*)(data->full_msg + data->full_len - 8), 8);
 	sha_init_hash(data);
 	sha256_init_constants(data);
 }
@@ -62,12 +79,13 @@ void	print_deca(const unsigned char *s, unsigned int len)
 {
     unsigned int i = 0;
 
+    printf("b'");
 	while (i != len)
 	{
-        printf(" %u", s[i]);
+        printf("%02x", s[i]);
         i++;
 	}
-    puts("");
+    puts("'");
 }
 
 unsigned int	eps0(unsigned int x)
@@ -108,16 +126,20 @@ unsigned char	*sha256_digest(const char *input)
 
 	sha256_digest_init(&data, input);
 	data.bloc_pos = 0;
+    // print_deca(data.full_msg, 64);exit(0);
 	while (data.bloc_pos != data.full_len)
 	{
 		t = 0;
+        // printf("[");
 		while (t != 16)
 		{
 			data.w[t] = ((unsigned int*)(data.full_msg))[t];
-			printf("w[%d] = %u\n", t, data.w[t]);
+            invert_endian((char*)(data.w + t), 4);
+			// printf("%u, ", data.w[t]);
 			t++;
 		}
-        exit(0);
+        // puts("]");
+        // exit(0);
 		while (t != 64)
 		{
 			data.w[t] = sig1((data.w)[t - 2]) + (data.w)[t - 7] + sig0((data.w)[t - 15]) + (data.w)[t - 16];
@@ -128,12 +150,12 @@ unsigned char	*sha256_digest(const char *input)
 		while(t != 64)
 		{
 			// printf("a = %u, b = %u, c = %u, d = %u, e = %u, f = %u, g = %u, h = %u\n", data.a[0], data.a[1], data.a[2], data.a[3], data.a[4], data.a[5], data.a[6], data.a[7]);
-			printf("%u + %u (eps %u) + %u (ch %u + %u + %u) + %u + %u\n", data.a[7], eps1(data.a[4]), data.a[4], ch(data.a[4], data.a[5], data.a[6]), data.a[4], data.a[5], data.a[6], data.constants[t], *(((unsigned int*)(data.w)) + t));
+			// printf("%u + %u (eps %u) + %u (ch %u + %u + %u) + %u + %u\n", data.a[7], eps1(data.a[4]), data.a[4], ch(data.a[4], data.a[5], data.a[6]), data.a[4], data.a[5], data.a[6], data.constants[t], *(((unsigned int*)(data.w)) + t));
 			t1 = data.a[7] + eps1(data.a[4]) + ch(data.a[4], data.a[5], data.a[6]) + data.constants[t] + ((unsigned int*)(data.w))[t];
 			t2 = eps0(data.a[0]) + maj(data.a[0], data.a[1], data.a[2]);
 			// printf("t1 = %u\n", t1);
 			// printf("t2 = %u (%u + %u), a = %u, b = %u, c = %u\n", t2, eps0(data.a[0]), maj(data.a[0], data.a[1], data.a[2]), data.a[0], data.a[1], data.a[2]);
-			exit(0);
+			// exit(0);
 			data.a[7] = data.a[6];
 			data.a[6] = data.a[5];
 			data.a[5] = data.a[4];
