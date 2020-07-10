@@ -5,3 +5,4 @@ src/test.c
 a.out
 md5.py
 file
+sha256.py

@@ -7,18 +7,18 @@ void	set_round_shift_table(unsigned char *r)
 	11, 16, 23, 4, 11, 16, 23, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21}, 64);
 }
 
-void	print_deca(const unsigned char *data, unsigned long size)
-{
-	unsigned long	i;
+// void	print_deca(const unsigned char *data, unsigned long size)
+// {
+// 	unsigned long	i;
 
-	i = 0;
-	while (i != size)
-	{
-		printf("%x ", data[i]);
-		i++;
-	}
-	puts("");
-}
+// 	i = 0;
+// 	while (i != size)
+// 	{
+// 		printf("%x ", data[i]);
+// 		i++;
+// 	}
+// 	puts("");
+// }
 
 void	md5_set_k(unsigned int *to_set)
 {

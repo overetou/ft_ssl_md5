@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/06 12:07:28 by overetou         ###   ########.fr       */
+/*   Updated: 2020/07/07 15:16:53 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,11 @@ typedef struct	s_sha_data
 	unsigned char	*full_msg;
 	unsigned int	bloc_pos;
 	unsigned int	word_pos;
-	unsigned long	initial_len;
-	unsigned long	full_len;
+	unsigned int	initial_len;
+	unsigned int	full_len;
 	unsigned int	a[8];
-	unsigned long	temp;
 	unsigned int	*h;
-	unsigned char	w[64];
+	unsigned int	w[64];
 	unsigned int	constants[64];
 }				t_sha_data;
 
@@ -106,7 +105,7 @@ void	memcopy(char *dest, const char *src, int size);
 void	add_final_exec_func(t_master *m, void (*f)(struct s_master*));
 void	md5_p_final_exec(t_master *m);
 void	md5_s_final_exec(t_master *m);
-int		str_len(const char *s);
+unsigned int		str_len(const char *s);
 void	b_zero(void* s, int len);
 void	print_checksum(unsigned char *s, int size);
 unsigned char	*md5_digest(const char *input);
