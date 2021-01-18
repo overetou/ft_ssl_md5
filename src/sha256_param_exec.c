@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 09:07:01 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/03 16:40:04 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/18 15:06:18 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	sha256_p_exec(void *m)
 	else
 	{
 		((t_master*)m)->p_enabled = 1;
-		load_stdin(m);//This func alloc a string containing stdin and stores its address in the master struct.
-		add_final_exec_func(m, sha256_p_final_exec);// adds a func to the final exec list.
+		load_stdin(m);
+		add_final_exec_func(m, sha256_p_final_exec);
 	}
 }
 
@@ -77,6 +77,6 @@ void	sha256_s_exec(void *m)
 			error_msg("ft_ssl/sha256: -s must be folowed by a string. Ex: hey / \" spaced words\"");
 		(((t_master*)m)->arg_pos)++;
 		((t_master*)m)->direct_string = ((t_master*)m)->argv[((t_master*)m)->arg_pos];
-		add_final_exec_func(m, sha256_s_final_exec);// adds a func to the final exec list.
+		add_final_exec_func(m, sha256_s_final_exec);
 	}
 }

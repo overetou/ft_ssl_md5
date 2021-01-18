@@ -9,7 +9,7 @@ LIB_DIRS=
 
 #Compilation related indications
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -Wpedantic -fsanitize=address -g -static-libasan
+CFLAGS=-Wall -Wextra -Werror
 LIBS=
 
 #From there we use the info to compile everything.

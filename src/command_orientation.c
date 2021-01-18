@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_orientation.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/18 15:01:14 by overetou          #+#    #+#             */
+/*   Updated: 2021/01/18 15:08:15 by overetou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ssl.h"
 
 void	command_add(const int command_index, t_command *commands,
-					const char *command_name, void (*exec)(void* master))
+					const char *command_name, void (*exec)(void*))
 {
 	commands[command_index].name = alloc_str(command_name);
 	commands[command_index].exec = exec;
@@ -12,7 +24,6 @@ void	free_commands(t_command *commands, int command_number)
 	int i;
 
 	i = 0;
-	// printf("param func number before free: %d\n", command_number);
 	while (i != command_number)
 	{
 		free(commands[i].name);
@@ -28,7 +39,6 @@ void	load_commands(t_master *m)
 	command_add(0, m->commands, "md5", md5_exec);
 	command_add(1, m->commands, "sha256", sha256_exec);
 }
-//3: passer a travers les noms de fonctions et si il y a match avec la chaine donnee appeler la fonction correspondante.
 
 BOOL	try_to_exec_command(t_master *m, const char *try_name)
 {
@@ -42,7 +52,7 @@ BOOL	try_to_exec_command(t_master *m, const char *try_name)
 		{
 			m->commands[i].exec(m);
 			free_commands(m->commands, m->command_number);
-			return(1);
+			return (1);
 		}
 		i++;
 	}

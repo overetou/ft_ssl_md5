@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/26 17:39:22 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/03 09:06:20 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/18 15:05:52 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	md5_p_exec(void *m)
 	else
 	{
 		((t_master*)m)->p_enabled = 1;
-		load_stdin(m);//This func alloc a string containing stdin and stores its address in the master struct.
-		add_final_exec_func(m, md5_p_final_exec);// adds a func to the final exec list.
+		load_stdin(m);
+		add_final_exec_func(m, md5_p_final_exec);
 	}
 }
 
@@ -51,7 +51,7 @@ void	md5_s_exec(void *m)
 			error_msg("ft_ssl/md5: -s must be folowed by a string. Ex: hey / \" spaced words\"");
 		(((t_master*)m)->arg_pos)++;
 		((t_master*)m)->direct_string = ((t_master*)m)->argv[((t_master*)m)->arg_pos];
-		add_final_exec_func(m, md5_s_final_exec);// adds a func to the final exec list.
+		add_final_exec_func(m, md5_s_final_exec);
 	}
 }
 

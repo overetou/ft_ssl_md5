@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 09:18:01 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/03 10:31:22 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/18 15:08:15 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ BOOL	try_arg(const char *s, t_master *m)
 		if (str_cmp(s, m->param_choice[i].name))
 		{
 			m->param_choice[i].exec(m);
-			return(1);
+			return (1);
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 void	parse_args(t_master *m)

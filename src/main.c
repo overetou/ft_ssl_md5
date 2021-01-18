@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:48:45 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/02 15:18:32 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/18 15:10:43 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	putstr(const char *s)
 	int i;
 
 	i = 0;
-	while(s[i])
+	while (s[i])
 		i++;
 	write(1, s, i);
 }
 
-void	b_zero(void* s, int len)
+void	b_zero(void *s, int len)
 {
 	int i;
 
@@ -54,7 +54,6 @@ BOOL	str_cmp(const char *s1, const char *s2)
 
 	if (s1 == NULL || s2 == NULL)
 		return (0);
-	// putstr("cmp: no null\n");
 	i = 0;
 	while (s1[i] == s2[i] && s1[i])
 		i++;

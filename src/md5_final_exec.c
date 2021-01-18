@@ -60,7 +60,10 @@ void	display_file_content_hash(t_master *m, char *file_content, char *file_name)
 		}
 		else
 		{
-			putstr("MD5 (");
+			if (m->digest == md5_digest)
+				putstr("MD5 (");
+			else
+				putstr("SHA256 (");
 			putstr(file_name);
 			putstr(") = ");
 			print_checksum(sum, (m->digest == md5_digest ? 16 : 32));

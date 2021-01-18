@@ -5,7 +5,7 @@ unsigned int		str_len(const char *s)
 	unsigned int i;
 
 	i = 0;
-	while(s[i])
+	while (s[i])
 		i++;
 	return (i);
 }

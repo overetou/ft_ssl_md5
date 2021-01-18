@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 09:35:31 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/07 15:57:32 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/18 15:08:34 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void			sha256_digest_init(t_sha_data *data, const char *input)
 		data->full_len = data->initial_len + 64 - (data->initial_len % 64);
 	else
 		data->full_len = data->initial_len + 128 - (data->initial_len % 64);
-	// printf("full len = %lu\n", data->full_len);
 	data->full_msg = secure_malloc(data->full_len);
 	memcopy((char*)(data->full_msg), input, data->initial_len);
 	data->full_msg[data->initial_len] = 128;
@@ -126,7 +125,6 @@ unsigned char	*sha256_digest(const char *input)
 
 	sha256_digest_init(&data, input);
 	data.bloc_pos = 0;
-    // print_deca(data.full_msg, 64);exit(0);
 	while (data.bloc_pos != data.full_len)
 	{
 		t = 0;
@@ -143,7 +141,7 @@ unsigned char	*sha256_digest(const char *input)
 		}
 		memcopy((char*)(data.a), (char*)(data.h), 8 * sizeof(int));
 		t = 0;
-		while(t != 64)
+		while (t != 64)
 		{
 			t1 = data.a[7] + eps1(data.a[4]) + ch(data.a[4], data.a[5], data.a[6]) + data.constants[t] + ((unsigned int*)(data.w))[t];
 			t2 = eps0(data.a[0]) + maj(data.a[0], data.a[1], data.a[2]);
@@ -155,7 +153,6 @@ unsigned char	*sha256_digest(const char *input)
 			data.a[2] = data.a[1];
 			data.a[1] = data.a[0];
 			data.a[0] = t1 + t2;
-			// exit(0);
 			t++;
 		}
 		data.bloc_pos += 64;
