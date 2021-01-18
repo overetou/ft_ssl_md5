@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 15:12:34 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:17:23 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/18 15:22:46 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,29 +75,29 @@ void			update_h(t_md5_data *data)
 
 unsigned char	*md5_digest(const char *input)
 {
-	t_md5_data	data;
+	t_md5_data	d;
 
-	md5_digest_init(&data, input);
-	data.bloc_pos = 0;
-	while (data.bloc_pos != data.full_len)
+	md5_digest_init(&d, input);
+	d.bloc_pos = 0;
+	while (d.bloc_pos != d.full_len)
 	{
-		data.w = data.full_msg + data.bloc_pos;
-		data.word_pos = 0;
-		memcopy((char*)(&(data.A)), (char*)(data.h), 4 * sizeof(int));
-		while (data.word_pos != 64)
+		d.w = d.full_msg + d.bloc_pos;
+		d.word_pos = 0;
+		memcopy((char*)(&(d.A)), (char*)(d.h), 4 * sizeof(int));
+		while (d.word_pos != 64)
 		{
-			set_f_and_g(&data);
-			data.temp = data.D;
-			data.D = data.C;
-			data.C = data.B;
-			data.B = data.B + left_rotate(data.A + data.f + (data.k)[data.word_pos] +
-			*(((unsigned int*)(data.w)) + data.g), (data.round_shift_amount)[data.word_pos]);
-			data.A = data.temp;
-			(data.word_pos)++;
+			set_f_and_g(&d);
+			d.temp = d.D;
+			d.D = d.C;
+			d.C = d.B;
+			d.B = d.B + left_rotate(d.A + d.f + (d.k)[d.word_pos] +
+			*(((unsigned int*)(d.w)) + d.g), (d.round_shift_nb)[d.word_pos]);
+			d.A = d.temp;
+			(d.word_pos)++;
 		}
-		update_h(&data);
-		data.bloc_pos += 64;
+		update_h(&d);
+		d.bloc_pos += 64;
 	}
-	free(data.full_msg);
-	return ((unsigned char*)(data.h));
+	free(d.full_msg);
+	return ((unsigned char*)(d.h));
 }

@@ -6,29 +6,30 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 09:18:01 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:08:15 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/18 15:37:49 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-void	md5_digest_init(t_md5_data *data, const char *input)
+void	md5_digest_init(t_md5_data *d, const char *input)
 {
-	data->initial_len = str_len(input);
-	data->h = secure_malloc(sizeof(int) * 4);
-	if (64 - data->initial_len % 64 > 8)
-		data->full_len = data->initial_len + 64 - (data->initial_len % 64);
+	d->initial_len = str_len(input);
+	d->h = secure_malloc(sizeof(int) * 4);
+	if (64 - d->initial_len % 64 > 8)
+		d->full_len = d->initial_len + 64 - (d->initial_len % 64);
 	else
-		data->full_len = data->initial_len + (64 - (data->initial_len + 8) % 64);
-	md5_set_k((unsigned int*)(data->k));
-	data->full_msg = secure_malloc(data->full_len);
-	memcopy((char*)(data->full_msg), input, data->initial_len);
-	data->full_msg[data->initial_len] = 128;
-	b_zero(data->full_msg + data->initial_len + 1, data->full_len - data->initial_len - 9);
-	data->initial_len *= 8;
-	memcopy((char*)(data->full_msg) + data->full_len - 8, (char*)(&(data->initial_len)), 8);
-	set_round_shift_table((unsigned char*)(data->round_shift_amount));
-	md5_init_hash(data->h);
+		d->full_len = d->initial_len + (64 - (d->initial_len + 8) % 64);
+	md5_set_k((unsigned int*)(d->k));
+	d->full_msg = secure_malloc(d->full_len);
+	memcopy((char*)(d->full_msg), input, d->initial_len);
+	d->full_msg[d->initial_len] = 128;
+	b_zero(d->full_msg + d->initial_len + 1, d->full_len - d->initial_len - 9);
+	d->initial_len *= 8;
+	memcopy((char*)(d->full_msg) + d->full_len - 8,
+	(char*)(&(d->initial_len)), 8);
+	set_round_shift_table((unsigned char*)(d->round_shift_nb));
+	md5_init_hash(d->h);
 }
 
 BOOL	try_arg(const char *s, t_master *m)
@@ -74,7 +75,7 @@ void	md5_load_params_choice(t_master *m)
 	command_add(3, m->param_choice, "-s", md5_s_exec);
 }
 
-void	md5_exec(void* m)
+void	md5_exec(void *m)
 {
 	((t_master*)m)->digest = md5_digest;
 	md5_load_params_choice(m);

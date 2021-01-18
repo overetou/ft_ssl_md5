@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   md5_final_exec.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/18 15:23:39 by overetou          #+#    #+#             */
+/*   Updated: 2021/01/18 15:26:10 by overetou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ssl.h"
 #include <fcntl.h>
 
@@ -9,7 +21,7 @@ void	md5_p_final_exec(t_master *m)
 	putstr(m->stdin_string);
 	if (m->stdin_string[str_len(m->stdin_string) - 1] != '\n')
 		putstr("\n");
-	print_checksum(md5sum, 16);
+	disp_sum(md5sum, 16);
 	putstr("\n");
 	free(m->stdin_string);
 	free(md5sum);
@@ -21,12 +33,12 @@ void	md5_s_final_exec(t_master *m)
 
 	md5sum = md5_digest(m->direct_string);
 	if (m->quiet_enabled)
-		print_checksum(md5sum, 16);
+		disp_sum(md5sum, 16);
 	else
 	{
 		if (m->reverse_enabled)
 		{
-			print_checksum(md5sum, 16);
+			disp_sum(md5sum, 16);
 			putstr(" \"");
 			putstr(m->direct_string);
 			putstr("\"");
@@ -36,27 +48,27 @@ void	md5_s_final_exec(t_master *m)
 			putstr("MD5 (\"");
 			putstr(m->direct_string);
 			putstr("\") = ");
-			print_checksum(md5sum, 16);
+			disp_sum(md5sum, 16);
 		}
 	}
 	putstr("\n");
 	free(md5sum);
 }
 
-void	display_file_content_hash(t_master *m, char *file_content, char *file_name)
+void	display_file_content_hash(t_master *m, char *f_content, char *f_name)
 {
 	unsigned char	*sum;
 
-	sum = m->digest(file_content);
+	sum = m->digest(f_content);
 	if (m->quiet_enabled)
-		print_checksum(sum, (m->digest == md5_digest ? 16 : 32));
+		disp_sum(sum, (m->digest == md5_digest ? 16 : 32));
 	else
 	{
 		if (m->reverse_enabled)
 		{
-			print_checksum(sum, (m->digest == md5_digest ? 16 : 32));
+			disp_sum(sum, (m->digest == md5_digest ? 16 : 32));
 			putstr(" ");
-			putstr(file_name);
+			putstr(f_name);
 		}
 		else
 		{
@@ -64,9 +76,9 @@ void	display_file_content_hash(t_master *m, char *file_content, char *file_name)
 				putstr("MD5 (");
 			else
 				putstr("SHA256 (");
-			putstr(file_name);
+			putstr(f_name);
 			putstr(") = ");
-			print_checksum(sum, (m->digest == md5_digest ? 16 : 32));
+			disp_sum(sum, (m->digest == md5_digest ? 16 : 32));
 		}
 	}
 	free(sum);
@@ -74,8 +86,8 @@ void	display_file_content_hash(t_master *m, char *file_content, char *file_name)
 
 void	exec_file_hash(t_master *m, char *file_name)
 {
-	char			*file_content;
-	int 			fd;
+	char	*file_content;
+	int		fd;
 
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)

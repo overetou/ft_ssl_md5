@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   md5_execute_loaded.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/18 15:43:21 by overetou          #+#    #+#             */
+/*   Updated: 2021/01/18 15:43:57 by overetou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ssl.h"
 
 void	md5_set_end_bits_len(unsigned char *adr, unsigned long val)
 {
-	int i;
-	int	j;
+	int				i;
+	int				j;
 	unsigned char	*vals;
 
 	i = 7;
@@ -59,7 +71,7 @@ void	md5_execute_loaded(t_master *m)
 		{
 			load_stdin(m);
 			md5sum = md5_digest(m->stdin_string);
-			print_checksum(md5sum, 16);
+			disp_sum(md5sum, 16);
 			free(md5sum);
 			free(m->stdin_string);
 			putstr("\n");

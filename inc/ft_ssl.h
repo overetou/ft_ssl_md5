@@ -6,19 +6,20 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/07 15:16:53 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/18 16:29:37 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SSL_H
 # define FT_SSL_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-#define BOOL char
-#define BUFF_MAX_SIZE 80
+# define BOOL char
+# define UINT unsigned int
+# define BUFF_MAX_SIZE 80
 
 typedef struct	s_command
 {
@@ -64,7 +65,7 @@ typedef struct	s_md5_data
 	unsigned int	C;
 	unsigned int	D;
 	unsigned long	temp;
-	unsigned char	round_shift_amount[64];
+	unsigned char	round_shift_nb[64];
 	unsigned int	*h;
 	unsigned int	f, g;
 	unsigned char	*w;
@@ -107,7 +108,7 @@ void	md5_p_final_exec(t_master *m);
 void	md5_s_final_exec(t_master *m);
 unsigned int		str_len(const char *s);
 void	b_zero(void* s, int len);
-void	print_checksum(unsigned char *s, int size);
+void	disp_sum(unsigned char *s, int size);
 unsigned char	*md5_digest(const char *input);
 void	load_file(t_master *m, int fd, char **to_fill);
 void	add_file_hash_task(t_master *m, char *file_name);
@@ -125,5 +126,12 @@ void	exec_final_funcs(t_master *m);
 unsigned char	*sha256_digest(const char *input);
 void	parse_args(t_master *m);
 unsigned int	right_rotate(unsigned int n, unsigned long times);
+unsigned int	eps0(unsigned int x);
+unsigned int	eps1(unsigned int x);
+unsigned int	sig0(unsigned int x);
+unsigned int	sig1(unsigned int x);
+unsigned int	ch(unsigned int x, unsigned int y, unsigned int z);
+void	sha_init_hash(t_sha_data *data);
+void	sha256_init_constants(t_sha_data *data);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/18 15:30:24 by overetou          #+#    #+#             */
+/*   Updated: 2021/01/18 15:32:37 by overetou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ssl.h"
 
 void	memcopy(char *dest, const char *src, int size)
@@ -37,7 +49,7 @@ void	*secure_realloc(void *ptr, int size)
 	return (new);
 }
 
-void	error_msg(const char* msg)
+void	error_msg(const char *msg)
 {
 	putstr(msg);
 	exit(0);

@@ -6,12 +6,11 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 11:31:30 by overetou          #+#    #+#             */
-/*   Updated: 2020/07/03 16:44:25 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/18 15:35:25 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-
 
 void	md5_init_hash(unsigned int *h)
 {
@@ -36,7 +35,7 @@ void	uchar_print_hex(unsigned char c)
 	putstr(buf);
 }
 
-void	print_checksum(unsigned char *s, int size)
+void	disp_sum(unsigned char *s, int size)
 {
 	int i;
 

@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 09:07:01 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:06:18 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/18 15:29:48 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sha256_p_final_exec(t_master *m)
 	putstr(m->stdin_string);
 	if (m->stdin_string[str_len(m->stdin_string) - 1] != '\n')
 		putstr("\n");
-	print_checksum(shasum, 32);
+	disp_sum(shasum, 32);
 	putstr("\n");
 	free(m->stdin_string);
 	free(shasum);
@@ -29,7 +29,8 @@ void	sha256_p_final_exec(t_master *m)
 void	sha256_p_exec(void *m)
 {
 	if (((t_master*)m)->p_enabled)
-		putstr("ft_ssl/sha256: -p argument given more than one time. (illegal action)\n");
+		putstr("ft_ssl/sha256: -p argument"
+		" given more than one time. (illegal action)\n");
 	else
 	{
 		((t_master*)m)->p_enabled = 1;
@@ -44,12 +45,12 @@ void	sha256_s_final_exec(t_master *m)
 
 	sha256_sum = sha256_digest(m->direct_string);
 	if (m->quiet_enabled)
-		print_checksum(sha256_sum, 32);
+		disp_sum(sha256_sum, 32);
 	else
 	{
 		if (m->reverse_enabled)
 		{
-			print_checksum(sha256_sum, 32);
+			disp_sum(sha256_sum, 32);
 			putstr(" \"");
 			putstr(m->direct_string);
 			putstr("\"");
@@ -59,7 +60,7 @@ void	sha256_s_final_exec(t_master *m)
 			putstr("SHA256 (\"");
 			putstr(m->direct_string);
 			putstr("\") = ");
-			print_checksum(sha256_sum, 32);
+			disp_sum(sha256_sum, 32);
 		}
 	}
 	putstr("\n");
@@ -69,14 +70,17 @@ void	sha256_s_final_exec(t_master *m)
 void	sha256_s_exec(void *m)
 {
 	if (((t_master*)m)->s_enabled)
-		putstr("ft_ssl/sha256: -s argument given more than one time. (illegal action)\n");
+		putstr("ft_ssl/sha256: -s argument"
+		" given more than one time. (illegal action)\n");
 	else
 	{
 		((t_master*)m)->s_enabled = 1;
 		if (((t_master*)m)->arg_pos + 1 == ((t_master*)m)->argc)
-			error_msg("ft_ssl/sha256: -s must be folowed by a string. Ex: hey / \" spaced words\"");
+			error_msg("ft_ssl/sha256: -s must be folowed by a"
+			" string. Ex: hey / \" spaced words\"");
 		(((t_master*)m)->arg_pos)++;
-		((t_master*)m)->direct_string = ((t_master*)m)->argv[((t_master*)m)->arg_pos];
+		((t_master*)m)->direct_string =
+		((t_master*)m)->argv[((t_master*)m)->arg_pos];
 		add_final_exec_func(m, sha256_s_final_exec);
 	}
 }
