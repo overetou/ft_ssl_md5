@@ -6,13 +6,13 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 11:31:30 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:35:25 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:51:28 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-void	md5_init_hash(UINT *h)
+void	md5_init_hash(unsigned int *h)
 {
 	h[0] = 0x67452301;
 	h[1] = 0xefcdab89;
@@ -20,7 +20,7 @@ void	md5_init_hash(UINT *h)
 	h[3] = 0x10325476;
 }
 
-void	uchar_print_hex(UCHAR c)
+void	char_print_hex(unsigned char c)
 {
 	char	buf[3];
 	char	nbs[16];
@@ -35,14 +35,14 @@ void	uchar_print_hex(UCHAR c)
 	putstr(buf);
 }
 
-void	disp_sum(UCHAR *s, int size)
+void	disp_sum(unsigned char *s, int size)
 {
 	int i;
 
 	i = 0;
 	while (i != size)
 	{
-		uchar_print_hex(s[i]);
+		char_print_hex(s[i]);
 		i++;
 	}
 }

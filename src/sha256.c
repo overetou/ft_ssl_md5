@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 08:44:52 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:24:26 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:36:40 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	sha256_load_params_choice(t_master *m)
 
 void	sha256_execute_loaded(t_master *m)
 {
-	UCHAR	*sha256_sum;
+	unsigned char	*sha256_sum;
 
 	if (m->files_to_hash_nb)
 		exec_files_hash_and_funcs(m);

@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 09:18:01 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:37:49 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:44:44 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	md5_digest_init(t_md5_data *d, const char *input)
 		d->full_len = d->initial_len + 64 - (d->initial_len % 64);
 	else
 		d->full_len = d->initial_len + (64 - (d->initial_len + 8) % 64);
-	md5_set_k((UINT*)(d->k));
+	md5_set_k((unsigned int*)(d->k));
 	d->full_msg = secure_malloc(d->full_len);
 	memcopy((char*)(d->full_msg), input, d->initial_len);
 	d->full_msg[d->initial_len] = 128;
@@ -28,7 +28,7 @@ void	md5_digest_init(t_md5_data *d, const char *input)
 	d->initial_len *= 8;
 	memcopy((char*)(d->full_msg) + d->full_len - 8,
 	(char*)(&(d->initial_len)), 8);
-	set_round_shift_table((UCHAR*)(d->round_shift_nb));
+	set_round_shift_table((unsigned char*)(d->round_shift_nb));
 	md5_init_hash(d->h);
 }
 

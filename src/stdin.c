@@ -6,15 +6,15 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 15:46:08 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/20 15:46:40 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:55:54 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-UINT	str_len(const char *s)
+unsigned int	str_len(const char *s)
 {
-	UINT i;
+	unsigned int i;
 
 	i = 0;
 	while (s[i])
@@ -22,17 +22,17 @@ UINT	str_len(const char *s)
 	return (i);
 }
 
-UINT	left_rotate(UINT n, unsigned long times)
+unsigned int	left_rotate(unsigned int n, unsigned long times)
 {
 	return ((n << times % 32) | (n >> (32 - times % 32)));
 }
 
-UINT	right_rotate(UINT n, unsigned long times)
+unsigned int	right_rotate(unsigned int n, unsigned long times)
 {
 	return ((n >> times % 32) | (n << (32 - times % 32)));
 }
 
-void	load_stdin(t_master *m)
+void			load_stdin(t_master *m)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ void	load_stdin(t_master *m)
 	m->stdin_string[i] = '\0';
 }
 
-void	load_file(t_master *m, int fd, char **to_fill)
+void			load_file(t_master *m, int fd, char **to_fill)
 {
 	int	i;
 

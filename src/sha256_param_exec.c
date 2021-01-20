@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 09:07:01 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:29:48 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:40:26 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sha256_p_final_exec(t_master *m)
 {
-	UCHAR	*shasum;
+	unsigned char	*shasum;
 
 	shasum = sha256_digest(m->stdin_string);
 	putstr(m->stdin_string);
@@ -41,7 +41,7 @@ void	sha256_p_exec(void *m)
 
 void	sha256_s_final_exec(t_master *m)
 {
-	UCHAR	*sha256_sum;
+	unsigned char	*sha256_sum;
 
 	sha256_sum = sha256_digest(m->direct_string);
 	if (m->quiet_enabled)

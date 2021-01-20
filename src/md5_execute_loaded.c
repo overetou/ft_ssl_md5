@@ -6,21 +6,21 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 15:43:21 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:43:57 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:55:12 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-void	md5_set_end_bits_len(UCHAR *adr, unsigned long val)
+void	md5_set_end_bits_len(unsigned char *adr, unsigned long val)
 {
 	int				i;
 	int				j;
-	UCHAR	*vals;
+	unsigned char	*vals;
 
 	i = 7;
 	j = 0;
-	vals = (UCHAR*)(&val);
+	vals = (unsigned char*)(&val);
 	while (i >= 0)
 	{
 		adr[i] = vals[j];
@@ -59,7 +59,7 @@ void	exec_files_hash_and_funcs(t_master *m)
 
 void	md5_execute_loaded(t_master *m)
 {
-	UCHAR	*md5sum;
+	unsigned char	*md5sum;
 
 	if (m->files_to_hash_nb)
 		exec_files_hash_and_funcs(m);

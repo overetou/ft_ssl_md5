@@ -6,16 +6,16 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 09:35:31 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 16:46:17 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:56:53 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-void	invert_endian(char *s, UINT len)
+void			invert_endian(char *s, unsigned int len)
 {
-	char	*new;
-	UINT	i;
+	char			*new;
+	unsigned int	i;
 
 	new = secure_malloc(len);
 	i = 0;
@@ -28,7 +28,7 @@ void	invert_endian(char *s, UINT len)
 	free(new);
 }
 
-void	sha256_digest_init(t_sha_data *data, const char *input)
+void			sha256_digest_init(t_sha_data *data, const char *input)
 {
 	data->initial_len = str_len(input);
 	if (data->initial_len % 64 < 56)
@@ -48,15 +48,15 @@ void	sha256_digest_init(t_sha_data *data, const char *input)
 	sha256_init_constants(data);
 }
 
-UINT	maj(UINT x, UINT y, UINT z)
+unsigned int	maj(unsigned int x, unsigned int y, unsigned int z)
 {
 	return ((x & y) ^ (x & z) ^ (y & z));
 }
 
-UCHAR	*sha256_digest(const char *input)
+unsigned char	*sha256_digest(const char *input)
 {
-	t_sha_data	data;
-	UINT		t;
+	t_sha_data			data;
+	unsigned int		t;
 
 	sha256_digest_init(&data, input);
 	data.bloc_pos = 0;
@@ -73,5 +73,5 @@ UCHAR	*sha256_digest(const char *input)
 		invert_endian((char*)(data.h + t), 4);
 		t++;
 	}
-	return ((UCHAR*)(data.h));
+	return ((unsigned char*)(data.h));
 }

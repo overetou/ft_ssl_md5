@@ -6,13 +6,13 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 15:12:34 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:22:46 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:56:27 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-void			set_round_shift_table(UCHAR *r)
+void			set_round_shift_table(unsigned char *r)
 {
 	memcopy((char*)(r), (char[64]){7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17,
 	22, 7, 12, 17, 22, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14,
@@ -20,9 +20,9 @@ void			set_round_shift_table(UCHAR *r)
 	15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21}, 64);
 }
 
-void			md5_set_k(UINT *to_set)
+void			md5_set_k(unsigned int *to_set)
 {
-	memcopy((char*)to_set, (char*)((UINT[64]){
+	memcopy((char*)to_set, (char*)((unsigned int[64]){
 		0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 		0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
 		0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
@@ -45,35 +45,35 @@ void			set_f_and_g(t_md5_data *data)
 {
 	if (data->word_pos < 16)
 	{
-		data->f = (data->B & data->C) | ((~data->B) & data->D);
+		data->f = (data->b & data->c) | ((~data->b) & data->d);
 		data->g = data->word_pos;
 	}
 	else if (data->word_pos < 32)
 	{
-		data->f = (data->B & data->D) | (data->C & (~(data->D)));
+		data->f = (data->b & data->d) | (data->c & (~(data->d)));
 		data->g = (5 * data->word_pos + 1) % 16;
 	}
 	else if (data->word_pos < 48)
 	{
-		data->f = data->B ^ data->C ^ data->D;
+		data->f = data->b ^ data->c ^ data->d;
 		data->g = (3 * data->word_pos + 5) % 16;
 	}
 	else
 	{
-		data->f = data->C ^ (data->B | (~data->D));
+		data->f = data->c ^ (data->b | (~data->d));
 		data->g = (7 * data->word_pos) % 16;
 	}
 }
 
 void			update_h(t_md5_data *data)
 {
-	(data->h)[0] += data->A;
-	(data->h)[1] += data->B;
-	(data->h)[2] += data->C;
-	(data->h)[3] += data->D;
+	(data->h)[0] += data->a;
+	(data->h)[1] += data->b;
+	(data->h)[2] += data->c;
+	(data->h)[3] += data->d;
 }
 
-UCHAR	*md5_digest(const char *input)
+unsigned char	*md5_digest(const char *input)
 {
 	t_md5_data	d;
 
@@ -83,21 +83,21 @@ UCHAR	*md5_digest(const char *input)
 	{
 		d.w = d.full_msg + d.bloc_pos;
 		d.word_pos = 0;
-		memcopy((char*)(&(d.A)), (char*)(d.h), 4 * sizeof(int));
+		memcopy((char*)(&(d.a)), (char*)(d.h), 4 * sizeof(int));
 		while (d.word_pos != 64)
 		{
 			set_f_and_g(&d);
-			d.temp = d.D;
-			d.D = d.C;
-			d.C = d.B;
-			d.B = d.B + left_rotate(d.A + d.f + (d.k)[d.word_pos] +
-			*(((UINT*)(d.w)) + d.g), (d.round_shift_nb)[d.word_pos]);
-			d.A = d.temp;
+			d.temp = d.d;
+			d.d = d.c;
+			d.c = d.b;
+			d.b = d.b + left_rotate(d.a + d.f + (d.k)[d.word_pos] +
+			*(((unsigned int*)(d.w)) + d.g), (d.round_shift_nb)[d.word_pos]);
+			d.a = d.temp;
 			(d.word_pos)++;
 		}
 		update_h(&d);
 		d.bloc_pos += 64;
 	}
 	free(d.full_msg);
-	return ((UCHAR*)(d.h));
+	return ((unsigned char*)(d.h));
 }

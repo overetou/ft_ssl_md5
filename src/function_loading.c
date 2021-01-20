@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:09:26 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:10:05 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:44:30 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	add_final_exec_func(t_master *m, void (*f)(t_master*))
 
 void	loop_start(t_sha_data *data)
 {
-	UINT	t;
+	unsigned int	t;
 
 	t = 0;
 	while (t != 16)
 	{
-		data->w[t] = ((UINT*)(data->full_msg))[t];
+		data->w[t] = ((unsigned int*)(data->full_msg))[t];
 		invert_endian((char*)(data->w + t), 4);
 		t++;
 	}
@@ -42,15 +42,15 @@ void	loop_start(t_sha_data *data)
 
 void	second_loop(t_sha_data *data)
 {
-	UINT	t;
-	UINT	t1;
-	UINT	t2;
+	unsigned int	t;
+	unsigned int	t1;
+	unsigned int	t2;
 
 	t = 0;
 	while (t != 64)
 	{
 		t1 = data->a[7] + eps1(data->a[4]) + ch(data->a[4], data->a[5],
-		data->a[6]) + data->constants[t] + ((UINT*)(data->w))[t];
+		data->a[6]) + data->constants[t] + ((unsigned int*)(data->w))[t];
 		t2 = eps0(data->a[0]) + maj(data->a[0], data->a[1], data->a[2]);
 		data->a[7] = data->a[6];
 		data->a[6] = data->a[5];
