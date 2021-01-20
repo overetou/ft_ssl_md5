@@ -19,6 +19,7 @@
 
 # define BOOL char
 # define UINT unsigned int
+# define UCHAR unsigned char
 # define BUFF_MAX_SIZE 80
 
 typedef struct	s_command
@@ -50,12 +51,12 @@ typedef struct	s_master
 	char		**files_to_hash;
 	int			files_to_hash_nb;
 	void		(**final_exec_funcs)(struct s_master*);
-	unsigned char	*(*digest)(const char*);
+	UCHAR	*(*digest)(const char*);
 }				t_master;
 
 typedef struct	s_md5_data
 {
-	unsigned char	*full_msg;
+	UCHAR	*full_msg;
 	UINT	bloc_pos;
 	UINT	word_pos;
 	unsigned long	initial_len;
@@ -65,16 +66,16 @@ typedef struct	s_md5_data
 	UINT	C;
 	UINT	D;
 	unsigned long	temp;
-	unsigned char	round_shift_nb[64];
+	UCHAR	round_shift_nb[64];
 	UINT	*h;
 	UINT	f, g;
-	unsigned char	*w;
+	UCHAR	*w;
 	UINT	k[64];
 }				t_md5_data;
 
 typedef struct	s_sha_data
 {
-	unsigned char	*full_msg;
+	UCHAR	*full_msg;
 	UINT	bloc_pos;
 	UINT	word_pos;
 	unsigned long	initial_len;
@@ -106,24 +107,24 @@ void	memcopy(char *dest, const char *src, int size);
 void	add_final_exec_func(t_master *m, void (*f)(struct s_master*));
 void	md5_p_final_exec(t_master *m);
 void	md5_s_final_exec(t_master *m);
-UINT		str_len(const char *s);
+UINT	str_len(const char *s);
 void	b_zero(void* s, int len);
-void	disp_sum(unsigned char *s, int size);
-unsigned char	*md5_digest(const char *input);
+void	disp_sum(UCHAR *s, int size);
+UCHAR	*md5_digest(const char *input);
 void	load_file(t_master *m, int fd, char **to_fill);
 void	add_file_hash_task(t_master *m, char *file_name);
 void	exec_file_hash(t_master *m, char *file_name);
 UINT	left_rotate(UINT n, unsigned long times);
 void	md5_set_k(UINT *to_set);
 void	md5_init_hash(UINT *h);
-void	set_round_shift_table(unsigned char *r);
+void	set_round_shift_table(UCHAR *r);
 void	md5_digest_init(t_md5_data *data, const char *input);
 void	sha256_exec(void *master);
 void	sha256_p_exec(void *m);
 void	sha256_s_exec(void *m);
 void	exec_files_hash_and_funcs(t_master *m);
 void	exec_final_funcs(t_master *m);
-unsigned char	*sha256_digest(const char *input);
+UCHAR	*sha256_digest(const char *input);
 void	parse_args(t_master *m);
 UINT	right_rotate(UINT n, unsigned long times);
 UINT	eps0(UINT x);
@@ -133,5 +134,10 @@ UINT	sig1(UINT x);
 UINT	ch(UINT x, UINT y, UINT z);
 void	sha_init_hash(t_sha_data *data);
 void	sha256_init_constants(t_sha_data *data);
+void	loop_start(t_sha_data *data);
+void	second_loop(t_sha_data *data);
+void	change_h(t_sha_data *data);
+UINT	maj(UINT x, UINT y, UINT z);
+void	invert_endian(char *s, UINT len);
 
 #endif

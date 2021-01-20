@@ -12,15 +12,15 @@
 
 #include "ft_ssl.h"
 
-void	md5_set_end_bits_len(unsigned char *adr, unsigned long val)
+void	md5_set_end_bits_len(UCHAR *adr, unsigned long val)
 {
 	int				i;
 	int				j;
-	unsigned char	*vals;
+	UCHAR	*vals;
 
 	i = 7;
 	j = 0;
-	vals = (unsigned char*)(&val);
+	vals = (UCHAR*)(&val);
 	while (i >= 0)
 	{
 		adr[i] = vals[j];
@@ -59,7 +59,7 @@ void	exec_files_hash_and_funcs(t_master *m)
 
 void	md5_execute_loaded(t_master *m)
 {
-	unsigned char	*md5sum;
+	UCHAR	*md5sum;
 
 	if (m->files_to_hash_nb)
 		exec_files_hash_and_funcs(m);

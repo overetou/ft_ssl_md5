@@ -28,7 +28,7 @@ void	md5_digest_init(t_md5_data *d, const char *input)
 	d->initial_len *= 8;
 	memcopy((char*)(d->full_msg) + d->full_len - 8,
 	(char*)(&(d->initial_len)), 8);
-	set_round_shift_table((unsigned char*)(d->round_shift_nb));
+	set_round_shift_table((UCHAR*)(d->round_shift_nb));
 	md5_init_hash(d->h);
 }
 

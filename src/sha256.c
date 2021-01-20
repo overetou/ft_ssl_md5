@@ -24,7 +24,7 @@ void	sha256_load_params_choice(t_master *m)
 
 void	sha256_execute_loaded(t_master *m)
 {
-	unsigned char	*sha256_sum;
+	UCHAR	*sha256_sum;
 
 	if (m->files_to_hash_nb)
 		exec_files_hash_and_funcs(m);

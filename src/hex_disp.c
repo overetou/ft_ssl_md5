@@ -20,7 +20,7 @@ void	md5_init_hash(UINT *h)
 	h[3] = 0x10325476;
 }
 
-void	uchar_print_hex(unsigned char c)
+void	uchar_print_hex(UCHAR c)
 {
 	char	buf[3];
 	char	nbs[16];
@@ -35,7 +35,7 @@ void	uchar_print_hex(unsigned char c)
 	putstr(buf);
 }
 
-void	disp_sum(unsigned char *s, int size)
+void	disp_sum(UCHAR *s, int size)
 {
 	int i;
 

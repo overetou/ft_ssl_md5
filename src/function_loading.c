@@ -20,7 +20,7 @@ void	add_final_exec_func(t_master *m, void (*f)(t_master*))
 	(m->final_funcs_number)++;
 }
 
-void		loop_start(t_sha_data *data)
+void	loop_start(t_sha_data *data)
 {
 	UINT	t;
 
@@ -33,13 +33,14 @@ void		loop_start(t_sha_data *data)
 	}
 	while (t != 64)
 	{
-		data->w[t] = sig1((data->w)[t - 2]) + (data->w)[t - 7] + sig0((data->w)[t - 15]) + (data->w)[t - 16];
+		data->w[t] = sig1((data->w)[t - 2]) + (data->w)[t - 7]
+		+ sig0((data->w)[t - 15]) + (data->w)[t - 16];
 		t++;
 	}
 	memcopy((char*)(data->a), (char*)(data->h), 8 * sizeof(int));
 }
 
-void		second_loop(t_sha_data *data)
+void	second_loop(t_sha_data *data)
 {
 	UINT	t;
 	UINT	t1;
@@ -48,7 +49,8 @@ void		second_loop(t_sha_data *data)
 	t = 0;
 	while (t != 64)
 	{
-		t1 = data->a[7] + eps1(data->a[4]) + ch(data->a[4], data->a[5], data->a[6]) + data->constants[t] + ((UINT*)(data->w))[t];
+		t1 = data->a[7] + eps1(data->a[4]) + ch(data->a[4], data->a[5],
+		data->a[6]) + data->constants[t] + ((UINT*)(data->w))[t];
 		t2 = eps0(data->a[0]) + maj(data->a[0], data->a[1], data->a[2]);
 		data->a[7] = data->a[6];
 		data->a[6] = data->a[5];

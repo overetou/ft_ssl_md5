@@ -12,9 +12,9 @@
 
 #include "ft_ssl.h"
 
-void			invert_endian(char *s, UINT len)
+void	invert_endian(char *s, UINT len)
 {
-	char			*new;
+	char	*new;
 	UINT	i;
 
 	new = secure_malloc(len);
@@ -28,7 +28,7 @@ void			invert_endian(char *s, UINT len)
 	free(new);
 }
 
-void			sha256_digest_init(t_sha_data *data, const char *input)
+void	sha256_digest_init(t_sha_data *data, const char *input)
 {
 	data->initial_len = str_len(input);
 	if (data->initial_len % 64 < 56)
@@ -48,12 +48,12 @@ void			sha256_digest_init(t_sha_data *data, const char *input)
 	sha256_init_constants(data);
 }
 
-UINT			maj(UINT x, UINT y, UINT z)
+UINT	maj(UINT x, UINT y, UINT z)
 {
 	return ((x & y) ^ (x & z) ^ (y & z));
 }
 
-unsigned char	*sha256_digest(const char *input)
+UCHAR	*sha256_digest(const char *input)
 {
 	t_sha_data	data;
 	UINT		t;
@@ -73,5 +73,5 @@ unsigned char	*sha256_digest(const char *input)
 		invert_endian((char*)(data.h + t), 4);
 		t++;
 	}
-	return ((unsigned char*)(data.h));
+	return ((UCHAR*)(data.h));
 }

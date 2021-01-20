@@ -12,7 +12,7 @@
 
 #include "ft_ssl.h"
 
-void			set_round_shift_table(unsigned char *r)
+void			set_round_shift_table(UCHAR *r)
 {
 	memcopy((char*)(r), (char[64]){7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17,
 	22, 7, 12, 17, 22, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14,
@@ -73,7 +73,7 @@ void			update_h(t_md5_data *data)
 	(data->h)[3] += data->D;
 }
 
-unsigned char	*md5_digest(const char *input)
+UCHAR	*md5_digest(const char *input)
 {
 	t_md5_data	d;
 
@@ -99,5 +99,5 @@ unsigned char	*md5_digest(const char *input)
 		d.bloc_pos += 64;
 	}
 	free(d.full_msg);
-	return ((unsigned char*)(d.h));
+	return ((UCHAR*)(d.h));
 }

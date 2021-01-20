@@ -15,7 +15,7 @@
 
 void	md5_p_final_exec(t_master *m)
 {
-	unsigned char	*md5sum;
+	UCHAR	*md5sum;
 
 	md5sum = md5_digest(m->stdin_string);
 	putstr(m->stdin_string);
@@ -29,7 +29,7 @@ void	md5_p_final_exec(t_master *m)
 
 void	md5_s_final_exec(t_master *m)
 {
-	unsigned char	*md5sum;
+	UCHAR	*md5sum;
 
 	md5sum = md5_digest(m->direct_string);
 	if (m->quiet_enabled)
@@ -57,7 +57,7 @@ void	md5_s_final_exec(t_master *m)
 
 void	display_file_content_hash(t_master *m, char *f_content, char *f_name)
 {
-	unsigned char	*sum;
+	UCHAR	*sum;
 
 	sum = m->digest(f_content);
 	if (m->quiet_enabled)
