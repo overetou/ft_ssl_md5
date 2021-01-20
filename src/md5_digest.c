@@ -20,9 +20,9 @@ void			set_round_shift_table(unsigned char *r)
 	15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21}, 64);
 }
 
-void			md5_set_k(unsigned int *to_set)
+void			md5_set_k(UINT *to_set)
 {
-	memcopy((char*)to_set, (char*)((unsigned int[64]){
+	memcopy((char*)to_set, (char*)((UINT[64]){
 		0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 		0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
 		0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
@@ -91,7 +91,7 @@ unsigned char	*md5_digest(const char *input)
 			d.D = d.C;
 			d.C = d.B;
 			d.B = d.B + left_rotate(d.A + d.f + (d.k)[d.word_pos] +
-			*(((unsigned int*)(d.w)) + d.g), (d.round_shift_nb)[d.word_pos]);
+			*(((UINT*)(d.w)) + d.g), (d.round_shift_nb)[d.word_pos]);
 			d.A = d.temp;
 			(d.word_pos)++;
 		}

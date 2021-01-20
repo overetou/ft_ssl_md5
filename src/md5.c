@@ -20,7 +20,7 @@ void	md5_digest_init(t_md5_data *d, const char *input)
 		d->full_len = d->initial_len + 64 - (d->initial_len % 64);
 	else
 		d->full_len = d->initial_len + (64 - (d->initial_len + 8) % 64);
-	md5_set_k((unsigned int*)(d->k));
+	md5_set_k((UINT*)(d->k));
 	d->full_msg = secure_malloc(d->full_len);
 	memcopy((char*)(d->full_msg), input, d->initial_len);
 	d->full_msg[d->initial_len] = 128;

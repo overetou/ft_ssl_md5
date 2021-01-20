@@ -12,7 +12,7 @@
 
 #include "ft_ssl.h"
 
-void	md5_init_hash(unsigned int *h)
+void	md5_init_hash(UINT *h)
 {
 	h[0] = 0x67452301;
 	h[1] = 0xefcdab89;

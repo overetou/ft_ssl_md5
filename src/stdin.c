@@ -1,8 +1,8 @@
 #include "ft_ssl.h"
 
-unsigned int		str_len(const char *s)
+UINT		str_len(const char *s)
 {
-	unsigned int i;
+	UINT i;
 
 	i = 0;
 	while (s[i])
@@ -10,12 +10,12 @@ unsigned int		str_len(const char *s)
 	return (i);
 }
 
-unsigned int	left_rotate(unsigned int n, unsigned long times)
+UINT	left_rotate(UINT n, unsigned long times)
 {
 	return ((n << times % 32) | (n >> (32 - times % 32)));
 }
 
-unsigned int	right_rotate(unsigned int n, unsigned long times)
+UINT	right_rotate(UINT n, unsigned long times)
 {
 	return ((n >> times % 32) | (n << (32 - times % 32)));
 }
