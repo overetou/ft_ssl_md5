@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/26 17:39:22 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/18 15:56:33 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/22 16:00:14 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	md5_s_exec(void *m)
 		((t_master*)m)->s_enabled = 1;
 		if (((t_master*)m)->arg_pos + 1 == ((t_master*)m)->argc)
 			error_msg("ft_ssl/md5: -s must be folowed by a string."
-			" Ex: hey / \" spaced words\"");
+			" Ex: hey / \" spaced words\"\n");
 		(((t_master*)m)->arg_pos)++;
 		((t_master*)m)->direct_string =
 		((t_master*)m)->argv[((t_master*)m)->arg_pos];
