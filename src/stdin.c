@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 15:46:08 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/20 16:55:54 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/22 16:39:56 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void			load_stdin(t_master *m)
 	{
 		if (m->buff_max == -1)
 			error_msg("Error while reading on stdin.");
-		m->stdin_string = secure_realloc(m->stdin_string, i + m->buff_max + 1);
+		m->stdin_string = secure_realloc(m->stdin_string, i,
+		i + m->buff_max + 1);
 		memcopy(m->stdin_string + i, m->buffer, m->buff_max);
 		i += m->buff_max;
 		m->buff_max = read(0, m->buffer, BUFF_MAX_SIZE);
@@ -61,7 +62,7 @@ void			load_file(t_master *m, int fd, char **to_fill)
 	{
 		if (m->buff_max == -1)
 			error_msg("Error while reading a file.");
-		*to_fill = secure_realloc(*to_fill, i + m->buff_max + 1);
+		*to_fill = secure_realloc(*to_fill, i, i + m->buff_max + 1);
 		memcopy(*to_fill + i, m->buffer, m->buff_max);
 		i += m->buff_max;
 		m->buff_max = read(fd, m->buffer, BUFF_MAX_SIZE);

@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/22 15:38:02 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/22 16:20:34 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char				*alloc_str(const char *content);
 void				error_msg(const char *msg);
 BOOL				str_cmp(const char *s1, const char *s2);
 void				*secure_malloc(int size);
-void				*secure_realloc(void *ptr, int size);
+void				*secure_realloc(void *ptr, int ptr_size, int size);
 void				command_add(const int command_index, t_command *commands,
 const				char *command_name, void (*exec)(void *master));
 void				free_commands(t_command *commands, int command_number);

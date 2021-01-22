@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/26 17:39:22 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/22 16:00:14 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/22 16:39:46 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	add_file_hash_task(t_master *m, char *file_name)
 {
 	(m->files_to_hash_nb)++;
 	m->files_to_hash = secure_realloc(m->files_to_hash,
-	(m->files_to_hash_nb) * sizeof(char*));
+	(m->files_to_hash_nb - 1) * sizeof(char*),
+	m->files_to_hash_nb * sizeof(char*));
 	m->files_to_hash[m->files_to_hash_nb - 1] = file_name;
 }
