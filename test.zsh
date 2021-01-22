@@ -43,6 +43,8 @@ output=(
     "`echo "GL HF let's go" | ./ft_ssl sha256 -p -s "foo" file`"
     "`echo "one more thing" | ./ft_ssl sha256 -r -p -s "foo" file -s "bar"`"
     "`echo "just to be extra clear" | ./ft_ssl sha256 -r -q -p -s "foo" file`"
+	"`echo "https://www.youtube.com/watch?v=w-5yAtMtrSM" > big_smoke_order_remix && ./ft_ssl sha256 -q big_smoke_order_remix`"
+	"`./ft_ssl sha256 -s "wubba lubba dub dub"`"
 )
 
 expected=(
@@ -74,6 +76,8 @@ expected=(
     $'SHA256 (file) = f9eb9a5a063eb386a18525c074e1065c316ec434f911e0d7d59ba2d9fd134705\nGL HF let\'s go\nf33201f3d70c9dccccec022e2ff0df2006e016f153f600407917d14955fbec22\nSHA256 ("foo") = 2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
     $'ft_ssl/sha256: -s argument given more than one time. (illegal action)\nf9eb9a5a063eb386a18525c074e1065c316ec434f911e0d7d59ba2d9fd134705 file\nCould not open file: bar\none more thing\n720bbf63077e0bea3b70c87954123daa6fcf32f973f4d646622bd016b140ec75\n2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae "foo"'
     $'f9eb9a5a063eb386a18525c074e1065c316ec434f911e0d7d59ba2d9fd134705\njust to be extra clear\n41c3da28172faf72bb777d6a428b6d801427d02513c56cd9e3672f44383f8eee\n2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
+	'a8dc621c3dcf18a8a2eddae1845e8e5f6498970a867056ac5f7121ac3d66cfd9'
+	'SHA256 ("wubba lubba dub dub") = 23a0944d11b5a54f1970492b5265c732044ae824b7d5656acb193e7f0e51e5fa'
 )
 
 echo 'Beginning tests.'
