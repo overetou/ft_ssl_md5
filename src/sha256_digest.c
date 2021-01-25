@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 09:35:31 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/20 16:56:53 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:12:49 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void			invert_endian(char *s, unsigned int len)
 		i++;
 	}
 	memcopy(s, new, len);
-	free(new);
+	ft_free(new);
 }
 
 void			sha256_digest_init(t_sha_data *data, const char *input)
@@ -66,7 +66,7 @@ unsigned char	*sha256_digest(const char *input)
 		second_loop(&data);
 		change_h(&data);
 	}
-	free(data.full_msg);
+	ft_free(data.full_msg);
 	t = 0;
 	while (t != 8)
 	{

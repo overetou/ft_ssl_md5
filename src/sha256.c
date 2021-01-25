@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 08:44:52 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/20 16:36:40 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:12:49 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	sha256_execute_loaded(t_master *m)
 			load_stdin(m);
 			sha256_sum = sha256_digest(m->stdin_string);
 			disp_sum(sha256_sum, 32);
-			free(sha256_sum);
-			free(m->stdin_string);
+			ft_free(sha256_sum);
+			ft_free(m->stdin_string);
 			putstr("\n");
 		}
 	}

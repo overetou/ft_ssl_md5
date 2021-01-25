@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 15:43:21 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/20 16:55:12 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:12:49 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	exec_final_funcs(t_master *m)
 		m->final_exec_funcs[i](m);
 		i++;
 	}
-	free(m->final_exec_funcs);
+	ft_free(m->final_exec_funcs);
 }
 
 void	exec_files_hash_and_funcs(t_master *m)
@@ -52,7 +52,7 @@ void	exec_files_hash_and_funcs(t_master *m)
 		exec_file_hash(m, m->files_to_hash[i]);
 		i++;
 	}
-	free(m->files_to_hash);
+	ft_free(m->files_to_hash);
 	if (m->final_funcs_number)
 		exec_final_funcs(m);
 }
@@ -72,8 +72,8 @@ void	md5_execute_loaded(t_master *m)
 			load_stdin(m);
 			md5sum = md5_digest(m->stdin_string);
 			disp_sum(md5sum, 16);
-			free(md5sum);
-			free(m->stdin_string);
+			ft_free(md5sum);
+			ft_free(m->stdin_string);
 			putstr("\n");
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 15:23:39 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/20 15:49:26 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:12:49 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	md5_p_final_exec(t_master *m)
 		putstr("\n");
 	disp_sum(md5sum, 16);
 	putstr("\n");
-	free(m->stdin_string);
-	free(md5sum);
+	ft_free(m->stdin_string);
+	ft_free(md5sum);
 }
 
 void	md5_s_final_exec(t_master *m)
@@ -52,7 +52,7 @@ void	md5_s_final_exec(t_master *m)
 		}
 	}
 	putstr("\n");
-	free(md5sum);
+	ft_free(md5sum);
 }
 
 void	display_file_content_hash(t_master *m, char *f_content, char *f_name)
@@ -81,7 +81,7 @@ void	display_file_content_hash(t_master *m, char *f_content, char *f_name)
 			disp_sum(sum, (m->digest == md5_digest ? 16 : 32));
 		}
 	}
-	free(sum);
+	ft_free(sum);
 }
 
 void	exec_file_hash(t_master *m, char *file_name)
@@ -100,7 +100,7 @@ void	exec_file_hash(t_master *m, char *file_name)
 		load_file(m, fd, &file_content);
 		close(fd);
 		display_file_content_hash(m, file_content, file_name);
-		free(file_content);
+		ft_free(file_content);
 	}
 	putstr("\n");
 }

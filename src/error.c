@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 15:30:24 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/22 16:21:38 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:12:49 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*secure_malloc(int size)
 {
 	void	*new;
 
-	new = malloc(size);
+	new = ft_malloc(size);
 	error_if_null(new, "Allocation Failure\n");
 	return (new);
 }
@@ -46,7 +46,7 @@ void	*secure_realloc(void *ptr, int ptr_size, int size)
 
 	new = secure_malloc(size);
 	memcopy(new, ptr, ptr_size);
-	free(ptr);
+	ft_free(ptr);
 	return (new);
 }
 

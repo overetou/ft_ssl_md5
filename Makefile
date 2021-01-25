@@ -8,7 +8,7 @@ INC_DIRS=inc
 LIB_DIRS=
 
 #Compilation related indications
-CC=gcc
+CC=clang
 CFLAGS=-Wall -Wextra -Werror
 LIBS=
 
