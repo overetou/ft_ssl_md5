@@ -80,6 +80,39 @@ expected=(
 	'SHA256 ("wubba lubba dub dub") = 23a0944d11b5a54f1970492b5265c732044ae824b7d5656acb193e7f0e51e5fa'
 )
 
+valgrind_output=(
+    "`./ft_ssl`"
+    #"`./ft_ssl foobar`"
+    #MD5
+    "`echo "pickle rick" | valgrind ./ft_ssl md5`"
+    "`echo "Do not pity the dead, Harry." | valgrind ./ft_ssl md5 -p`"
+    "`echo "Pity the living." | valgrind ./ft_ssl md5 -q -r`"
+    "`echo "And above all," > file && valgrind ./ft_ssl md5 file`"
+    "`valgrind ./ft_ssl md5 -r file`"
+    "`valgrind ./ft_ssl md5 -s "pity those that aren't following baerista on spotify."`"
+    "`echo "be sure to handle edge cases carefully" | valgrind ./ft_ssl md5 -p file`"
+    "`echo "some of this will not make sense at first" | valgrind ./ft_ssl md5 file`"
+    "`echo "but eventually you will understand" | valgrind ./ft_ssl md5 -p -r file`"
+    "`echo "GL HF let's go" | valgrind ./ft_ssl md5 -p -s "foo" file`"
+    "`echo "one more thing" | valgrind ./ft_ssl md5 -r -p -s "foo" file -s "bar"`"
+    "`echo "just to be extra clear" | valgrind ./ft_ssl md5 -r -q -p -s "foo" file`"
+    #SHA256
+    "`echo "pickle rick" | valgrind ./ft_ssl sha256`"
+    "`echo "Do not pity the dead, Harry." | valgrind ./ft_ssl sha256 -p`"
+    "`echo "Pity the living." | valgrind ./ft_ssl sha256 -q -r`"
+    "`echo "And above all," > file && valgrind ./ft_ssl sha256 file`"
+    "`valgrind ./ft_ssl sha256 -r file`"
+    "`valgrind ./ft_ssl sha256 -s "pity those that aren't following baerista on spotify."`"
+    "`echo "be sure to handle edge cases carefully" | valgrind ./ft_ssl sha256 -p file`"
+    "`echo "some of this will not make sense at first" | valgrind ./ft_ssl sha256 file`"
+    "`echo "but eventually you will understand" | valgrind ./ft_ssl sha256 -p -r file`"
+    "`echo "GL HF let's go" | valgrind ./ft_ssl sha256 -p -s "foo" file`"
+    "`echo "one more thing" | valgrind ./ft_ssl sha256 -r -p -s "foo" file -s "bar"`"
+    "`echo "just to be extra clear" | valgrind ./ft_ssl sha256 -r -q -p -s "foo" file`"
+	"`echo "https://www.youtube.com/watch?v=w-5yAtMtrSM" > big_smoke_order_remix && valgrind ./ft_ssl sha256 -q big_smoke_order_remix`"
+	"`valgrind ./ft_ssl sha256 -s "wubba lubba dub dub"`"
+)
+
 echo 'Beginning tests.'
 for ((i=0; i<${#output[@]}; i++)); do
     test "${output[$i]}" "${expected[$i]}" $i
