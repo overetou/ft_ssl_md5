@@ -6,27 +6,11 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:48:45 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/25 16:17:49 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:37:44 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-
-int malloc_nb = 0;
-void* my_malloc(size_t size, const char *file, int line, const char *func)
-{
-    void *p = malloc(size);
-    printf ("Allocated = %s, %i, %s, %p[%li]\n", file, line, func, p, size);
-	malloc_nb++;
-    return p;
-}
-int free_nb = 0;
-void my_free(void *pointer, const char *file, int line, const char *func)
-{
-    free(pointer);
-    printf ("Freed = %s, %i, %s\n", file, line, func);
-	free_nb++;
-}
 
 void	putstr(const char *s)
 {
@@ -101,6 +85,5 @@ int		main(int argc, char **argv)
 			"usage: ft_ssl command [command opts] [command args]\n");
 		}
 	}
-	printf("%d allocs, %d frees.\n", malloc_nb, free_nb);
 	return (0);
 }

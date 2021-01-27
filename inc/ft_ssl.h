@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/25 16:17:41 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:34:24 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,14 +139,5 @@ void				second_loop(t_sha_data *data);
 void				change_h(t_sha_data *data);
 unsigned int		maj(unsigned int x, unsigned int y, unsigned int z);
 void				invert_endian(char *s, unsigned int len);
-void* my_malloc(size_t size, const char *file, int line, const char *func);
-void my_free(void *p, const char *file, int line, const char *func);
-
-
-#define ft_malloc(X) my_malloc( X, __FILE__, __LINE__, __FUNCTION__)
-
-#define ft_free(X) my_free( X, __FILE__, __LINE__, __FUNCTION__)
-
-
 
 #endif

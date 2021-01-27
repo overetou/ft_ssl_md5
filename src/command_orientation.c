@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 15:01:14 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/25 16:12:49 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:35:37 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	free_commands(t_command *commands, int command_number)
 	i = 0;
 	while (i != command_number)
 	{
-		ft_free(commands[i].name);
+		free(commands[i].name);
 		i++;
 	}
-	ft_free(commands);
+	free(commands);
 }
 
 void	load_commands(t_master *m)

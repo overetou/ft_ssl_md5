@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 15:12:34 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/25 16:12:49 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:35:37 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ unsigned char	*md5_digest(const char *input)
 		update_h(&d);
 		d.bloc_pos += 64;
 	}
-	ft_free(d.full_msg);
+	free(d.full_msg);
 	return ((unsigned char*)(d.h));
 }
