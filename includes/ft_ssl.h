@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:07:38 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/27 15:27:31 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/29 15:19:56 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,10 @@ void				exec_files_hash_and_funcs(t_master *m);
 void				exec_final_funcs(t_master *m);
 unsigned char		*sha256_digest(const char *input);
 void				parse_args(t_master *m);
+unsigned int		right_rotate(unsigned int n, unsigned long times);
+unsigned int		eps0(unsigned int x);
+unsigned int		eps1(unsigned int x);
+unsigned int		sig0(unsigned int x);
 unsigned int		sig1(unsigned int x);
 unsigned int		ch(unsigned int x, unsigned int y, unsigned int z);
 void				sha_init_hash(t_sha_data *data);

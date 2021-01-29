@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:48:45 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/25 16:37:44 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/29 15:51:03 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int		main(int argc, char **argv)
 		m.stdin_string = NULL;
 		if (try_to_exec_command(&m, argv[1]) == 0)
 		{
-			putstr("Given command could not be processed.\n"
+			error_msg("Given command could not be processed.\n"
 			"usage: ft_ssl command [command opts] [command args]\n");
 		}
 	}

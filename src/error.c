@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 15:30:24 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/25 16:35:37 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/29 15:14:46 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ void	*secure_realloc(void *ptr, int ptr_size, int size)
 
 void	error_msg(const char *msg)
 {
-	putstr(msg);
+	int	len;
+
+	len = str_len(msg);
+	write(2, msg, len);
 	exit(0);
 }
