@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:48:45 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/29 15:51:03 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/29 16:04:02 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int		main(int argc, char **argv)
 		m.s_enabled = 0;
 		m.final_funcs_number = 0;
 		m.final_exec_funcs = NULL;
-		m.stdin_string = NULL;
 		if (try_to_exec_command(&m, argv[1]) == 0)
 		{
 			error_msg("Given command could not be processed.\n"

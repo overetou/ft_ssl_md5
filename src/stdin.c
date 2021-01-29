@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 15:46:08 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/29 15:49:06 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/29 16:05:28 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void			load_stdin(t_master *m)
 	m->buff_max = read(0, m->buffer, BUFF_MAX_SIZE);
 	if (m->buff_max == 0)
 		m->stdin_string = secure_malloc(1);
+	else
+		m->stdin_string = NULL;
 	i = 0;
 	while (m->buff_max)
 	{
@@ -60,8 +62,9 @@ void			load_file(t_master *m, int fd, char **to_fill)
 	m->buff_max = read(fd, m->buffer, BUFF_MAX_SIZE);
 	if (m->buff_max == 0)
 		*to_fill = secure_malloc(1);
+	else
+		*to_fill = NULL;
 	i = 0;
-	*to_fill = NULL;
 	while (m->buff_max)
 	{
 		if (m->buff_max == -1)
