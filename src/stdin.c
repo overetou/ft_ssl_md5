@@ -6,7 +6,7 @@
 /*   By: overetou <overetou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 15:46:08 by overetou          #+#    #+#             */
-/*   Updated: 2021/01/22 16:39:56 by overetou         ###   ########.fr       */
+/*   Updated: 2021/01/29 16:05:28 by overetou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ void			load_stdin(t_master *m)
 	int	i;
 
 	m->buff_max = read(0, m->buffer, BUFF_MAX_SIZE);
+	if (m->buff_max == 0)
+		m->stdin_string = secure_malloc(1);
+	else
+		m->stdin_string = NULL;
 	i = 0;
 	while (m->buff_max)
 	{
 		if (m->buff_max == -1)
-			error_msg("Error while reading on stdin.");
+			error_msg("Error while reading on stdin.\n");
 		m->stdin_string = secure_realloc(m->stdin_string, i,
 		i + m->buff_max + 1);
 		memcopy(m->stdin_string + i, m->buffer, m->buff_max);
@@ -56,12 +60,15 @@ void			load_file(t_master *m, int fd, char **to_fill)
 	int	i;
 
 	m->buff_max = read(fd, m->buffer, BUFF_MAX_SIZE);
+	if (m->buff_max == 0)
+		*to_fill = secure_malloc(1);
+	else
+		*to_fill = NULL;
 	i = 0;
-	*to_fill = NULL;
 	while (m->buff_max)
 	{
 		if (m->buff_max == -1)
-			error_msg("Error while reading a file.");
+			error_msg("Error while reading a file.\n");
 		*to_fill = secure_realloc(*to_fill, i, i + m->buff_max + 1);
 		memcopy(*to_fill + i, m->buffer, m->buff_max);
 		i += m->buff_max;

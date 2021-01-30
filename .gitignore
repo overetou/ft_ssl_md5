@@ -9,3 +9,5 @@ obj/
 remove_last_char.c
 test.txt
 test2.zsh
+ft_ssl.dSYM/Contents/Info.plist
+empty

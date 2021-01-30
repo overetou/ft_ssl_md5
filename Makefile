@@ -4,7 +4,7 @@ TARGET=ft_ssl
 #Directories
 OBJ_DIR=obj
 SRC_DIR=src
-INC_DIRS=inc
+INC_DIRS=includes
 LIB_DIRS=
 
 #Compilation related indications
