@@ -12,25 +12,37 @@
 
 #include "ft_ssl.h"
 
-void			invert_endian(char *s, unsigned int len)
+void invert_endian(char* s, unsigned int len)
 {
-	char			*new;
-	unsigned int	i;
+    char* new;
+    unsigned int i;
 
-	new = secure_malloc(len);
-	i = 0;
-	while (i != len)
+    new = secure_malloc(len);
+    i = 0;
+    while(i != len)
 	{
-		new[i] = s[len - i - 1];
-		i++;
+	    new[i] = s[len - i - 1];
+	    i++;
 	}
-	memcopy(s, new, len);
-	free(new);
+    memcopy(s, new, len);
+    free(new);
 }
 
-void			sha256_digest_init(t_sha_data *data, const char *input)
+void print_msg_hex(const char *s)
 {
-	data->initial_len = str_len(input);
+    int i = 0;
+
+    while (i != 64)
+    {
+        printf("%02x %02x %02x %02x %02x %02x %02x %02x\n",
+        s[i], s[i + 1], s[i + 2], s[i + 3], s[i + 4], s[i + 5], s[i + 6], s[i + 7]);
+        i += 8;
+    }
+}
+
+void sha256_digest_init(t_sha_data* data, const char* input)
+{
+    data->initial_len = str_len(input);
 	if (data->initial_len % 64 < 56)
 		data->full_len = data->initial_len + 64 - (data->initial_len % 64);
 	else
@@ -48,30 +60,30 @@ void			sha256_digest_init(t_sha_data *data, const char *input)
 	sha256_init_constants(data);
 }
 
-unsigned int	maj(unsigned int x, unsigned int y, unsigned int z)
+unsigned int maj(unsigned int x, unsigned int y, unsigned int z)
 {
-	return ((x & y) ^ (x & z) ^ (y & z));
+    return ((x & y) ^ (x & z) ^ (y & z));
 }
 
-unsigned char	*sha256_digest(const char *input)
+unsigned char* sha256_digest(const char* input)
 {
-	t_sha_data			data;
-	unsigned int		t;
+    t_sha_data data;
+    unsigned int t;
 
-	sha256_digest_init(&data, input);
-	data.bloc_pos = 0;
-	while (data.bloc_pos != data.full_len)
+    sha256_digest_init(&data, input);
+    data.bloc_pos = 0;
+    while(data.bloc_pos != data.full_len)
 	{
-		loop_start(&data);
-		second_loop(&data);
-		change_h(&data);
+	    loop_start(&data);
+	    second_loop(&data);
+	    change_h(&data);
 	}
-	free(data.full_msg);
-	t = 0;
-	while (t != 8)
+    free(data.full_msg);
+    t = 0;
+    while(t != 8)
 	{
-		invert_endian((char*)(data.h + t), 4);
-		t++;
+	    invert_endian((char*)(data.h + t), 4);
+	    t++;
 	}
-	return ((unsigned char*)(data.h));
+    return ((unsigned char*)(data.h));
 }

@@ -11,3 +11,5 @@ test.txt
 test2.zsh
 ft_ssl.dSYM/Contents/Info.plist
 empty
+sha256.py
+tests/test.c

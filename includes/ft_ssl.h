@@ -57,13 +57,13 @@ typedef struct		s_md5_data
 	unsigned char	*full_msg;
 	unsigned int	bloc_pos;
 	unsigned int	word_pos;
-	unsigned long	initial_len;
-	unsigned long	full_len;
+	unsigned long long	initial_len;
+	unsigned long long	full_len;
 	unsigned int	a;
 	unsigned int	b;
 	unsigned int	c;
 	unsigned int	d;
-	unsigned long	temp;
+	unsigned long long	temp;
 	unsigned char	round_shift_nb[64];
 	unsigned int	*h;
 	unsigned int	f;
@@ -77,8 +77,8 @@ typedef struct		s_sha_data
 	unsigned char	*full_msg;
 	unsigned int	bloc_pos;
 	unsigned int	word_pos;
-	unsigned long	initial_len;
-	unsigned int	full_len;
+	unsigned long long	initial_len;
+	unsigned long long	full_len;
 	unsigned int	a[8];
 	unsigned int	*h;
 	unsigned int	w[64];
