@@ -28,11 +28,11 @@ void invert_endian(char* s, unsigned int len)
     free(new);
 }
 
-void print_msg_hex(const char *s)
+void print_msg_hex(const unsigned char *s, int len)
 {
     int i = 0;
 
-    while (i != 64)
+    while (i != len)
     {
         printf("%02x %02x %02x %02x %02x %02x %02x %02x\n",
         s[i], s[i + 1], s[i + 2], s[i + 3], s[i + 4], s[i + 5], s[i + 6], s[i + 7]);
@@ -43,10 +43,11 @@ void print_msg_hex(const char *s)
 void sha256_digest_init(t_sha_data* data, const char* input)
 {
     data->initial_len = str_len(input);
-	if (data->initial_len % 64 < 56)
-		data->full_len = data->initial_len + 64 - (data->initial_len % 64);
+	//printf("len = %llu.\n", data->initial_len);
+	if (64 % data->initial_len < 9)
+		data->full_len = data->initial_len + 64 % data->initial_len + 64;
 	else
-		data->full_len = data->initial_len + 128 - (data->initial_len % 64);
+		data->full_len = data->initial_len + 64 % data->initial_len;
 	data->full_msg = secure_malloc(data->full_len);
 	memcopy((char*)(data->full_msg), input, data->initial_len);
 	data->full_msg[data->initial_len] = 128;

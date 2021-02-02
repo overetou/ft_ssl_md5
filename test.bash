@@ -30,7 +30,8 @@ output=(
     "`echo "GL HF let's go" | ./ft_ssl md5 -p -s "foo" file`"
     "`echo "one more thing" | ./ft_ssl md5 -r -p -s "foo" file -s "bar"`"
     "`echo "just to be extra clear" | ./ft_ssl md5 -r -q -p -s "foo" file`"
-    #SHA256
+    "`./ft_ssl md5 -q test.bash`"
+	#SHA256
     "`echo "pickle rick" | ./ft_ssl sha256`"
     "`echo "Do not pity the dead, Harry." | ./ft_ssl sha256 -p`"
     "`echo "Pity the living." | ./ft_ssl sha256 -q -r`"
@@ -45,6 +46,7 @@ output=(
     "`echo "just to be extra clear" | ./ft_ssl sha256 -r -q -p -s "foo" file`"
 	"`echo "https://www.youtube.com/watch?v=w-5yAtMtrSM" > big_smoke_order_remix && ./ft_ssl sha256 -q big_smoke_order_remix`"
 	"`./ft_ssl sha256 -s "wubba lubba dub dub"`"
+    "`./ft_ssl sha256 -q test.bash`"
 )
 
 expected=(
@@ -63,7 +65,8 @@ expected=(
     $'MD5 (file) = 53d53ea94217b259c11a5a2d104ec58a\nGL HF let\'s go\nd1e3cc342b6da09480b27ec57ff243e2\nMD5 ("foo") = acbd18db4cc2f85cedef654fccc4a4d8'
     $'ft_ssl/md5: -s argument given more than one time. (illegal action)\n53d53ea94217b259c11a5a2d104ec58a file\nCould not open file: bar\none more thing\na0bd1876c6f011dd50fae52827f445f5\nacbd18db4cc2f85cedef654fccc4a4d8 "foo"'
     $'53d53ea94217b259c11a5a2d104ec58a\njust to be extra clear\n3ba35f1ea0d170cb3b9a752e3360286c\nacbd18db4cc2f85cedef654fccc4a4d8'
-    #SHA256
+    "`openssl md5 test.bash | awk '{print $2}'`"
+	#SHA256
     "a9c55180c67a4bc62753d836843f46fa47af28874600cdc637de921d711937ed"
     $'Do not pity the dead, Harry.\n7197000d32ca5a13cf923ba196286a72daa06e9f168c4dd5753f917568ea373f'
     "40133cfe543247c1cae0ffb0003c1179ce9fb0046bee19f9fca167380643ba45"
@@ -78,40 +81,41 @@ expected=(
     $'f9eb9a5a063eb386a18525c074e1065c316ec434f911e0d7d59ba2d9fd134705\njust to be extra clear\n41c3da28172faf72bb777d6a428b6d801427d02513c56cd9e3672f44383f8eee\n2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
 	'a8dc621c3dcf18a8a2eddae1845e8e5f6498970a867056ac5f7121ac3d66cfd9'
 	'SHA256 ("wubba lubba dub dub") = 23a0944d11b5a54f1970492b5265c732044ae824b7d5656acb193e7f0e51e5fa'
+	"`openssl sha256 test.bash | awk '{print $2}'`"
 )
 
-valgrind_output=(
-    "`valgrind ./ft_ssl`"
+#valgrind_output=(
+#    "`valgrind ./ft_ssl`"
     #"`./ft_ssl foobar`"
     #MD5
-    "`echo "pickle rick" | valgrind ./ft_ssl md5`"
-    "`echo "Do not pity the dead, Harry." | valgrind ./ft_ssl md5 -p`"
-    "`echo "Pity the living." | valgrind ./ft_ssl md5 -q -r`"
-    "`echo "And above all," > file && valgrind ./ft_ssl md5 file`"
-    "`valgrind ./ft_ssl md5 -r file`"
-    "`valgrind ./ft_ssl md5 -s "pity those that aren't following baerista on spotify."`"
-    "`echo "be sure to handle edge cases carefully" | valgrind ./ft_ssl md5 -p file`"
-    "`echo "some of this will not make sense at first" | valgrind ./ft_ssl md5 file`"
-    "`echo "but eventually you will understand" | valgrind ./ft_ssl md5 -p -r file`"
-    "`echo "GL HF let's go" | valgrind ./ft_ssl md5 -p -s "foo" file`"
-    "`echo "one more thing" | valgrind ./ft_ssl md5 -r -p -s "foo" file -s "bar"`"
-    "`echo "just to be extra clear" | valgrind ./ft_ssl md5 -r -q -p -s "foo" file`"
+#    "`echo "pickle rick" | valgrind ./ft_ssl md5`"
+#    "`echo "Do not pity the dead, Harry." | valgrind ./ft_ssl md5 -p`"
+#    "`echo "Pity the living." | valgrind ./ft_ssl md5 -q -r`"
+#    "`echo "And above all," > file && valgrind ./ft_ssl md5 file`"
+#    "`valgrind ./ft_ssl md5 -r file`"
+#    "`valgrind ./ft_ssl md5 -s "pity those that aren't following baerista on spotify."`"
+#    "`echo "be sure to handle edge cases carefully" | valgrind ./ft_ssl md5 -p file`"
+#    "`echo "some of this will not make sense at first" | valgrind ./ft_ssl md5 file`"
+#    "`echo "but eventually you will understand" | valgrind ./ft_ssl md5 -p -r file`"
+#    "`echo "GL HF let's go" | valgrind ./ft_ssl md5 -p -s "foo" file`"
+#    "`echo "one more thing" | valgrind ./ft_ssl md5 -r -p -s "foo" file -s "bar"`"
+#    "`echo "just to be extra clear" | valgrind ./ft_ssl md5 -r -q -p -s "foo" file`"
     #SHA256
-    "`echo "pickle rick" | valgrind ./ft_ssl sha256`"
-    "`echo "Do not pity the dead, Harry." | valgrind ./ft_ssl sha256 -p`"
-    "`echo "Pity the living." | valgrind ./ft_ssl sha256 -q -r`"
-    "`echo "And above all," > file && valgrind ./ft_ssl sha256 file`"
-    "`valgrind ./ft_ssl sha256 -r file`"
-    "`valgrind ./ft_ssl sha256 -s "pity those that aren't following baerista on spotify."`"
-    "`echo "be sure to handle edge cases carefully" | valgrind ./ft_ssl sha256 -p file`"
-    "`echo "some of this will not make sense at first" | valgrind ./ft_ssl sha256 file`"
-    "`echo "but eventually you will understand" | valgrind ./ft_ssl sha256 -p -r file`"
-    "`echo "GL HF let's go" | valgrind ./ft_ssl sha256 -p -s "foo" file`"
-    "`echo "one more thing" | valgrind ./ft_ssl sha256 -r -p -s "foo" file -s "bar"`"
-    "`echo "just to be extra clear" | valgrind ./ft_ssl sha256 -r -q -p -s "foo" file`"
-	"`echo "https://www.youtube.com/watch?v=w-5yAtMtrSM" > big_smoke_order_remix && valgrind ./ft_ssl sha256 -q big_smoke_order_remix`"
-	"`valgrind ./ft_ssl sha256 -s "wubba lubba dub dub"`"
-)
+#    "`echo "pickle rick" | valgrind ./ft_ssl sha256`"
+#    "`echo "Do not pity the dead, Harry." | valgrind ./ft_ssl sha256 -p`"
+#    "`echo "Pity the living." | valgrind ./ft_ssl sha256 -q -r`"
+#    "`echo "And above all," > file && valgrind ./ft_ssl sha256 file`"
+#    "`valgrind ./ft_ssl sha256 -r file`"
+#    "`valgrind ./ft_ssl sha256 -s "pity those that aren't following baerista on spotify."`"
+#    "`echo "be sure to handle edge cases carefully" | valgrind ./ft_ssl sha256 -p file`"
+#    "`echo "some of this will not make sense at first" | valgrind ./ft_ssl sha256 file`"
+#    "`echo "but eventually you will understand" | valgrind ./ft_ssl sha256 -p -r file`"
+#    "`echo "GL HF let's go" | valgrind ./ft_ssl sha256 -p -s "foo" file`"
+#    "`echo "one more thing" | valgrind ./ft_ssl sha256 -r -p -s "foo" file -s "bar"`"
+#    "`echo "just to be extra clear" | valgrind ./ft_ssl sha256 -r -q -p -s "foo" file`"
+#	"`echo "https://www.youtube.com/watch?v=w-5yAtMtrSM" > big_smoke_order_remix && valgrind ./ft_ssl sha256 -q big_smoke_order_remix`"
+#	"`valgrind ./ft_ssl sha256 -s "wubba lubba dub dub"`"
+#)
 
 echo 'Beginning tests.'
 for ((i=0; i<${#output[@]}; i++)); do

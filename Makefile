@@ -30,6 +30,10 @@ $(TARGET): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(TARGET) $(LIBIDR_FLAGS) $(LIBS_FLAGS)
 	@echo "Compilation succeeded."
 
+fast: $(OBJS)
+	@$(CC) $(CFLAGS) -Ofast $(OBJS) -o $(TARGET) $(LIBIDR_FLAGS) $(LIBS_FLAGS)
+	@echo "Compilation succeeded. Gotta go fast!"
+
 $(OBJS): $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INC_DIRS)/ft_ssl.h |$(OBJ_DIR)
 	@$(COMPILE.c) $(OUTPUT_OPTIONS) -o $@ $<
 
