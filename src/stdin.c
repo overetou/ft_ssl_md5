@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
+#include <sys/types.h>
+#include <sys/stat.h>
 
 unsigned int	str_len(const char *s)
 {
@@ -29,7 +31,7 @@ unsigned int	left_rotate(unsigned int n, unsigned long times)
 
 void			load_stdin(t_master *m)
 {
-	int	i;
+	long	i;
 
 	m->buff_max = read(0, m->buffer, BUFF_MAX_SIZE);
 	if (m->buff_max == 0)
@@ -50,39 +52,30 @@ void			load_stdin(t_master *m)
 	m->stdin_string[i] = '\0';
 }
 
-long	file_len(int fd)
-{
-	long res = lseek(fd, 0, SEEK_END);
-	lseek(fd, 0, SEEK_SET);
-	return (res);
-}
 #include <string.h>
 void			load_file(t_master *m, int fd, char **to_fill)
 {
-	unsigned int	i;
-	long	flen;
-
-	flen = file_len(fd);
-	//printf("File len = %ld.\n", flen);
-	m->buff_max = read(fd, m->buffer, BUFF_MAX_SIZE);
-	if (m->buff_max)
-		*to_fill = secure_malloc(flen + 1);
-	else
-		*to_fill = NULL;
-	i = 0;
-	//printf("Read %d bits.\n", m->buff_max);
-	while (m->buff_max)
+	struct stat statbuf;
+	ssize_t	buffered;
+	char 		*temp;
+	off_t		left;
+	
+	fstat(fd, &statbuf);
+	(void)m;
+	*to_fill = secure_malloc(statbuf.st_size + 1);
+	temp = *to_fill;
+	left = statbuf.st_size;
+	while ((buffered = read(fd, temp, BUFF_MAX_SIZE)) > 0)
 	{
-		if (m->buff_max == -1)
-			error_msg("Error while reading a file.\n");
-		//printf("Copying %d bits from buffer to msg + %u\n", m->buff_max, i);
-		memcopy((*to_fill) + i, m->buffer, m->buff_max);
-		//puts("Still alive.");
-		if (!memcmp(*to_fill, m->buffer, m->buff_max)) //puts("Copied correctly.");
-		i += (unsigned int)(m->buff_max);
-		//printf("i now equals %u.\n", i);
-		m->buff_max = read(fd, m->buffer, BUFF_MAX_SIZE);
+		temp += buffered;
+		left -= buffered;
+		printf("Left to read: %ld\n", left);
 	}
-	//puts("still alive");
-	(*to_fill)[i] = '\0';
+	if (buffered < 0)
+	{
+		puts("Error while reading file.");
+		exit(0);
+	}
+	(*to_fill)[statbuf.st_size] = '\0';
+	puts("ok.");
 }

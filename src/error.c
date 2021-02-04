@@ -40,7 +40,7 @@ void	*secure_malloc(long size)
 	return (new);
 }
 
-void	*secure_realloc(void *ptr, int ptr_size, int size)
+void	*secure_realloc(void *ptr, unsigned long ptr_size, unsigned long size)
 {
 	void	*new;
 

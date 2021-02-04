@@ -18,7 +18,7 @@
 # include <stdio.h>
 
 # define BOOL char
-# define BUFF_MAX_SIZE 16384
+# define BUFF_MAX_SIZE 1048576
 
 typedef struct		s_command
 {
@@ -35,7 +35,7 @@ typedef struct		s_master
 	int				argc;
 	int				arg_pos;
 	int				buff_pos;
-	int				buff_max;
+	long long		buff_max;
 	int				command_number;
 	int				param_choice_number;
 	int				final_funcs_number;
@@ -99,7 +99,7 @@ char				*alloc_str(const char *content);
 void				error_msg(const char *msg);
 BOOL				str_cmp(const char *s1, const char *s2);
 void				*secure_malloc(long size);
-void				*secure_realloc(void *ptr, int ptr_size, int size);
+void				*secure_realloc(void *ptr, unsigned long ptr_size, unsigned long size);
 void				command_add(const int command_index, t_command *commands,
 const				char *command_name, void (*exec)(void *master));
 void				free_commands(t_command *commands, int command_number);
