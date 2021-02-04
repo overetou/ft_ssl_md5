@@ -31,7 +31,7 @@ void	error_if_null(void *p, const char *err_msg)
 	error_msg(err_msg);
 }
 
-void	*secure_malloc(int size)
+void	*secure_malloc(long size)
 {
 	void	*new;
 

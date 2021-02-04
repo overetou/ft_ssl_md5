@@ -18,7 +18,7 @@
 # include <stdio.h>
 
 # define BOOL char
-# define BUFF_MAX_SIZE 80
+# define BUFF_MAX_SIZE 16384
 
 typedef struct		s_command
 {
@@ -72,7 +72,7 @@ typedef struct		s_md5_data
 	unsigned int	k[64];
 }					t_md5_data;
 
-typedef struct		s_sha_data
+/* typedef struct		s_sha_data
 {
 	unsigned char	*full_msg;
 	unsigned int	bloc_pos;
@@ -83,13 +83,22 @@ typedef struct		s_sha_data
 	unsigned int	*h;
 	unsigned int	w[64];
 	unsigned int	constants[64];
-}					t_sha_data;
+}					t_sha_data; */
+
+typedef struct	s_sha_data
+{
+	unsigned long long	msg_len;
+	unsigned long long	full_len;
+	unsigned char	*blocks;
+	unsigned int	*h;
+	unsigned int	konstants[64];
+}				t_sha_data;
 
 void				putstr(const char *s);
 char				*alloc_str(const char *content);
 void				error_msg(const char *msg);
 BOOL				str_cmp(const char *s1, const char *s2);
-void				*secure_malloc(int size);
+void				*secure_malloc(long size);
 void				*secure_realloc(void *ptr, int ptr_size, int size);
 void				command_add(const int command_index, t_command *commands,
 const				char *command_name, void (*exec)(void *master));
@@ -124,20 +133,20 @@ void				sha256_p_exec(void *m);
 void				sha256_s_exec(void *m);
 void				exec_files_hash_and_funcs(t_master *m);
 void				exec_final_funcs(t_master *m);
-unsigned char		*sha256_digest(const char *input);
+unsigned char		*sha256_digest(const char *msg);
 void				parse_args(t_master *m);
-unsigned int		right_rotate(unsigned int n, unsigned long times);
+unsigned int		right_rotate(unsigned int x, unsigned int n);
 unsigned int		eps0(unsigned int x);
 unsigned int		eps1(unsigned int x);
 unsigned int		sig0(unsigned int x);
 unsigned int		sig1(unsigned int x);
 unsigned int		ch(unsigned int x, unsigned int y, unsigned int z);
 void				sha_init_hash(t_sha_data *data);
-void				sha256_init_constants(t_sha_data *data);
+void				sha256_init_constants(unsigned int *konstants);
 void				loop_start(t_sha_data *data);
 void				second_loop(t_sha_data *data);
 void				change_h(t_sha_data *data);
 unsigned int		maj(unsigned int x, unsigned int y, unsigned int z);
-void				invert_endian(char *s, unsigned int len);
+void				invert_endian(unsigned char *u, int l);
 
 #endif

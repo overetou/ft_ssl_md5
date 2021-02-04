@@ -97,7 +97,9 @@ void	exec_file_hash(t_master *m, char *file_name)
 	}
 	else
 	{
+		puts("file opened.");
 		load_file(m, fd, &file_content);
+		puts("file loaded.");
 		close(fd);
 		display_file_content_hash(m, file_content, file_name);
 		free(file_content);
