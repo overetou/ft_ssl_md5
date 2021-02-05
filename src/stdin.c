@@ -50,9 +50,9 @@ void			load_stdin(t_master *m)
 		m->buff_max = read(0, m->buffer, BUFF_MAX_SIZE);
 	}
 	m->stdin_string[i] = '\0';
+	m->msg_len = str_len(m->stdin_string);
 }
 
-#include <string.h>
 void			load_file(t_master *m, int fd, char **to_fill)
 {
 	struct stat statbuf;
@@ -61,7 +61,7 @@ void			load_file(t_master *m, int fd, char **to_fill)
 	off_t		left;
 	
 	fstat(fd, &statbuf);
-	(void)m;
+	m->msg_len = (unsigned long long)(statbuf.st_size);
 	*to_fill = secure_malloc(statbuf.st_size + 1);
 	temp = *to_fill;
 	left = statbuf.st_size;
@@ -69,13 +69,11 @@ void			load_file(t_master *m, int fd, char **to_fill)
 	{
 		temp += buffered;
 		left -= buffered;
-		printf("Left to read: %ld\n", left);
+		//printf("Left to read: %ld\n", left);
 	}
 	if (buffered < 0)
 	{
-		puts("Error while reading file.");
+		putstr("Error while reading file.");
 		exit(0);
 	}
-	(*to_fill)[statbuf.st_size] = '\0';
-	puts("ok.");
 }

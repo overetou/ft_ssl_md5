@@ -16,7 +16,7 @@ void	sha256_p_final_exec(t_master *m)
 {
 	unsigned char	*shasum;
 
-	shasum = sha256_digest(m->stdin_string);
+	shasum = sha256_digest(m->stdin_string, m->msg_len);
 	putstr(m->stdin_string);
 	if (m->stdin_string[str_len(m->stdin_string) - 1] != '\n')
 		putstr("\n");
@@ -43,7 +43,7 @@ void	sha256_s_final_exec(t_master *m)
 {
 	unsigned char	*sha256_sum;
 
-	sha256_sum = sha256_digest(m->direct_string);
+	sha256_sum = sha256_digest(m->direct_string, (unsigned long long)str_len(m->direct_string));
 	if (m->quiet_enabled)
 		disp_sum(sha256_sum, 32);
 	else

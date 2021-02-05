@@ -52,8 +52,7 @@ void	load_hashable_blocks(const unsigned char *msg, t_sha_data *d)
 {
 	unsigned long long	padding;
 
-	d->msg_len = str_len((const char*)msg);//printf("msg len = %llu.\n", d->msg_len);
-	printf("msg len = %llu.\n", d->msg_len);
+	//printf("msg len = %llu.\n", d->msg_len);
 	d->full_len = d->msg_len;
 	d->full_len += 1;//printf("full len = %llu.\n", d->full_len);
 	d->full_len += 8;//printf("full len = %llu.\n", d->full_len);
@@ -173,7 +172,7 @@ void			iterate_on_blocks(t_sha_data *d)
 	{
 		operate_on_block(d, (unsigned int*)(d->blocks + pos));
 		pos += 64;
-		puts("Hashed one block.");
+		//puts("Hashed one block.");
 	}
 }
 
@@ -189,11 +188,12 @@ void	print_h(const unsigned char *h)
 	printf("\n");
 }
 
-unsigned char	*sha256_digest(const char *msg)
+unsigned char	*sha256_digest(const char *msg, unsigned long long msg_len)
 {
 	t_sha_data	d;
 	int 		i;
 
+	d.msg_len = msg_len;
 	load_hashable_blocks((unsigned char*)msg, &d);
 	sha_init_hash(&d);
 	sha256_init_constants(d.konstants);

@@ -35,7 +35,7 @@ void	sha256_execute_loaded(t_master *m)
 		else
 		{
 			load_stdin(m);
-			sha256_sum = sha256_digest(m->stdin_string);
+			sha256_sum = sha256_digest(m->stdin_string, m->msg_len);
 			disp_sum(sha256_sum, 32);
 			free(sha256_sum);
 			free(m->stdin_string);

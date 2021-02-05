@@ -49,7 +49,8 @@ typedef struct		s_master
 	char			**files_to_hash;
 	int				files_to_hash_nb;
 	void			(**final_exec_funcs)(struct s_master*);
-	unsigned char	*(*digest)(const char*);
+	unsigned char	*(*digest)(const char*, unsigned long long);
+	unsigned long long	msg_len;
 }					t_master;
 
 typedef struct		s_md5_data
@@ -119,7 +120,7 @@ void				md5_s_final_exec(t_master *m);
 unsigned int		str_len(const char *s);
 void				b_zero(void *s, int len);
 void				disp_sum(unsigned char *s, int size);
-unsigned char		*md5_digest(const char *input);
+unsigned char		*md5_digest(const char *input, unsigned long long msg_len);
 void				load_file(t_master *m, int fd, char **to_fill);
 void				add_file_hash_task(t_master *m, char *file_name);
 void				exec_file_hash(t_master *m, char *file_name);
@@ -133,7 +134,7 @@ void				sha256_p_exec(void *m);
 void				sha256_s_exec(void *m);
 void				exec_files_hash_and_funcs(t_master *m);
 void				exec_final_funcs(t_master *m);
-unsigned char		*sha256_digest(const char *msg);
+unsigned char		*sha256_digest(const char *msg, unsigned long long msg_len);
 void				parse_args(t_master *m);
 unsigned int		right_rotate(unsigned int x, unsigned int n);
 unsigned int		eps0(unsigned int x);

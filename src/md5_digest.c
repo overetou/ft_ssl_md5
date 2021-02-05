@@ -73,10 +73,11 @@ void			update_h(t_md5_data *data)
 	(data->h)[3] += data->d;
 }
 
-unsigned char	*md5_digest(const char *input)
+unsigned char	*md5_digest(const char *input, unsigned long long msg_len)
 {
 	t_md5_data	d;
 
+	d.initial_len = msg_len;
 	md5_digest_init(&d, input);
 	d.bloc_pos = 0;
 	while (d.bloc_pos != d.full_len)

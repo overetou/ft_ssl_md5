@@ -70,7 +70,7 @@ void	md5_execute_loaded(t_master *m)
 		else
 		{
 			load_stdin(m);
-			md5sum = md5_digest(m->stdin_string);
+			md5sum = md5_digest(m->stdin_string, m->msg_len);
 			disp_sum(md5sum, 16);
 			free(md5sum);
 			free(m->stdin_string);

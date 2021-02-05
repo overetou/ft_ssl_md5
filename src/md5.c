@@ -14,7 +14,6 @@
 
 void	md5_digest_init(t_md5_data *d, const char *input)
 {
-	d->initial_len = str_len(input);
 	d->h = secure_malloc(sizeof(int) * 4);
 	if (64 - d->initial_len % 64 > 8)
 		d->full_len = d->initial_len + 64 - (d->initial_len % 64);
