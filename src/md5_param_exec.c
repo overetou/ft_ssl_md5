@@ -20,7 +20,6 @@ void	md5_p_exec(void *m)
 	else
 	{
 		((t_master*)m)->p_enabled = 1;
-		load_stdin(m);
 		add_final_exec_func(m, md5_p_final_exec);
 	}
 }

@@ -16,9 +16,10 @@ void	sha256_p_final_exec(t_master *m)
 {
 	unsigned char	*shasum;
 
+	load_stdin(m);
 	shasum = sha256_digest(m->stdin_string, m->msg_len);
 	putstr(m->stdin_string);
-	if (m->stdin_string[str_len(m->stdin_string) - 1] != '\n')
+	if (m->stdin_string[(m->msg_len) - 1] != '\n')
 		putstr("\n");
 	disp_sum(shasum, 32);
 	putstr("\n");
@@ -34,7 +35,6 @@ void	sha256_p_exec(void *m)
 	else
 	{
 		((t_master*)m)->p_enabled = 1;
-		load_stdin(m);
 		add_final_exec_func(m, sha256_p_final_exec);
 	}
 }

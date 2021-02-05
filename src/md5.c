@@ -14,16 +14,19 @@
 
 void	md5_digest_init(t_md5_data *d, const char *input)
 {
+	unsigned long long	padding;
+
 	d->h = secure_malloc(sizeof(int) * 4);
-	if (64 - d->initial_len % 64 > 8)
-		d->full_len = d->initial_len + 64 - (d->initial_len % 64);
-	else
-		d->full_len = d->initial_len + (64 - (d->initial_len + 8) % 64);
+	d->full_len = d->initial_len;
+	d->full_len += 1;//printf("full len = %llu.\n", d->full_len);
+	d->full_len += 8;//printf("full len = %llu.\n", d->full_len);
+	padding = remainer_to_64_bytes(d->full_len);//printf("padding = %llu.\n", padding);
+	d->full_len += padding;
 	md5_set_k((unsigned int*)(d->k));
 	d->full_msg = secure_malloc(d->full_len);
 	memcopy((char*)(d->full_msg), input, d->initial_len);
 	d->full_msg[d->initial_len] = 128;
-	b_zero(d->full_msg + d->initial_len + 1, d->full_len - d->initial_len - 9);
+	b_zero(d->full_msg + d->initial_len + 1, padding);
 	d->initial_len *= 8;
 	memcopy((char*)(d->full_msg) + d->full_len - 8,
 	(char*)(&(d->initial_len)), 8);

@@ -172,7 +172,6 @@ void			iterate_on_blocks(t_sha_data *d)
 	{
 		operate_on_block(d, (unsigned int*)(d->blocks + pos));
 		pos += 64;
-		//puts("Hashed one block.");
 	}
 }
 

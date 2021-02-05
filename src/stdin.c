@@ -55,25 +55,20 @@ void			load_stdin(t_master *m)
 
 void			load_file(t_master *m, int fd, char **to_fill)
 {
-	struct stat statbuf;
-	ssize_t	buffered;
-	char 		*temp;
-	off_t		left;
-	
+	struct stat	statbuf;
+	ssize_t		buffered;
+	off_t		progress = 0;
+	char	buf[BUFF_MAX_SIZE];
+
 	fstat(fd, &statbuf);
 	m->msg_len = (unsigned long long)(statbuf.st_size);
-	*to_fill = secure_malloc(statbuf.st_size + 1);
-	temp = *to_fill;
-	left = statbuf.st_size;
-	while ((buffered = read(fd, temp, BUFF_MAX_SIZE)) > 0)
+	*to_fill = secure_malloc((long)(m->msg_len));
+	while (progress != statbuf.st_size)
 	{
-		temp += buffered;
-		left -= buffered;
-		//printf("Left to read: %ld\n", left);
-	}
-	if (buffered < 0)
-	{
-		putstr("Error while reading file.");
-		exit(0);
+		buffered = read(fd, buf, BUFF_MAX_SIZE);
+		if (buffered < 0)
+			error_msg("Encountered a problem while reading.\n");
+		long_memcopy((unsigned char*)(*to_fill) + progress, (unsigned char*)buf, buffered);
+		progress += buffered;
 	}
 }

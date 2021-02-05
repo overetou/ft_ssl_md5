@@ -17,9 +17,10 @@ void	md5_p_final_exec(t_master *m)
 {
 	unsigned char	*md5sum;
 
+	load_stdin(m);
 	md5sum = md5_digest(m->stdin_string, m->msg_len);
 	putstr(m->stdin_string);
-	if (m->stdin_string[str_len(m->stdin_string) - 1] != '\n')
+	if (m->stdin_string[(m->msg_len) - 1] != '\n')
 		putstr("\n");
 	disp_sum(md5sum, 16);
 	putstr("\n");

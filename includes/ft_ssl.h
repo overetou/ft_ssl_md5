@@ -149,5 +149,7 @@ void				second_loop(t_sha_data *data);
 void				change_h(t_sha_data *data);
 unsigned int		maj(unsigned int x, unsigned int y, unsigned int z);
 void				invert_endian(unsigned char *u, int l);
+unsigned long long	remainer_to_64_bytes(unsigned long long l);
+void	long_memcopy(unsigned char *dest, const unsigned char *src, unsigned long long len);
 
 #endif
