@@ -128,7 +128,7 @@ unsigned int		left_rotate(unsigned int n, unsigned long times);
 void				md5_set_k(unsigned int *to_set);
 void				md5_init_hash(unsigned int *h);
 void				set_round_shift_table(unsigned char *r);
-void				md5_digest_init(t_md5_data *data, const char *input);
+void				md5_digest_init(t_md5_data *data, const char *input, unsigned long long l);
 void				sha256_exec(void *master);
 void				sha256_p_exec(void *m);
 void				sha256_s_exec(void *m);

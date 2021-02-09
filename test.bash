@@ -68,7 +68,7 @@ expected=(
 	"MD5 (file) = 53d53ea94217b259c11a5a2d104ec58a"
 	$'53d53ea94217b259c11a5a2d104ec58a file\nbut eventually you will understand\ndcdd84e0f635694d2a943fa8d3905281'
 	$'MD5 (file) = 53d53ea94217b259c11a5a2d104ec58a\nGL HF let\'s go\nd1e3cc342b6da09480b27ec57ff243e2\nMD5 ("foo") = acbd18db4cc2f85cedef654fccc4a4d8'
-	$'ft_ssl/md5: -s argument given more than one time. (illegal action)\n53d53ea94217b259c11a5a2d104ec58a file\nCould not open file: bar\none more thing\na0bd1876c6f011dd50fae52827f445f5\nacbd18db4cc2f85cedef654fccc4a4d8 "foo"'
+	$'53d53ea94217b259c11a5a2d104ec58a file\none more thing\na0bd1876c6f011dd50fae52827f445f5\nacbd18db4cc2f85cedef654fccc4a4d8 "foo"'
 	$'53d53ea94217b259c11a5a2d104ec58a\njust to be extra clear\n3ba35f1ea0d170cb3b9a752e3360286c\nacbd18db4cc2f85cedef654fccc4a4d8'
 	"`openssl md5 test.bash | awk '{print $2}'`"
 	"`echo '' | openssl md5 | awk '{print $2}'`"
@@ -84,7 +84,7 @@ expected=(
 	"SHA256 (file) = f9eb9a5a063eb386a18525c074e1065c316ec434f911e0d7d59ba2d9fd134705"
 	$'f9eb9a5a063eb386a18525c074e1065c316ec434f911e0d7d59ba2d9fd134705 file\nbut eventually you will understand\n43da940057fd3b7453ee91b3a056a41343e6f0bce315570ed27e06c993a539da'
 	$'SHA256 (file) = f9eb9a5a063eb386a18525c074e1065c316ec434f911e0d7d59ba2d9fd134705\nGL HF let\'s go\nf33201f3d70c9dccccec022e2ff0df2006e016f153f600407917d14955fbec22\nSHA256 ("foo") = 2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
-	$'ft_ssl/sha256: -s argument given more than one time. (illegal action)\nf9eb9a5a063eb386a18525c074e1065c316ec434f911e0d7d59ba2d9fd134705 file\nCould not open file: bar\none more thing\n720bbf63077e0bea3b70c87954123daa6fcf32f973f4d646622bd016b140ec75\n2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae "foo"'
+	$'f9eb9a5a063eb386a18525c074e1065c316ec434f911e0d7d59ba2d9fd134705 file\none more thing\n720bbf63077e0bea3b70c87954123daa6fcf32f973f4d646622bd016b140ec75\n2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae "foo"'
 	$'f9eb9a5a063eb386a18525c074e1065c316ec434f911e0d7d59ba2d9fd134705\njust to be extra clear\n41c3da28172faf72bb777d6a428b6d801427d02513c56cd9e3672f44383f8eee\n2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
 	'a8dc621c3dcf18a8a2eddae1845e8e5f6498970a867056ac5f7121ac3d66cfd9'
 	'SHA256 ("wubba lubba dub dub") = 23a0944d11b5a54f1970492b5265c732044ae824b7d5656acb193e7f0e51e5fa'

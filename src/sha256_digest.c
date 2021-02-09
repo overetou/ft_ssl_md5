@@ -14,8 +14,9 @@
 
 unsigned long long	remainer_to_64_bytes(unsigned long long l)
 {
-	unsigned long long	mod = l % 64;
+	unsigned long long	mod;
 
+	mod = l % 64;
 	if (mod)
 		return (64 - mod);
 	return (0);
@@ -36,7 +37,8 @@ void	invert_endian(unsigned char *u, int l)
 	}
 }
 
-void	long_memcopy(unsigned char *dest, const unsigned char *src, unsigned long long len)
+void	long_memcopy(unsigned char *dest,
+		const unsigned char *src, unsigned long long len)
 {
 	unsigned long long	i;
 
@@ -52,17 +54,16 @@ void	load_hashable_blocks(const unsigned char *msg, t_sha_data *d)
 {
 	unsigned long long	padding;
 
-	//printf("msg len = %llu.\n", d->msg_len);
 	d->full_len = d->msg_len;
-	d->full_len += 1;//printf("full len = %llu.\n", d->full_len);
-	d->full_len += 8;//printf("full len = %llu.\n", d->full_len);
-	padding = remainer_to_64_bytes(d->full_len);//printf("padding = %llu.\n", padding);
-	d->full_len += padding;//printf("full len = %llu.\n", d->full_len);
+	d->full_len += 1;
+	d->full_len += 8;
+	padding = remainer_to_64_bytes(d->full_len);
+	d->full_len += padding;
 	d->blocks = malloc(d->full_len);
 	long_memcopy(d->blocks, msg, d->msg_len);
 	d->blocks[d->msg_len] = 0b10000000;
-	b_zero(d->blocks + d->msg_len + 1, padding);//printf("bzero from %llu of a length of %llu.\n", d->msg_len + 1, padding);
-	*((unsigned long long*)(d->blocks + d->full_len - 8)) = d->msg_len * 8;//printf("Writing msg bit length from pos %llu on a size of %lu.\n", d->full_len - 8, sizeof(unsigned long long));
+	b_zero(d->blocks + d->msg_len + 1, padding);
+	*((unsigned long long*)(d->blocks + d->full_len - 8)) = d->msg_len * 8;
 	invert_endian(d->blocks + d->full_len - 8, 8);
 }
 
@@ -73,17 +74,19 @@ unsigned int	right_rotate(unsigned int x, unsigned int n)
 
 unsigned int	sig0(unsigned int x)
 {
-	return right_rotate(x, 7) ^ right_rotate(x, 18) ^ (x >> 3);
+	return (right_rotate(x, 7) ^ right_rotate(x, 18) ^ (x >> 3));
 }
 
 unsigned int	sig1(unsigned int x)
 {
-	return	right_rotate(x, 17) ^ right_rotate(x, 19) ^ (x >> 10);
+	return (right_rotate(x, 17) ^ right_rotate(x, 19) ^ (x >> 10));
 }
 
 void	compute_w(unsigned int *bloc, unsigned int *w)
 {
-	int j = 0;
+	int j;
+
+	j = 0;
 	while (j != 16)
 	{
 		w[j] = bloc[j];
@@ -99,31 +102,32 @@ void	compute_w(unsigned int *bloc, unsigned int *w)
 
 unsigned int	ch(unsigned int x, unsigned int y, unsigned int z)
 {
-	return (x & y) ^ (~x & z);
+	return ((x & y) ^ (~x & z));
 }
 
 unsigned int	maj(unsigned int x, unsigned int y, unsigned int z)
 {
-	return (x & y) ^ (x & z) ^ (y & z);
+	return ((x & y) ^ (x & z) ^ (y & z));
 }
 
 unsigned int	eps0(unsigned int x)
 {
-	return right_rotate(x, 2) ^ right_rotate(x, 13) ^ right_rotate(x, 22);
+	return (right_rotate(x, 2) ^ right_rotate(x, 13) ^ right_rotate(x, 22));
 }
 
 unsigned int	eps1(unsigned int x)
 {
-	return	right_rotate(x, 6) ^ right_rotate(x, 11) ^ right_rotate(x, 25);
+	return (right_rotate(x, 6) ^ right_rotate(x, 11) ^ right_rotate(x, 25));
 }
 
-void	compress(	unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *d,
+void	compress(unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *d,
 					unsigned int *e, unsigned int *f, unsigned int *g, unsigned int *h, unsigned int *bloc, t_sha_data *data)
 {
-	int j = 0;
-	unsigned int w[64];
-	unsigned int t1, t2;
+	int				j;
+	unsigned int	w[64];
+	unsigned int	t1, t2;
 
+	j = 0;
 	compute_w(bloc, w);
 	while (j != 64)
 	{
@@ -131,9 +135,9 @@ void	compress(	unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *
 		t2 = eps0(*a) + maj(*a, *b, *c);
 		*h = *g;
 		*g = *f;
-		*f = *e;	//printf("f = %x\n", *f);
-		*e = *d + t1;	//printf("e = %x\n", *e);//t1 est faux
-		*d = *c;	//printf("d = %x\n", *d);
+		*f = *e;
+		*e = *d + t1;	
+		*d = *c;
 		*c = *b;
 		*b = *a;
 		*a = t1 + t2;
@@ -204,6 +208,5 @@ unsigned char	*sha256_digest(const char *msg, unsigned long long msg_len)
 		invert_endian((unsigned char*)(d.h + i), sizeof(int));
 		i++;
 	}
-	//print_h((const unsigned char*)(d.h));
 	return ((unsigned char*)(d.h));
 }

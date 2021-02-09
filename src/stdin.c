@@ -57,9 +57,10 @@ void			load_file(t_master *m, int fd, char **to_fill)
 {
 	struct stat	statbuf;
 	ssize_t		buffered;
-	off_t		progress = 0;
-	char	buf[BUFF_MAX_SIZE];
+	off_t		progress;
+	char		buf[BUFF_MAX_SIZE];
 
+	progress = 0;
 	fstat(fd, &statbuf);
 	m->msg_len = (unsigned long long)(statbuf.st_size);
 	*to_fill = secure_malloc((long)(m->msg_len));
@@ -68,7 +69,8 @@ void			load_file(t_master *m, int fd, char **to_fill)
 		buffered = read(fd, buf, BUFF_MAX_SIZE);
 		if (buffered < 0)
 			error_msg("Encountered a problem while reading.\n");
-		long_memcopy((unsigned char*)(*to_fill) + progress, (unsigned char*)buf, buffered);
+		long_memcopy((unsigned char*)(*to_fill) + progress,
+		(unsigned char*)buf, buffered);
 		progress += buffered;
 	}
 }

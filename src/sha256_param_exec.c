@@ -30,8 +30,8 @@ void	sha256_p_final_exec(t_master *m)
 void	sha256_p_exec(void *m)
 {
 	if (((t_master*)m)->p_enabled)
-		putstr("ft_ssl/sha256: -p argument"
-		" given more than one time. (illegal action)\n");
+		write(2, "ft_ssl/sha256: -p argument"
+		" given more than one time. (illegal action)\n", 70);
 	else
 	{
 		((t_master*)m)->p_enabled = 1;
@@ -43,7 +43,8 @@ void	sha256_s_final_exec(t_master *m)
 {
 	unsigned char	*sha256_sum;
 
-	sha256_sum = sha256_digest(m->direct_string, (unsigned long long)str_len(m->direct_string));
+	sha256_sum = sha256_digest(m->direct_string,
+	(unsigned long long)str_len(m->direct_string));
 	if (m->quiet_enabled)
 		disp_sum(sha256_sum, 32);
 	else
@@ -70,14 +71,14 @@ void	sha256_s_final_exec(t_master *m)
 void	sha256_s_exec(void *m)
 {
 	if (((t_master*)m)->s_enabled)
-		putstr("ft_ssl/sha256: -s argument"
-		" given more than one time. (illegal action)\n");
+		write(2, "ft_ssl/sha256: -s argument"
+		" given more than one time. (illegal action)\n", 70);
 	else
 	{
 		((t_master*)m)->s_enabled = 1;
 		if (((t_master*)m)->arg_pos + 1 == ((t_master*)m)->argc)
-			error_msg("ft_ssl/sha256: -s must be folowed by a"
-			" string. Ex: hey / \" spaced words\"\n");
+			write(2, "ft_ssl/sha256: -s must be folowed by a"
+			" string. Ex: hey / \" spaced words\"\n", 73);
 		(((t_master*)m)->arg_pos)++;
 		((t_master*)m)->direct_string =
 		((t_master*)m)->argv[((t_master*)m)->arg_pos];

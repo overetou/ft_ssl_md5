@@ -93,17 +93,16 @@ void	exec_file_hash(t_master *m, char *file_name)
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 	{
-		putstr("Could not open file: ");
-		putstr(file_name);
+		write(2, "Could not open file: ", 21);
+		write(2, file_name, str_len(file_name));
+		write(2, "\n", 1);
 	}
 	else
 	{
-		//puts("file opened.");
 		load_file(m, fd, &file_content);
-		//puts("file loaded.");
 		close(fd);
 		display_file_content_hash(m, file_content, file_name);
 		free(file_content);
+		putstr("\n");
 	}
-	putstr("\n");
 }

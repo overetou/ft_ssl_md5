@@ -12,15 +12,16 @@
 
 #include "ft_ssl.h"
 
-void	md5_digest_init(t_md5_data *d, const char *input)
+void	md5_digest_init(t_md5_data *d, const char *input, unsigned long long l)
 {
 	unsigned long long	padding;
 
+	d->initial_len = l;
 	d->h = secure_malloc(sizeof(int) * 4);
 	d->full_len = d->initial_len;
-	d->full_len += 1;//printf("full len = %llu.\n", d->full_len);
-	d->full_len += 8;//printf("full len = %llu.\n", d->full_len);
-	padding = remainer_to_64_bytes(d->full_len);//printf("padding = %llu.\n", padding);
+	d->full_len += 1;
+	d->full_len += 8;
+	padding = remainer_to_64_bytes(d->full_len);
 	d->full_len += padding;
 	md5_set_k((unsigned int*)(d->k));
 	d->full_msg = secure_malloc(d->full_len);
