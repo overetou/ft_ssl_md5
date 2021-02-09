@@ -120,8 +120,7 @@ unsigned int	eps1(unsigned int x)
 	return (right_rotate(x, 6) ^ right_rotate(x, 11) ^ right_rotate(x, 25));
 }
 
-void	compress(unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *d,
-					unsigned int *e, unsigned int *f, unsigned int *g, unsigned int *h, unsigned int *bloc, t_sha_data *data)
+void	compress(unsigned int *letters, unsigned int *bloc, t_sha_data *data)
 {
 	int				j;
 	unsigned int	w[64];
@@ -131,40 +130,41 @@ void	compress(unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *d
 	compute_w(bloc, w);
 	while (j != 64)
 	{
-		t1 = *h + eps1(*e) + ch(*e, *f, *g) + data->konstants[j] + w[j];
-		t2 = eps0(*a) + maj(*a, *b, *c);
-		*h = *g;
-		*g = *f;
-		*f = *e;
-		*e = *d + t1;	
-		*d = *c;
-		*c = *b;
-		*b = *a;
-		*a = t1 + t2;
+		t1 = letters[7] + eps1(letters[4]) + ch(letters[4], letters[5], letters[6]) + data->konstants[j] + w[j];
+		t2 = eps0(letters[0]) + maj(letters[0], letters[1], letters[2]);
+		letters[7] = letters[6];
+		letters[6] = letters[5];
+		letters[5] = letters[4];
+		letters[4] = letters[3] + t1;	
+		letters[3] = letters[2];
+		letters[2] = letters[1];
+		letters[1] = letters[0];
+		letters[0] = t1 + t2;
 		j++;
 	}
 }
 
 void			operate_on_block(t_sha_data *data, unsigned int *block)
 {
-	unsigned int	a, b, c, d, e, f, g, h;
-	a = data->h[0];
-	b = data->h[1];
-	c = data->h[2];
-	d = data->h[3];
-	e = data->h[4];
-	f = data->h[5];
-	g = data->h[6];
-	h = data->h[7];
-	compress(&a, &b, &c, &d, &e, &f, &g, &h, block, data);
-	data->h[0] += a;
-	data->h[1] += b;
-	data->h[2] += c;
-	data->h[3] += d;
-	data->h[4] += e;
-	data->h[5] += f;
-	data->h[6] += g;
-	data->h[7] += h;
+	unsigned int	letters[8];
+
+	letters[0] = data->h[0];
+	letters[1] = data->h[1];
+	letters[2] = data->h[2];
+	letters[3] = data->h[3];
+	letters[4] = data->h[4];
+	letters[5] = data->h[5];
+	letters[6] = data->h[6];
+	letters[7] = data->h[7];
+	compress(letters, block, data);
+	data->h[0] += letters[0];
+	data->h[1] += letters[1];
+	data->h[2] += letters[2];
+	data->h[3] += letters[3];
+	data->h[4] += letters[4];
+	data->h[5] += letters[5];
+	data->h[6] += letters[6];
+	data->h[7] += letters[7];
 }
 
 void			iterate_on_blocks(t_sha_data *d)
