@@ -52,7 +52,7 @@ void	md5_s_exec(void *m)
 		((t_master*)m)->s_enabled = 1;
 		if (((t_master*)m)->arg_pos + 1 == ((t_master*)m)->argc)
 			error_msg("ft_ssl/md5: -s must be folowed by a string."
-			" Ex: hey / \" spaced words\"\n");	
+			" Ex: hey / \" spaced words\"\n");
 		(((t_master*)m)->arg_pos)++;
 		((t_master*)m)->direct_string =
 		((t_master*)m)->argv[((t_master*)m)->arg_pos];
