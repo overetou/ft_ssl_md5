@@ -12,7 +12,7 @@
 
 #include "ft_ssl.h"
 
-void	sha256_load_params_choice(t_master *m)
+void			sha256_load_params_choice(t_master *m)
 {
 	m->param_choice_number = 4;
 	m->param_choice = secure_malloc(4 * sizeof(t_command));
@@ -22,7 +22,7 @@ void	sha256_load_params_choice(t_master *m)
 	command_add(3, m->param_choice, "-s", sha256_s_exec);
 }
 
-void	sha256_execute_loaded(t_master *m)
+void			sha256_execute_loaded(t_master *m)
 {
 	unsigned char	*sha256_sum;
 
@@ -44,7 +44,7 @@ void	sha256_execute_loaded(t_master *m)
 	}
 }
 
-void	sha256_exec(void *m)
+void			sha256_exec(void *m)
 {
 	((t_master*)m)->digest = sha256_digest;
 	sha256_load_params_choice(m);
@@ -52,4 +52,14 @@ void	sha256_exec(void *m)
 	sha256_execute_loaded(m);
 	free_commands(((t_master*)m)->param_choice,
 					((t_master*)m)->param_choice_number);
+}
+
+unsigned int	right_rotate(unsigned int x, unsigned int n)
+{
+	return (x >> n) | (x << ((sizeof(x) * 8) - n));
+}
+
+unsigned int	sig0(unsigned int x)
+{
+	return (right_rotate(x, 7) ^ right_rotate(x, 18) ^ (x >> 3));
 }

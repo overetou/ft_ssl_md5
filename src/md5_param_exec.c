@@ -16,7 +16,7 @@ void	md5_p_exec(void *m)
 {
 	if (((t_master*)m)->p_enabled)
 		write(2, "ft_ssl/md5: -p argument given more than one time."
-		" (illegal action)\n", 63);
+		" (illegal action)\n", 67);
 	else
 	{
 		((t_master*)m)->p_enabled = 1;
@@ -27,8 +27,8 @@ void	md5_p_exec(void *m)
 void	q_exec(void *m)
 {
 	if (((t_master*)m)->quiet_enabled)
-		write(2, "ft_ssl: -q argument given more than one time."
-		" (illegal action)\n", 63);
+		write(2, "ft_ssl/md5: -q argument given more than one time."
+		" (illegal action)\n", 67);
 	else
 		((t_master*)m)->quiet_enabled = 1;
 }
@@ -36,8 +36,8 @@ void	q_exec(void *m)
 void	r_exec(void *m)
 {
 	if (((t_master*)m)->reverse_enabled)
-		write(2, "ft_ssl: -r argument given more than one time."
-		" (illegal action)\n", 63);
+		write(2, "ft_ssl/md5: -r argument given more than one time."
+		" (illegal action)\n", 67);
 	else
 		((t_master*)m)->reverse_enabled = 1;
 }
@@ -46,13 +46,13 @@ void	md5_s_exec(void *m)
 {
 	if (((t_master*)m)->s_enabled)
 		write(2, "ft_ssl/md5: -s argument given more than one time."
-		" (illegal action)\n", 63);
+		" (illegal action)\n", 67);
 	else
 	{
 		((t_master*)m)->s_enabled = 1;
 		if (((t_master*)m)->arg_pos + 1 == ((t_master*)m)->argc)
-			write(2, "ft_ssl/md5: -s must be folowed by a string."
-			" Ex: hey / \" spaced words\"\n", 93);
+			error_msg("ft_ssl/md5: -s must be folowed by a string."
+			" Ex: hey / \" spaced words\"\n");	
 		(((t_master*)m)->arg_pos)++;
 		((t_master*)m)->direct_string =
 		((t_master*)m)->argv[((t_master*)m)->arg_pos];

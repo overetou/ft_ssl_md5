@@ -12,7 +12,7 @@
 
 #include "ft_ssl.h"
 
-void	sha256_p_final_exec(t_master *m)
+void			sha256_p_final_exec(t_master *m)
 {
 	unsigned char	*shasum;
 
@@ -27,7 +27,7 @@ void	sha256_p_final_exec(t_master *m)
 	free(shasum);
 }
 
-void	sha256_p_exec(void *m)
+void			sha256_p_exec(void *m)
 {
 	if (((t_master*)m)->p_enabled)
 		write(2, "ft_ssl/sha256: -p argument"
@@ -39,7 +39,7 @@ void	sha256_p_exec(void *m)
 	}
 }
 
-void	sha256_s_final_exec(t_master *m)
+void			sha256_s_final_exec(t_master *m)
 {
 	unsigned char	*sha256_sum;
 
@@ -68,7 +68,7 @@ void	sha256_s_final_exec(t_master *m)
 	free(sha256_sum);
 }
 
-void	sha256_s_exec(void *m)
+void			sha256_s_exec(void *m)
 {
 	if (((t_master*)m)->s_enabled)
 		write(2, "ft_ssl/sha256: -s argument"
@@ -77,11 +77,16 @@ void	sha256_s_exec(void *m)
 	{
 		((t_master*)m)->s_enabled = 1;
 		if (((t_master*)m)->arg_pos + 1 == ((t_master*)m)->argc)
-			write(2, "ft_ssl/sha256: -s must be folowed by a"
-			" string. Ex: hey / \" spaced words\"\n", 73);
+			error_msg("ft_ssl/sha256: -s must be folowed by a"
+			" string. Ex: hey / \" spaced words\"\n");
 		(((t_master*)m)->arg_pos)++;
 		((t_master*)m)->direct_string =
 		((t_master*)m)->argv[((t_master*)m)->arg_pos];
 		add_final_exec_func(m, sha256_s_final_exec);
 	}
+}
+
+unsigned int	eps0(unsigned int x)
+{
+	return (right_rotate(x, 2) ^ right_rotate(x, 13) ^ right_rotate(x, 22));
 }

@@ -12,7 +12,7 @@
 
 #include "ft_ssl.h"
 
-void	md5_init_hash(unsigned int *h)
+void			md5_init_hash(unsigned int *h)
 {
 	h[0] = 0x67452301;
 	h[1] = 0xefcdab89;
@@ -20,7 +20,7 @@ void	md5_init_hash(unsigned int *h)
 	h[3] = 0x10325476;
 }
 
-void	char_print_hex(unsigned char c)
+void			char_print_hex(unsigned char c)
 {
 	char	buf[3];
 	char	nbs[16];
@@ -35,7 +35,7 @@ void	char_print_hex(unsigned char c)
 	putstr(buf);
 }
 
-void	disp_sum(unsigned char *s, int size)
+void			disp_sum(unsigned char *s, int size)
 {
 	int i;
 
@@ -45,4 +45,14 @@ void	disp_sum(unsigned char *s, int size)
 		char_print_hex(s[i]);
 		i++;
 	}
+}
+
+unsigned int	ch(unsigned int x, unsigned int y, unsigned int z)
+{
+	return ((x & y) ^ (~x & z));
+}
+
+unsigned int	maj(unsigned int x, unsigned int y, unsigned int z)
+{
+	return ((x & y) ^ (x & z) ^ (y & z));
 }

@@ -74,3 +74,8 @@ void			load_file(t_master *m, int fd, char **to_fill)
 		progress += buffered;
 	}
 }
+
+unsigned int	sig1(unsigned int x)
+{
+	return (right_rotate(x, 17) ^ right_rotate(x, 19) ^ (x >> 10));
+}

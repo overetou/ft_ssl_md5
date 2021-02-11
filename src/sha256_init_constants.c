@@ -12,7 +12,7 @@
 
 #include "ft_ssl.h"
 
-void		sha_init_hash(t_sha_data *data)
+void			sha_init_hash(t_sha_data *data)
 {
 	data->h = secure_malloc(8 * sizeof(int));
 	(data->h)[0] = 0x6a09e667;
@@ -25,7 +25,7 @@ void		sha_init_hash(t_sha_data *data)
 	(data->h)[7] = 0x5be0cd19;
 }
 
-static void	assign_3_uint(unsigned int *tab, unsigned int u1,
+static void		assign_3_uint(unsigned int *tab, unsigned int u1,
 unsigned int u2, unsigned int u3)
 {
 	tab[0] = u1;
@@ -33,7 +33,7 @@ unsigned int u2, unsigned int u3)
 	tab[2] = u3;
 }
 
-static void	sha256_reamaining_constants(unsigned int *konstants)
+static void		sha256_reamaining_constants(unsigned int *konstants)
 {
 	assign_3_uint(konstants + 36, 0x650a7354, 0x766a0abb, 0x81c2c92e);
 	konstants[39] = 0x92722c85;
@@ -51,7 +51,7 @@ static void	sha256_reamaining_constants(unsigned int *konstants)
 	konstants[63] = 0xc67178f2;
 }
 
-void		sha256_init_constants(unsigned int *konstants)
+void			sha256_init_constants(unsigned int *konstants)
 {
 	assign_3_uint(konstants, 0x428a2f98, 0x71374491, 0xb5c0fbcf);
 	konstants[3] = 0xe9b5dba5;
@@ -72,4 +72,9 @@ void		sha256_init_constants(unsigned int *konstants)
 	assign_3_uint(konstants + 32, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc);
 	konstants[35] = 0x53380d13;
 	sha256_reamaining_constants(konstants);
+}
+
+unsigned int	eps1(unsigned int x)
+{
+	return (right_rotate(x, 6) ^ right_rotate(x, 11) ^ right_rotate(x, 25));
 }
